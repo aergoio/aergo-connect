@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Button from '@aergo-connect/lib-ui/src/components/Button.vue';
+import Button from '@aergo-connect/lib-ui/src/buttons/Button.vue';
 
 @Component({ components: { Button, }})
 export default class HelloWorld extends Vue {
