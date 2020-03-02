@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/vue';
 import ScrollView from './ScrollView.vue';
 import InvertedColors from '../theme/InvertedColors.vue';
 
-storiesOf('ScrollView', module)
+storiesOf('Layouts/ScrollView', module)
   .add('basic', () => ({
     components: { ScrollView },
     template: `
@@ -14,7 +14,7 @@ storiesOf('ScrollView', module)
 
           <div style="padding: 10px">
             Scroll view content
-            <div style="height: 345px"></div>
+            <div style="height: 545px"></div>
             Hello
           </div>
           

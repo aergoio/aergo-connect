@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/vue';
 import Button from './Button.vue';
 
-storiesOf('Button', module)
+storiesOf('Buttons/Button', module)
   .add('with text', () => ({
     components: { Button },
     template: '<Button>with text</Button>',
