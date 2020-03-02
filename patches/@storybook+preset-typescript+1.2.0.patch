@@ -1,0 +1,76 @@
+diff --git a/node_modules/@storybook/preset-typescript/index.d.ts b/node_modules/@storybook/preset-typescript/index.d.ts
+index 2de4a3f..4bf2eff 100644
+--- a/node_modules/@storybook/preset-typescript/index.d.ts
++++ b/node_modules/@storybook/preset-typescript/index.d.ts
+@@ -1,10 +1,8 @@
+ import { Configuration } from 'webpack';
+ import { Options as TSLoaderOptions } from 'ts-loader';
+-import TSDocgenLoaderOptions from 'react-docgen-typescript-loader/dist/LoaderOptions';
+ 
+ interface Options {
+   tsLoaderOptions?: TSLoaderOptions;
+-  tsDocgenLoaderOptions?: TSDocgenLoaderOptions;
+   transpileManager?: boolean;
+   include?: string[];
+ }
+diff --git a/node_modules/@storybook/preset-typescript/index.js b/node_modules/@storybook/preset-typescript/index.js
+index 2ea940b..3afe0d2 100644
+--- a/node_modules/@storybook/preset-typescript/index.js
++++ b/node_modules/@storybook/preset-typescript/index.js
+@@ -4,9 +4,8 @@ function webpack(webpackConfig = {}, options = {}) {
+   const { module = {}, resolve = {}, plugins = [] } = webpackConfig;
+   const {
+     tsLoaderOptions = { transpileOnly: true },
+-    tsDocgenLoaderOptions = {},
+     forkTsCheckerWebpackPluginOptions,
+-    include = [],
++    include,
+   } = options;
+ 
+   if (tsLoaderOptions.transpileOnly) {
+@@ -15,26 +14,31 @@ function webpack(webpackConfig = {}, options = {}) {
+     );
+   }
+ 
++  if (options.framework === 'vue') {
++    tsLoaderOptions.appendTsSuffixTo = [...(tsLoaderOptions.appendTsSuffixTo || []), /\.vue$/];
++  }
++
++  const tsLoader = {
++    test: /\.tsx?$/,
++    use: [
++      {
++        loader: require.resolve('ts-loader'),
++        options: tsLoaderOptions,
++      },
++    ],
++  };
++
++  if (include) {
++    tsLoader.include = include;
++  }
++
+   return {
+     ...webpackConfig,
+     module: {
+       ...module,
+       rules: [
+         ...(module.rules || []),
+-        {
+-          test: /\.tsx?$/,
+-          use: [
+-            {
+-              loader: require.resolve('ts-loader'),
+-              options: tsLoaderOptions,
+-            },
+-            {
+-              loader: require.resolve('react-docgen-typescript-loader'),
+-              options: tsDocgenLoaderOptions,
+-            },
+-          ],
+-          include,
+-        },
++        tsLoader,
+       ],
+     },
+     resolve: {

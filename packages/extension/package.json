@@ -1,0 +1,19 @@
+{
+  "name": "@aergo-connect/extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "*",
+    "@vue/cli-plugin-eslint": "*",
+    "@vue/cli-plugin-router": "*",
+    "@vue/cli-plugin-typescript": "*",
+    "@vue/cli-plugin-vuex": "*"
+  }
+}
