@@ -1,0 +1,59 @@
+# http://www.nomnoml.com/
+#direction: down
+
+[<start>stUnlock] - [if wallet is locked]
+[if wallet is locked] -> [unlock with password]
+
+[<start>st] - [<sender>user]
+
+[user] - [onboarding]
+[onboarding] -> [set wallet password]
+[set wallet password] -> [<end>end3]
+
+[user] -> [select account]
+[select account] -> [<end>end]
+[user] -> [account details]
+[account details] -> [<end>end2]
+[user] -> [transaction history]
+
+[user] -> [add account]
+[add account] -> [import]
+[import] -> [choose network for import]
+[choose network for import] -> [<choice>type]
+[choose network for import] <-> [configure networks]
+[type] -> [from keystore]
+[from keystore] -> [input file and password]
+[type] ->[from text]
+[from text]->[input text and password]
+[input text and password] -> [import success]
+[input file and password] -> [import success]
+[import success] -> [<end>end4]
+[add account] -> [create]
+[user] -> [export]
+[export] -> [input password]
+[input password] -> [download file]
+[download file] -> [<end>end5]
+[create] -> [choose network for create]
+[choose network for create] <-> [configure networks]
+[choose network for create] -> [create success]
+[create success] -> [export]
+
+[configure networks] <-> [add network]
+[configure networks] <-> [edit network]
+
+[user] -> [send]
+[send] -> [confirm send data]
+[confirm send data] -> [send success]
+[send success] -> [<end>end6]
+
+[<start>st2] - [<sender>dapp request]
+[dapp request] -> [<choice>active account?]
+[active account?] -> [confirm send data]
+[active account?] -> [confirm get address]
+[confirm get address] -> [success]
+[active account?] -> [confirm signature]
+[confirm signature] -> [success]
+[success] -> [<end>end7]
+[active account?] <->no [choose account]
+
+

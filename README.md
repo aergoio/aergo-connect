@@ -1,5 +1,7 @@
 # Aergo Connect
 
+Chrome browser extension built using
+Vue + Typescript
 
 ## Development
 
