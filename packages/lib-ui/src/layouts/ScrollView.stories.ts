@@ -6,7 +6,7 @@ storiesOf('Layouts/ScrollView', module)
   .add('basic', () => ({
     components: { ScrollView },
     template: `
-      <div style="width: 250px; height: 400px; border: 1px solid #ccc;">
+      <div style="width: 250px; height: 350px; border: 1px solid #ccc;">
         <ScrollView>
           <template #header>
           Header Content (optional)
@@ -28,7 +28,7 @@ storiesOf('Layouts/ScrollView', module)
   .add('with little content', () => ({
     components: { ScrollView },
     template: `
-      <div style="width: 250px; height: 400px; border: 1px solid #ccc;">
+      <div style="width: 250px; height: 350px; border: 1px solid #ccc;">
         <ScrollView>
           <template #header>
           Header Content (optional)
@@ -48,7 +48,7 @@ storiesOf('Layouts/ScrollView', module)
   .add('with nested scroll view', () => ({
     components: { ScrollView },
     template: `
-      <div style="width: 250px; height: 400px; border: 1px solid #ccc;">
+      <div style="width: 250px; height: 350px; border: 1px solid #ccc;">
         <ScrollView>
           <div style="padding: 10px; height: 100%; box-sizing: border-box;">
             <ScrollView style="background-color: #f0f0f0; border-radius: 5px;">
@@ -71,7 +71,7 @@ storiesOf('Layouts/ScrollView', module)
   .add('inverted colors', () => ({
     components: { ScrollView, InvertedColors },
     template: `
-      <InvertedColors style="width: 250px; height: 400px; border: 1px solid #ccc; background: #111; color: #fff;">
+      <InvertedColors style="width: 250px; height: 350px; border: 1px solid #ccc; background: #111; color: #fff;">
         <ScrollView>
           <div style="padding: 10px">
             Scroll view content
