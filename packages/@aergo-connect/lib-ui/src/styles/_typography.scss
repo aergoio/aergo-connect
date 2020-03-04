@@ -2,6 +2,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: greyscale;
+  color: #272727;
 }
 
 code, .monospace {
@@ -17,4 +18,10 @@ p {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 .6em;
 }

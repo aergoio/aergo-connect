@@ -2,14 +2,6 @@
 # yarn lockfile v1
 
 
-"@aergo-connect/extension@file:packages/@aergo-connect/extension":
-  version "0.1.0"
-  dependencies:
-    "@aergo-connect/lib-ui" "*"
-
-"@aergo-connect/lib-ui@file:packages/@aergo-connect/lib-ui":
-  version "0.1.0"
-
 "@babel/code-frame@7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.5.5.tgz#bc0782f6d69f7b7d49531219699b988f669a8f9d"

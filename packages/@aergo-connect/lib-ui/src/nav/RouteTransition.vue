@@ -60,17 +60,17 @@ export default Vue.extend({
   methods: {
     beforeLeave(element: HTMLElement): void {
       const style = getComputedStyle(element);
-      this.prevHeight = style.height;
+      //this.prevHeight = style.height;
       this.prevWidth = style.width;
-      element.style.height = this.prevHeight;
+      //element.style.height = this.prevHeight;
       element.style.width = this.prevWidth;
     },
     enter(element: HTMLElement): void {
-      element.style.height = this.prevHeight;
+      //element.style.height = this.prevHeight;
       element.style.width = this.prevWidth;
     },
     afterEnter(element: HTMLElement): void {
-      element.style.height = `auto`;
+      //element.style.height = `auto`;
       element.style.width = `auto`;
     },
   },
@@ -94,7 +94,7 @@ export default Vue.extend({
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition-duration: .25s;
+  transition-duration: .5s;
   transition-property: height, opacity, transform;
   transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
   overflow: hidden;

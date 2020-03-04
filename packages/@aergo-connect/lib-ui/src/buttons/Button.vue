@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="classes" :disabled="disabled" @click="$emit('click')">
+  <button class="button" :class="classes" :disabled="disabled" @click="handleClick">
     <template v-if="loading">
       <LoadingIndicator class="button-loading-indicator" />
     </template>
@@ -13,7 +13,11 @@
 import Vue, { PropType } from 'vue';
 import { ButtonType, ButtonSize } from './types';
 import LoadingIndicator from '../icons/LoadingIndicator.vue';
+import { RawLocation } from 'vue-router';
 
+/**
+ * Either handle click event by `@click` or pass a router location into the `to` prop.
+ */
 export default Vue.extend({
   name: 'Button',
   props: {
@@ -32,6 +36,9 @@ export default Vue.extend({
     loading: {
       type: Boolean,
       default: false,
+    },
+    to: {
+      type: [String, Object] as PropType<RawLocation>,
     },
   },
   components: {
@@ -59,6 +66,15 @@ export default Vue.extend({
       ];
     },
   },
+  methods: {
+    handleClick() {
+      if (typeof this.to !== 'undefined' && typeof this.$router !== 'undefined') {
+        this.$router.push(this.to);
+      } else {
+        this.$emit('click');
+      }
+    }
+  }
 });
 </script>
 
