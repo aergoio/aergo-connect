@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { ButtonType, ButtonSize } from './types';
+import { ButtonType, ButtonTypes, ButtonSize, ButtonSizes } from './types';
 import LoadingIndicator from '../icons/LoadingIndicator.vue';
 import { RawLocation } from 'vue-router';
 
@@ -23,11 +23,11 @@ export default Vue.extend({
   props: {
     type: {
       type: String as PropType<ButtonType>,
-      default: 'primary',
+      default: ButtonTypes[0],
     },
     size: {
       type: String as PropType<ButtonSize>,
-      default: 'default',
+      default: ButtonSizes[0],
     },
     disabled: {
       type: Boolean,
