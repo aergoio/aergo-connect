@@ -1,9 +1,5 @@
 <template>
   <ScrollView class="page">
-    <template #header>
-      Header
-    </template>
-
     <div class="welcome-content">
       <h1 class="big-title">Welcome to Aergo Connect</h1>
     </div>
@@ -11,7 +7,7 @@
     <template #footer>
       <div style="margin: 20px;">
         <ButtonGroup vertical>
-          <Button type="primary" to="/new/create">Create your wallet</Button>
+          <Button type="primary" :to="{ name: 'account-create' }">Create your wallet</Button>
           <Button type="secondary">Import your wallet</Button>
         </ButtonGroup>
       </div>
@@ -21,9 +17,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import ScrollView from '@aergo-connect/lib-ui/src/layouts/ScrollView.vue';
-import { Button } from '@aergo-connect/lib-ui/src/buttons';
-import ButtonGroup from '@aergo-connect/lib-ui/src/buttons/ButtonGroup.vue';
+import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
+import { Button, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 
 export default Vue.extend({
   components: {

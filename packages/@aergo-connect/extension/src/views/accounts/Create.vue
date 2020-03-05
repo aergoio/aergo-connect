@@ -1,7 +1,9 @@
 <template>
   <ScrollView class="page">
     <div class="content">
-      <BackButton />
+      <section class="dialog-header">
+        <BackButton />
+      </section>
       <h1>Create</h1>
       <p>To get started, please configure a network.</p>
     </div>
@@ -10,8 +12,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import ScrollView from '@aergo-connect/lib-ui/src/layouts/ScrollView.vue';
 import { BackButton } from '@aergo-connect/lib-ui/src/buttons';
+import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 
 export default Vue.extend({
   components: {
@@ -20,3 +22,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.dialog-header {
+  margin: 10px 0 20px;
+}
+</style>

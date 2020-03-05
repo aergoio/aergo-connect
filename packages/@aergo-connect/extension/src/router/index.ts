@@ -1,28 +1,64 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Welcome from '../views/Welcome.vue';
-import Create from '../views/Create.vue';
+import AccountsFrame from '../views/AccountsFrame.vue';
+import Welcome from '../views/accounts/Welcome.vue';
+import Create from '../views/accounts/Create.vue';
 
 Vue.use(VueRouter);
+
+/*
+- accounts
+  - welcome
+  - list
+  - add
+    - create
+    - import
+    - select network
+  
+- account
+  - add-success
+  - balance
+  - send
+  - history
+  - export
+  - name
+    - create
+    - update
+
+*/
 
 const routes = [
   {
     path: '/',
-    name: 'Welcome',
-    component: Welcome,
+    redirect: '/accounts',
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home,
+    path: '/accounts',
+    name: 'accounts',
+    component: AccountsFrame,
+    children: [
+      {
+        path: '',
+        redirect: 'welcome', // todo: only go to welcome when no accounts existing, otherwise go to list
+      },
+      {
+        path: 'welcome',
+        name: 'welcome',
+        component: Welcome,
+        meta: { transitionName: 'slide', index: 0, },
+      },
+      {
+        path: 'list',
+        name: 'accounts-list',
+      },
+      {
+        path: 'create',
+        name: 'account-create',
+        component: Create,
+        meta: { transitionName: 'slide', index: 1, },
+      },
+    ],
   },
-  {
-    path: '/new/create',
-    name: 'Create',
-    component: Create,
-    meta: { transitionName: 'slide', },
-  }
 ];
 
 const router = new VueRouter({
