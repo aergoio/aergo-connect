@@ -6,7 +6,10 @@ import { InputVariants, InputTypes, InputStates } from './types';
 storiesOf('Forms/TextField', module)
   .add('with options', () => ({
     components: { TextField },
-    template: '<TextField :type="type" :variant="variant" :state="state" :disabled="disabled" :error="error" v-model="value" />',
+    template: `
+    <div style="max-width: 400px">
+      <TextField :type="type" :variant="variant" :state="state" :disabled="disabled" :error="error" v-model="value" />
+    </div>`,
     data: () => {
       return {
         value: '',

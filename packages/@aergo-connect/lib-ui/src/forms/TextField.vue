@@ -9,6 +9,7 @@
       @keyup.enter="handleEnter" />
 
     <LoadingIndicator v-if="state === 'loading'" />
+    <Icon name="checkmark" :size="24" v-if="state === 'valid'" />
   </div>
 </template>
 
@@ -16,10 +17,12 @@
 import Vue, { PropType } from 'vue';
 import { InputVariant, InputVariants, InputType, InputTypes, InputStates, InputState } from './types';
 import LoadingIndicator from '../icons/LoadingIndicator.vue';
+import Icon from '../icons/Icon.vue';
 
 export default Vue.extend({
   components: {
     LoadingIndicator,
+    Icon,
   },
   props: {
     value: [String, Number],
@@ -80,6 +83,7 @@ export default Vue.extend({
   line-height: 60px;
   min-height: 60px;
   display: flex;
+  align-items: center;
 
   input {
     border: 0;
@@ -89,12 +93,14 @@ export default Vue.extend({
     background-color: transparent;
   }
 
+  transition: box-shadow .1s;
+
   &.is-disabled {
     background-color: rgba(0, 0, 0, 0.05);
   }
   
   &.variant-default {
-    border: 1px solid rgba(217, 217, 217, 1);
+    box-shadow: 0 0 0 1px rgba(217, 217, 217, 1);
     border-radius: 3px;
   
     input {
@@ -109,18 +115,17 @@ export default Vue.extend({
   }
 
   &.variant-main {
-    border-bottom: 1px solid rgba(34, 34, 34, 1);
+    box-shadow: 0 1px 0 0 rgba(34, 34, 34, 1);
     input {
       font-size: (20/16) * 1rem;
       font-weight: 500;
     }
     &.state-invalid {
-      border-color:  rgba(238, 70, 72, 1);
-      box-shadow: 0 1px 0 0 rgba(238, 70, 72, 1);
+      box-shadow: 0 2px 0 0 rgba(238, 70, 72, 1);
     }
   }
 
-  .loading-indicator {
+  .loading-indicator, .icon--checkmark {
     margin-right: 15px;
   }
 }

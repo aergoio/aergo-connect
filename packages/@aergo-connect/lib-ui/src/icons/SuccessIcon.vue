@@ -11,7 +11,6 @@
 
 <style lang="scss">
 .icon-success-animated {
-  text-align: center;
   svg {
     display: inline;
     circle {

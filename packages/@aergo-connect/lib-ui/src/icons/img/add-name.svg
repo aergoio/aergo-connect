@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24">
+    <g fill="#C3C3C3" class="hover-darken">
+        <path d="M6 8H18V10H6z"/>
+        <path d="M6 8H18V10H6z" transform="rotate(-90 12 9)"/>
+        <path d="M5 21L19 21 21 21 21 19 19 19 5 19 3 19 3 21z"/>
+    </g>
+</svg>

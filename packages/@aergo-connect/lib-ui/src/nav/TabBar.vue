@@ -26,6 +26,9 @@ export default Vue.extend({
     background-color: rgba(242, 242, 242, 1);
     min-height: 48px;
     line-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   > .router-link-active {
     background-color: #fff;

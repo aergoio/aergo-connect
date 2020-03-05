@@ -14,4 +14,12 @@ module.exports = {
       },
     }
   ],
+  /*
+  webpackFinal: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['vue-svg-loader'],
+    });
+    return config;
+  },*/
 };

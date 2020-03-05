@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" viewBox="0 0 24 24">
+    <defs>
+        <path id="prefix__a" d="M7.865 4.445L6.204 2.783l.787-.787 3.007 3.006-.01.01.01.01-2.983 2.982-.787-.787L7.913 5.53H0V4.445h7.865z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill-rule="nonzero" d="M0 0H24V24H0z"/>
+        <circle cx="12" cy="12" r="12" fill="#00C789" fill-opacity=".1" fill-rule="nonzero"/>
+        <g transform="matrix(-1 0 0 1 18 7)">
+            <path fill="#00C789" fill-rule="nonzero" stroke="#08C98D" stroke-width=".2" d="M10 0H11V10H10z"/>
+            <use fill="#00C789" fill-rule="nonzero" stroke="#00C789" stroke-width=".2" xlink:href="#prefix__a"/>
+        </g>
+    </g>
+</svg>
