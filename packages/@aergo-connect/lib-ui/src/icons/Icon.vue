@@ -30,8 +30,12 @@ export default Vue.extend({
   props: {
     name: {
       type: String as PropType<IconName>,
+      required: true,
     },
-    size: Number,
+    size: {
+      type: Number,
+      default: 24,
+    },
     badge: Boolean,
     badgeText: String,
   },

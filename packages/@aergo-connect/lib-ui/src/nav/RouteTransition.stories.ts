@@ -26,7 +26,7 @@ storiesOf('Navigation/RouteTransition', module)
   .add('slide based on path', () => ({
     components: { RouteTransition },
     template: `
-      <div style="width: 400px; height: 200px; overflow: hidden; margin: 10px auto; border: 1px solid #eee; position: relative">
+      <div style="width: 400px; height: 200px; margin: 10px auto; border: 1px solid #eee; position: relative">
         <RouteTransition>
           <router-view/>
         </RouteTransition>

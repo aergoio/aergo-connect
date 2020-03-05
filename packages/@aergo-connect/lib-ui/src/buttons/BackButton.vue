@@ -1,15 +1,17 @@
 <template>
-  <Button @click="handleClick" :to="to" type="secondary">Back</Button>
+  <Button @click="handleClick" :to="to" type="icon" class="back-button"><Icon name="back" :size="36" /></Button>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import Button from './Button.vue';
 import { RawLocation } from 'vue-router';
+import Icon from '../icons/Icon.vue';
 
 export default Vue.extend({
   components: {
     Button,
+    Icon,
   },
   props: {
     to: {
@@ -26,3 +28,9 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style lang="scss">
+.back-button {
+  margin-left: -5px;
+}
+</style>

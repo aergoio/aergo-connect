@@ -1,14 +1,16 @@
 <template>
-  <transition
-    :name="transitionName"
-    :mode="transitionMode"
-    :enter-active-class="transitionEnterActiveClass"
-    @beforeLeave="beforeLeave"
-    @enter="enter"
-    @afterEnter="afterEnter"
-  >
-    <slot/>
-  </transition>
+  <div class="route-transition-wrap">
+    <transition
+      :name="transitionName"
+      :mode="transitionMode"
+      :enter-active-class="transitionEnterActiveClass"
+      @beforeLeave="beforeLeave"
+      @enter="enter"
+      @afterEnter="afterEnter"
+    >
+      <slot/>
+    </transition>
+  </div>
 </template>
 
 <script lang="ts">
@@ -78,6 +80,13 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.route-transition-wrap {
+  position: relative; /* Set animation context */
+  height: 100%; /* Don't affect layout */
+  width: 100%;
+  overflow: hidden; /* Hide animation artifacts */
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.25s;

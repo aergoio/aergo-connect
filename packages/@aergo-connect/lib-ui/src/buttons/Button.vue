@@ -125,5 +125,11 @@ export default Vue.extend({
   &.button-type-secondary {
     box-shadow: none;
   }
+  &.button-type-icon {
+    box-shadow: none;
+    padding: 0;
+    line-height: initial;
+    min-height: 0;
+  }
 }
 </style>

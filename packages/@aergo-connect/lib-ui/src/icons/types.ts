@@ -8,6 +8,7 @@ export const iconNames = tuple(
   'close',
   'dropdown',
   'link',
+  'logo',
   'next',
   'tab-history',
   'tab-send',

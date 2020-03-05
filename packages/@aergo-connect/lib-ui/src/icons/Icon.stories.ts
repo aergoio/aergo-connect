@@ -30,7 +30,7 @@ storiesOf('Icons/Icon', module)
     },
     components: { Icon },
     template: `
-      <div style="background-color: #f0f0f0; padding: 10px; font-size: 12px">
+      <div style="padding: 10px; font-size: 12px">
         ${iconNames.map((name: IconName) => `${IconStory(name)}`).join('')}
       </div>
     `,
