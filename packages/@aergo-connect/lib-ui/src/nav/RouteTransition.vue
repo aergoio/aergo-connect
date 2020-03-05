@@ -17,7 +17,7 @@
 import Vue from 'vue';
 import { RouteConfig } from 'vue-router';
 
-const DEFAULT_TRANSITION = 'fade';
+const DEFAULT_TRANSITION = 'slide';
 const DEFAULT_TRANSITION_MODE = '';
 
 /**
@@ -47,7 +47,7 @@ export default Vue.extend({
       if (from.meta.transitionName === 'fade' || to.meta.transitionName === 'fade') {
         // If one of them is fade, always use that
         transitionName = 'fade';
-      } else if (from.meta.transitionName === 'slide' || to.meta.transitionName === 'slide') {
+      } else if (transitionName === 'slide') {
         // For slide, calculate depth difference based on path or meta.index
         const depthDiff = from.path.split(`/`).length - to.path.split(`/`).length;
         const indexDiff = (from.meta.index || 0) - (to.meta.index || 0);

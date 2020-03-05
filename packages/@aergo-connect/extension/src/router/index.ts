@@ -45,7 +45,7 @@ const routes = [
         path: 'welcome',
         name: 'welcome',
         component: Welcome,
-        meta: { transitionName: 'slide', index: 0, },
+        meta: { index: 0, },
       },
       {
         path: 'list',
@@ -55,7 +55,7 @@ const routes = [
         path: 'create',
         name: 'account-create',
         component: Create,
-        meta: { transitionName: 'slide', index: 1, },
+        meta: { index: 1, },
       },
     ],
   },

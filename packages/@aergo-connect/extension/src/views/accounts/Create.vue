@@ -4,7 +4,7 @@
       <section class="dialog-header">
         <BackButton />
       </section>
-      <h1>Create</h1>
+      <Heading animated>Create</Heading>
       <p>To get started, please configure a network.</p>
     </div>
   </ScrollView>
@@ -14,11 +14,13 @@
 import Vue from 'vue';
 import { BackButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
+import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 
 export default Vue.extend({
   components: {
     ScrollView,
     BackButton,
+    Heading,
   },
 });
 </script>
