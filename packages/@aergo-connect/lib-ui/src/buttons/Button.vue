@@ -80,27 +80,32 @@ export default Vue.extend({
 
 <style lang="scss">
 .button {
+  /* Typography */
+  font-weight: 500;
+  font-size: (15/16)*1em;
+  
+  /* Sizing */
   box-sizing: border-box;
-  line-height: (30/15)*1em;
-  min-height: (30/15)*1em;
-  padding: 1px 1em;
-  border-radius: 3px;
+  min-height: 2em; /* 30px */
+  line-height: 1.5em;
+  padding: 0.25em 1em;
 
+  /* Borders and background */
+  outline: none;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.6);
+  background-color: transparent;
+
+  /* Content alignment */
   display: flex;
   text-decoration: none;
   text-align: center;
   align-items: center;
   justify-content: space-around;
 
+  /* Behavior */
   cursor: pointer;
-
-  font-weight: 500;
-  font-size: (15/16)*1em;
-
-  outline: none;
-  border: 0;
-  box-shadow: inset 0 0 1px 0 rgba(0,0,0,0.6);
-
   transition: min-width .35s ease-in;
 
   &[disabled] {
@@ -109,8 +114,8 @@ export default Vue.extend({
   }
 
   &.button-size-default {
+    min-height: 4em; /* 60px */
     line-height: 3em;
-    min-height: 4em;
     padding: .5em 2.5em;
   }
   &.button-type-primary {
@@ -124,14 +129,12 @@ export default Vue.extend({
   }
   &.button-type-secondary {
     box-shadow: none;
-    background-color: #fff;
   }
   &.button-type-icon {
     box-shadow: none;
     padding: 0;
     line-height: initial;
     min-height: 0;
-    background: transparent;
   }
 }
 </style>
