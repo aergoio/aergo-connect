@@ -11,7 +11,7 @@
         <Appear :delay="0.6">
           <ButtonGroup vertical>
             <Button type="primary" :to="{ name: 'account-create' }">Create your wallet</Button>
-            <Button type="secondary">Import your wallet</Button>
+            <Button type="secondary" :to="{ name: 'account-details', params: { address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw'}}">View dummy account</Button>
           </ButtonGroup>
         </Appear>
       </div>

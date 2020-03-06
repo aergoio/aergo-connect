@@ -18,5 +18,9 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   padding: 0 16px;
+
+  > * + * {
+    margin-left: 14px;
+  }
 }
 </style>

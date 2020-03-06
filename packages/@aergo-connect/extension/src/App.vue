@@ -32,6 +32,7 @@ body {
   position: relative;
   border-radius: 8px;
   box-shadow: 0 16px 24px 0 rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 </style>

@@ -84,4 +84,9 @@ export default Vue.extend({
     opacity: 1;
   }
 }
+.inverted-colors .icon {
+  .invertible-stroke {
+    stroke: #fff;
+  }
+}
 </style>
