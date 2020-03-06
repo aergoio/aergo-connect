@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType, FunctionalComponentOptions} from 'vue';
+import Vue, { PropType, FunctionalComponentOptions } from 'vue';
 import { IconName } from './types';
 
 function namedRequireAll(context: __WebpackModuleApi.RequireContext, namePrefix = '') {

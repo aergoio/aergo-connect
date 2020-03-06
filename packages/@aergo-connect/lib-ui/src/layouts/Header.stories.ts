@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/vue';
 import ScrollView from './ScrollView.vue';
 import Header from './Header.vue';
 import HeaderLogo from '../icons/HeaderLogo.vue';
-import InvertedColors from '../theme/InvertedColors.vue';
+//import InvertedColors from '../theme/InvertedColors.vue';
 
 storiesOf('Layouts/Header', module)
   .add('basic', () => ({

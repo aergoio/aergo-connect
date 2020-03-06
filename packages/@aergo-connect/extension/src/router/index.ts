@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import AccountsFrame from '../views/AccountsFrame.vue';
 import Welcome from '../views/accounts/Welcome.vue';
 import Create from '../views/accounts/Create.vue';
@@ -27,7 +27,7 @@ Vue.use(VueRouter);
 
 */
 
-const routes = [
+const routes: RouteConfig[] = [
   {
     path: '/',
     redirect: '/accounts',

@@ -1,6 +1,5 @@
 import { storiesOf } from '@storybook/vue';
 import Appear from './Appear.vue';
-import { number } from '@storybook/addon-knobs';
 
 storiesOf('Animations/Appear', module)
   .add('with options', () => ({
