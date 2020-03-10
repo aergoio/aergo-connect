@@ -96,7 +96,6 @@ export default Vue.extend({
   },
   methods: {
     toggle(): void {
-      console.log('toggle', this.optionsVisible);
       this.optionsVisible = !this.optionsVisible;
       if (this.optionsVisible) {
         this.open();
@@ -116,7 +115,6 @@ export default Vue.extend({
       this.optionsVisible = false;
     },
     handleBlur(): void {
-      console.log('blur');
       this.close();
       this.$emit('blur', this.optionDict[this.selectedOptionIndex].value);
     },
