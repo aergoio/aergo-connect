@@ -19,3 +19,15 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 .4em;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: (22/16)*1rem;
+  font-weight: 500;
+}

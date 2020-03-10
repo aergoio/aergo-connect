@@ -20,11 +20,6 @@ export default Vue.extend({
 
 <style lang="scss">
 .section-heading {
-  &h1 {
-    font-size: 2rem;
-    font-weight: 500;
-    margin: 0 0 .4em;
-  }
   &.is-animated {
     animation: heading-appear .5s forwards .3s;
     opacity: 0;

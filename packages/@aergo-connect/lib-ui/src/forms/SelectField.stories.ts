@@ -34,4 +34,19 @@ storiesOf('Forms/SelectField', module)
         default: text('Error', ''),
       }
     }
+  }))
+  .add('with modal dialog', () => ({
+    components: { SelectField },
+    template: `
+    <div style="max-width: 360px; height: 420px; border-radius: 8px; box-shadow: 0 16px 24px 0 rgba(0, 0, 0, 0.08); position: relative; overflow: hidden;">
+      <div class="content">
+        <SelectField variant="main" :options="options" v-model="value" modal-sheet dropdownTitle="Network" />
+      </div>
+    </div>`,
+    data: () => {
+      return {
+        value: 'aergo.io',
+        options: ['aergo.io', 'testnet.aergo.io'],
+      };
+    },
   }));
