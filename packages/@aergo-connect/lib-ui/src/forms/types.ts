@@ -16,3 +16,9 @@ export interface InputProps {
   disabled?: boolean;
   state?: InputState;
 }
+
+type SelectOptionWithLabel = [string, string];
+export type SelectOption = string | SelectOptionWithLabel;
+export function isSelectOptionWithLabel(option: any): option is SelectOptionWithLabel {
+  return typeof option === 'object' && option.length === 2;
+}

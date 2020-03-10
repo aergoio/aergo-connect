@@ -5,6 +5,7 @@ export const iconNames = tuple(
   'add',
   'back',
   'checkmark',
+  'checkmark-circle',
   'close',
   'dropdown',
   'link',

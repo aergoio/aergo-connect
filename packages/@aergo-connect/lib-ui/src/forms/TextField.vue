@@ -1,5 +1,5 @@
 <template>
-  <div class="text-field" :class="classes" @focusin="focused=true" @focusout="focused=false">
+  <InputContainer :disabled="disabled" :variant="variant" :state="state" :error="error" :class="classes">
     <input
       :value="value"
       :type="type"
@@ -7,22 +7,17 @@
       @input="handleInput"
       @blur="handleBlur"
       @keyup.enter="handleEnter" />
-
-    <LoadingIndicator v-if="state === 'loading'" />
-    <Icon name="checkmark" :size="24" v-if="state === 'valid'" />
-  </div>
+  </InputContainer>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import { InputVariant, InputVariants, InputType, InputTypes, InputStates, InputState } from './types';
-import LoadingIndicator from '../icons/LoadingIndicator.vue';
-import Icon from '../icons/Icon.vue';
+import InputContainer from './InputContainer.vue';
 
 export default Vue.extend({
   components: {
-    LoadingIndicator,
-    Icon,
+    InputContainer,
   },
   props: {
     value: [String, Number],
@@ -47,20 +42,11 @@ export default Vue.extend({
       default: '',
     },
   },
-  data() {
-    return {
-      focused: false,
-    };
-  },
   computed: {
     classes(): string[] {
       return [
-        `variant-${this.variant}`,
+        'text-field',
         `type-${this.type}`,
-        `state-${this.state}`,
-        this.disabled ? 'is-disabled' : '',
-        this.error ? 'has-error' : '',
-        this.focused ? 'is-focused' : '',
       ];
     }
   },
@@ -80,11 +66,6 @@ export default Vue.extend({
 
 <style lang="scss">
 .text-field {
-  line-height: 60px;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-
   input {
     border: 0;
     flex: 1;
@@ -93,40 +74,18 @@ export default Vue.extend({
     background-color: transparent;
   }
 
-  transition: box-shadow .1s;
-
-  &.is-disabled {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
   &.variant-default {
-    box-shadow: 0 0 0 1px rgba(217, 217, 217, 1);
-    border-radius: 3px;
-  
     input {
       font-size: (14/16)*1rem;
       border-radius: 3px;
     }
-
-    &.is-focused {
-      outline: rgba(0, 103, 244, 0.247) auto 5px;
-      outline-offset: -2px;
-    }
   }
 
   &.variant-main {
-    box-shadow: 0 1px 0 0 rgba(34, 34, 34, 1);
     input {
       font-size: (20/16) * 1rem;
       font-weight: 500;
     }
-    &.state-invalid {
-      box-shadow: 0 2px 0 0 rgba(238, 70, 72, 1);
-    }
-  }
-
-  .loading-indicator, .icon--checkmark {
-    margin-right: 15px;
   }
 }
 </style>
