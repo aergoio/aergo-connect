@@ -8,11 +8,16 @@
       <p>To get started, please select a network.</p>
       <SelectField variant="main" :options="options" v-model="value" modal-sheet dropdownTitle="Network" />
     </div>
+    <template #footer>
+      <div class="content">
+        <ContinueButton :to="{ name: 'account-created', params: { address: 'Abc' } }" />
+      </div>
+    </template>
   </ScrollView>
 </template>
 
 <script lang="ts">
-import { BackButton } from '@aergo-connect/lib-ui/src/buttons';
+import { BackButton, ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
@@ -26,6 +31,7 @@ import Component, { mixins } from 'vue-class-component'
     BackButton,
     Heading,
     SelectField,
+    ContinueButton,
   },
 })
 export default class Create extends mixins(PersistInputsMixin) {

@@ -1,7 +1,7 @@
 <template>
   <InvertedColors>
     <Header class="account-header">
-      <BackButton />
+      <BackButton :to="{ name: 'accounts-list' }" />
       <HeaderLogo />
       <div class="account-identifier">
         <Elide class="address" :text="$route.params.address" mode="middle-fixed-tail" expect-ellipsis />

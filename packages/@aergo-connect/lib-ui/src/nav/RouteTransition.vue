@@ -50,7 +50,7 @@ export default Vue.extend({
       } else if (transitionName === 'slide') {
         // For slide, calculate depth difference based on path or meta.index
         const depthDiff = from.path.split(`/`).length - to.path.split(`/`).length;
-        const indexDiff = (from.meta.index || 0) - (to.meta.index || 0);
+        const indexDiff = (from.meta.index && to.meta.index) && (from.meta.index - to.meta.index);
         transitionName = (indexDiff > 0 || depthDiff > 0) ? `slide-right` : `slide-left`;
       }
       this.transitionName = transitionName;

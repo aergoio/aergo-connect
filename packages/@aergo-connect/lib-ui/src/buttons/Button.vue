@@ -130,11 +130,19 @@ export default Vue.extend({
   &.button-type-secondary {
     box-shadow: none;
   }
-  &.button-type-icon {
+  &.button-type-icon,
+  &.button-type-primary-icon {
     box-shadow: none;
     padding: 0;
     line-height: initial;
     min-height: 0;
+  }
+  &.button-type-primary-icon {
+    background-color: #ff337f;
+    border-radius: 100%;
+    line-height: 56px;
+    min-height: 56px;
+    width: 56px;
   }
 }
 </style>
