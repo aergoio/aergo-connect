@@ -19,6 +19,7 @@ export interface InputProps {
 
 type SelectOptionWithLabel = [string, string];
 export type SelectOption = string | SelectOptionWithLabel;
+// eslint-disable-next-line
 export function isSelectOptionWithLabel(option: any): option is SelectOptionWithLabel {
   return typeof option === 'object' && option.length === 2;
 }

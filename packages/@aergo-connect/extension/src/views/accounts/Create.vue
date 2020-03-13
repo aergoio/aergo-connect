@@ -12,26 +12,27 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import { BackButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
+import { PersistInputsMixin } from '../../store/ui';
 
-export default Vue.extend({
+import Component, { mixins } from 'vue-class-component'
+
+@Component({
   components: {
     ScrollView,
     BackButton,
     Heading,
     SelectField,
   },
-  data() {
-    return {
-      value: 'aergo.io',
-      options: ['aergo.io', 'testnet.aergo.io'],
-    };
-  }
-});
+})
+export default class Create extends mixins(PersistInputsMixin) {
+  value = 'aergo.io';
+  persistFields = ['value'];
+  options = ['aergo.io', 'testnet.aergo.io'];
+}
 </script>
 
 <style lang="scss">

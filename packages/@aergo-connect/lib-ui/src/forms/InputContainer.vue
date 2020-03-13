@@ -78,15 +78,16 @@ export default Vue.extend({
     border-radius: 3px;
 
     &.is-focused {
-      outline: rgba(0, 103, 244, 0.247) auto 5px;
-      outline-offset: -2px;
+      outline: none;
+      box-shadow: inset 0 0 0 1px rgba(34, 34, 34, 1);
     }
   }
 
   &.variant-main {
     box-shadow: inset 0 -1px 0 0 rgba(34, 34, 34, 1);
     &.is-focused:not(.options-visible) {
-      box-shadow: inset 0 -1px 0 0 rgba(0, 103, 244, 1);
+      //box-shadow: inset 0 -1px 0 0 rgba(0, 103, 244, 1);
+      background-color: rgba(0,0,0,0.04);
     }
     &.state-invalid {
       box-shadow: inset 0 -2px 0 0 rgba(238, 70, 72, 1);

@@ -7,6 +7,8 @@ import Create from '../views/accounts/Create.vue';
 
 import Dummy from '../views/Dummy.vue';
 
+import store from '../store';
+
 Vue.use(VueRouter);
 
 /*
@@ -45,6 +47,23 @@ const routes: RouteConfig[] = [
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach(function(to, from, next) {
+    // Load persisted route on initial load
+    // or whenever selecting an account during permission request
+    const isEntryRoute = from.fullPath === '/' && from.name === null;
+    if (isEntryRoute || to.name == 'deposit') {
+        const savedPath = store.state.ui.route.currentPath;
+        if (savedPath && savedPath != to.fullPath) {
+            next(savedPath);
+            return;
+        }
+    }
+    if (!to.meta || to.meta.donottrack !== true) {
+        store.commit('ui/setCurrentRoute', to);
+    }
+    next();
 });
 
 export default router;
