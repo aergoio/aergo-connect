@@ -10,8 +10,10 @@ module.exports = {
     'background': 'src/background/main.js'
   },
   chainWebpack: (config) => {
-    if (process.env.NODE_ENV !== 'production') {
-      config.plugin('extension-reloader').use(ChromeExtensionReloader);
+    if (process.env.npm_lifecycle_event === 'build-dev') {
+      config.plugin('extension-reloader').use(ChromeExtensionReloader, [{
+        reloadPage: false,
+      }]);
     }
 
     // manifest.json interpolation
@@ -20,12 +22,19 @@ module.exports = {
       .use('extricate-loader').loader('extricate-loader').end()
       .use('interpolate-loader').loader('interpolate-loader').end();
   
+    // Stop parsing package.json
     config.module.rule('json').test(/package\.json$/).type('javascript/auto').exclude.add(/node_modules/).end();
 
     // Disable inlining of images
     config.module.rule('images').use('url-loader').loader('url-loader').tap(options => Object.assign(options, { limit: 1 }));
 
-    // Add content script
-    //config.entry('content-script').add('./src/content-script.js').end();
+    // Add content-script entry
+    config.entry('content-script').add('./src/content-script.js').end();
   },
+  configureWebpack: {
+    output: {
+      filename: 'js/[name].js',
+      chunkFilename: 'js/[name].js'
+    }
+  }
 }

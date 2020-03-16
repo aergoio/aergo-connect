@@ -16,7 +16,8 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --dest dist-dev --mode development --watch --no-clean",
+    "build": "vue-cli-service build --dest dist",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

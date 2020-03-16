@@ -69,7 +69,8 @@ console.log('Extension ID', extension.runtime.id);
 if (!extension.runtime.id) {
     console.error('Script needs run in extension context. Aborting');
 } else {
-    setupController();
+    //setupController();
+    //
 
     extension.contextMenus.removeAll();
     extension.contextMenus.create({
