@@ -1,7 +1,7 @@
 <template>
   <ScrollView class="page">
     <div class="content">
-     Details
+     History
     </div>
   </ScrollView>
 </template>
@@ -17,7 +17,7 @@ import Component from 'vue-class-component'
     ScrollView,
   },
 })
-export default class AccountDetails extends Vue {
+export default class AccountHistory extends Vue {
 }
 </script>
 

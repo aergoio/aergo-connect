@@ -3,16 +3,15 @@
     <InputContainer :disabled="disabled" :variant="variant" :state="state" :error="error" :class="classes"
       @cancel="close" @pointerNext="selectNext" @pointerPrevious="selectPrevious" @accept="handleAccept" @blur="handleBlur">
       <input type="text" class="focus-target" ref="focusTarget" />
-      <span class="current-value" @click="openIfClosed">{{value}}</span>
+      <span class="current-value" @click="openIfClosed">{{label}}</span>
     
       <div class="toggle-button" v-show="state !== 'loading'" @click="toggle">
         <Icon name="dropdown" :size="36" />
       </div>
       
-      <component :is="modalSheet ? 'ModalDialog' : 'div'" class="dropdown" :visible="optionsVisible">
-        <h2 class="dropdown-title">{{dropdownTitle}}</h2>
-        <div class="select-options" v-if="optionsVisible">
-          <div v-for="(option, index) in optionDict" :key="option.value" class="select-option" @mousedown="selectOption(option.value, index)" :class="{focused: index === focusedOptionIndex}">
+      <component :is="modalSheet ? 'ModalDialog' : 'div'" class="dropdown" :visible="optionsVisible" :title="dropdownTitle">
+        <div class="dialog-options" v-if="optionsVisible">
+          <div v-for="(option, index) in optionDict" :key="option.value" class="dialog-option" @mousedown="selectOption(option.value, index)" :class="{focused: index === focusedOptionIndex}">
             {{option.label}}
             <Icon name="checkmark-circle" :size="20" v-if="index === selectedOptionIndex" />
           </div>
@@ -86,7 +85,11 @@ export default Vue.extend({
         }
         return { value: option, label: option };
       });
-    }
+    },
+    label(): string {
+      const selected = this.optionDict.find(option => option.value === this.value);
+      return selected ? selected.label : this.value;
+    },
   },
   mounted() {
     this.selectedOptionIndex = this.optionDict.findIndex(option => option.value === this.value);
@@ -171,7 +174,7 @@ export default Vue.extend({
       font-weight: 500;
     }
   }
-  .current-value, .toggle-button, .select-option {
+  .current-value, .toggle-button, .dialog-option {
     cursor: pointer;
     user-select: none;
   }
@@ -198,18 +201,12 @@ export default Vue.extend({
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
     animation: slideOut ease-out .3s;
     overflow: hidden;
-    .dropdown-title {
+    .modal-title {
       display: none;
     }
   }
-  .dropdown.modal-container {
-    .dropdown-title {
-      margin: 15px 24px 0 24px;
-      line-height: 2;
-    }
-  }
-  .select-options {
-    .select-option {
+  .dialog-options {
+    .dialog-option {
       font-size: (13/16)*1rem;
       font-weight: 500;
       padding: 0 14px 0 24px;
@@ -217,7 +214,7 @@ export default Vue.extend({
       justify-content: space-between;
       align-items: center;
 
-      &:hover, &.focused {
+      &.focused {
         background-color: rgba(0,0,0,0.04);
       }
     }
@@ -226,12 +223,7 @@ export default Vue.extend({
 .use-dropdown .select-field.options-visible  {
   background-color: rgba(0,0,0,0.06);
 }
-.modal-dialog .select-options {
-  margin-bottom: 20px;
-  .select-option {
-    line-height: 70px;
-  }
-}
+
 @keyframes slideOut {
   0% { max-height: 0%; }
   100% { max-height: 50vh; }

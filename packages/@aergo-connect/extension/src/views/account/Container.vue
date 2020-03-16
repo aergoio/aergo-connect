@@ -12,7 +12,7 @@
 <script lang="ts">
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import RouteTransition from '@aergo-connect/lib-ui/src/nav/RouteTransition.vue';
-import AccountHeader from '../components/AccountHeader.vue';
+import AccountHeader from '../../components/AccountHeader.vue';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 
 import Vue from 'vue';

@@ -1,4 +1,4 @@
-import { NavigationGuard } from 'vue-router';
+import { NavigationGuard, Route } from 'vue-router';
 import store from '../store';
 
 /**
@@ -24,4 +24,14 @@ export const persistRoute: NavigationGuard = (to, from, next) => {
     store.commit('ui/setCurrentRoute', to);
   }
   return next();
+}
+
+function capitalizeFirstLetter(string: string): string {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const updateTitle = (to: Route, from: Route): void => {
+  setTimeout(() => {
+    document.title = to.meta && to.meta.title || capitalizeFirstLetter(to.name || '') + ' - Aergo Connect';
+  });
 }

@@ -1,7 +1,8 @@
 <template>
   <ScrollView class="page">
     <div class="content">
-     Send
+     <p>Details</p>
+     <p><router-link :to="{ name: 'account-export' }" class="text-link">Export</router-link></p>
     </div>
   </ScrollView>
 </template>
@@ -17,7 +18,7 @@ import Component from 'vue-class-component'
     ScrollView,
   },
 })
-export default class AccountSend extends Vue {
+export default class AccountDetails extends Vue {
 }
 </script>
 

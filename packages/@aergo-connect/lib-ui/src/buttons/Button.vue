@@ -143,6 +143,9 @@ export default Vue.extend({
     line-height: 56px;
     min-height: 56px;
     width: 56px;
+    &[disabled] {
+      opacity: .5;
+    }
   }
 }
 </style>

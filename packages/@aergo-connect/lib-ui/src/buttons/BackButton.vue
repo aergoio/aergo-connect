@@ -31,6 +31,9 @@ export default Vue.extend({
 
 <style lang="scss">
 .back-button {
-  margin-left: -5px;
+  margin-left: -10px;
+}
+.header .back-button {
+  margin-left: -7px;
 }
 </style>

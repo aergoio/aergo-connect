@@ -1,7 +1,8 @@
 <template>
   <ScrollView class="page">
     <div class="content">
-     Send
+     <BackButton />
+    <Heading tag="h2">Export</Heading>
     </div>
   </ScrollView>
 </template>
@@ -11,13 +12,17 @@ import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 
 import Vue from 'vue';
 import Component from 'vue-class-component'
+import { BackButton } from '@aergo-connect/lib-ui/src/buttons';
+import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 
 @Component({
   components: {
     ScrollView,
+    BackButton,
+    Heading,
   },
 })
-export default class AccountSend extends Vue {
+export default class AccountExport extends Vue {
 }
 </script>
 

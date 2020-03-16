@@ -24,6 +24,9 @@ export default Vue.extend({
     animation: heading-appear .5s forwards .3s;
     opacity: 0;
   }
+
+  display: flex;
+  justify-content: space-between;
 }
 @keyframes heading-appear {
     0%   { transform: translateX(10px); opacity: 0.25; }

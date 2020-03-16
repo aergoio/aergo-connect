@@ -4,13 +4,13 @@
       <section class="dialog-header">
         <BackButton />
       </section>
-      <Heading animated>Create</Heading>
-      <p>To get started, please select a network.</p>
+      <Heading animated>Import</Heading>
+      <p>Please select the network for which you want to import the account.</p>
       <SelectField variant="main" :options="options" v-model="value" modal-sheet dropdownTitle="Network" />
     </div>
     <template #footer>
       <div class="content">
-        <ContinueButton :to="{ name: 'account-created', params: { address: 'Abc' } }" />
+        <ContinueButton :to="{ name: 'account-import-format' }" />
       </div>
     </template>
   </ScrollView>
@@ -21,7 +21,7 @@ import { BackButton, ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
-import { PersistInputsMixin } from '../../store/ui';
+import { PersistInputsMixin } from '../../../store/ui';
 
 import Component, { mixins } from 'vue-class-component'
 
@@ -34,7 +34,7 @@ import Component, { mixins } from 'vue-class-component'
     ContinueButton,
   },
 })
-export default class Create extends mixins(PersistInputsMixin) {
+export default class Import extends mixins(PersistInputsMixin) {
   value = 'aergo.io';
   persistFields = ['value'];
   options = [['aergo.io', 'Mainnet'], ['testnet.aergo.io', 'Testnet']];

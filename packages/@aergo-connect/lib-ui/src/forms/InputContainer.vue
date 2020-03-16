@@ -66,6 +66,7 @@ export default Vue.extend({
   min-height: 60px;
   display: flex;
   align-items: center;
+  margin-bottom: 1em;
 
   transition: box-shadow .1s;
 
