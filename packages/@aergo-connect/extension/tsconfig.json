@@ -4,6 +4,6 @@
     "src/**/*"
   ],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
   }
 }

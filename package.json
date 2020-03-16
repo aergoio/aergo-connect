@@ -1,7 +1,7 @@
 {
   "name": "aergo-connect",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "index.js",
   "license": "MIT",
   "workspaces": [
@@ -24,6 +24,7 @@
     "@storybook/vue": "^5.3.14",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
+    "@types/chrome": "^0.0.100",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",

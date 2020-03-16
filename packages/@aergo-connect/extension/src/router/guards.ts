@@ -19,7 +19,7 @@ export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
 /**
  * Persist next route to store
  */
-export const persistRoute: NavigationGuard = (to, from, next) => {
+export const persistRoute: NavigationGuard = (to, _from, next) => {
   if (!to.meta || to.meta.donottrack !== true) {
     store.commit('ui/setCurrentRoute', to);
   }
@@ -30,7 +30,7 @@ function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const updateTitle = (to: Route, from: Route): void => {
+export const updateTitle = (to: Route): void => {
   setTimeout(() => {
     document.title = to.meta && to.meta.title || capitalizeFirstLetter(to.name || '') + ' - Aergo Connect';
   });

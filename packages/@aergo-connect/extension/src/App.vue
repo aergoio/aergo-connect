@@ -20,7 +20,7 @@ export default Vue.extend({
 <style lang="scss">
 body {
   margin: 0;
-  padding: 10px;
+  font-size: 100%;
 }
 
 #app {
@@ -30,9 +30,15 @@ body {
   margin: 0 auto;
   background-color: #fff;
   position: relative;
-  border-radius: 8px;
-  box-shadow: 0 16px 24px 0 rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
+body.fullpage {
+  padding: 10px;
+
+  #app {
+    border-radius: 8px;
+    box-shadow: 0 16px 24px 0 rgba(0, 0, 0, 0.08);
+  }
+}
 </style>
