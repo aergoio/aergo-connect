@@ -1,5 +1,5 @@
 <template>
-  <div class="icon" :class="[`icon--${name}`]" :style="{width: size+'px', lineHeight: size+'px'}">
+  <div class="icon" :class="[`icon--${name}`]" :style="{width: size+'px'}">
     <component :is="`icon-${name}`" :width="`${size}px`" />
     <div v-if="badge" class="badge">{{badgeText}}</div>
   </div>

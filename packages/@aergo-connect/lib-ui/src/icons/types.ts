@@ -1,12 +1,16 @@
 const tuple = <T extends string[]>(...args: T) => args;
 
 export const iconNames = tuple(
+  'account-create',
+  'account-connect',
+  'account-import',
   'add-name',
   'add',
   'back',
   'checkmark',
   'checkmark-circle',
   'close',
+  'danger',
   'dropdown',
   'link',
   'logo',
