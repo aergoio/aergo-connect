@@ -7,7 +7,7 @@
         <Elide class="address" :text="$route.params.address" mode="middle-fixed-tail" expect-ellipsis />
         <Elide class="network" :text="$route.params.chainId" mode="head" />
       </div>
-      <Button @click="gotoScan" type="icon" class="scan-button" v-if="explorerUrl"><Icon name="link" :size="36" /></Button>
+      <Button @click="gotoExplorer" type="icon" class="scan-button" v-if="explorerUrl"><Icon name="link" :size="36" /></Button>
     </Header>
   </InvertedColors>
 </template>
@@ -33,15 +33,12 @@ export default Vue.extend({
     Button,
   },
   computed: {
-    networkName() {
-      return `aergo.io`;
-    },
     explorerUrl() {
       return getExplorerUrl(this.$route.params.chainId, `account/${this.$route.params.address}`);
     }
   },
   methods: {
-    gotoScan() {
+    gotoExplorer() {
       window.open(this.explorerUrl);
     },
   },
@@ -67,26 +64,6 @@ export default Vue.extend({
     font-size: (13/16)*1rem;
     line-height: 1.3;
     transform: translateY(1px);
-
-    .address, .network {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .elide {
-      display: flex;
-      max-width: 100%;
-      user-select: all;
-      .head, .tail {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 1em;
-      }
-      .tail {
-        direction: rtl;
-        text-align: left;
-      }
-    }
 
     .address {
       font-weight: 500;
