@@ -1,4 +1,11 @@
-const chains = [
+const tuple = <T extends string[]>(...args: T) => args;
+
+interface ChainConfig {
+  chainId: string;
+  nodeUrl: string;
+}
+
+export const ChainConfigs: ChainConfig[] = [
   {
     chainId: 'testnet.aergo.io',
     nodeUrl: 'http://testnet-api-http.aergo.io',
@@ -21,6 +28,26 @@ const chains = [
   },
 ];
 
+export const PublicChainIds = tuple('aergo.io', 'testnet.aergo.io');
+type PublicChainId = typeof PublicChainIds[number];
+
+export function isPublicChainId(chainId: string): chainId is PublicChainId {
+  return PublicChainIds.indexOf(chainId as any) !== -1;
+}
+
+export const PublicChainUrls: Record<PublicChainId, { apiUrl: string, explorerUrl: string }> = {
+  'aergo.io': {
+    apiUrl: 'https://api.aergoscan.io/main',
+    explorerUrl: 'https://mainnet.aergoscan.io',
+  },
+  'testnet.aergo.io': {
+    apiUrl: 'https://api.aergoscan.io/testnet',
+    explorerUrl: 'https://testnet.aergoscan.io',
+  },
+};
+
 export default {
-  chains,
+  ChainConfigs,
+  PublicChainIds,
+  PublicChainUrls,
 };

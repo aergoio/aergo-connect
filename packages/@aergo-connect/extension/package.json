@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@aergo-connect/lib-ui": "*",
-    "@herajs/client": "^0.17.1",
-    "@herajs/crypto": "^0.17.1",
-    "@herajs/wallet": "^0.17.1",
+    "@herajs/client": "^0.18.2",
+    "@herajs/crypto": "^0.18.2",
+    "@herajs/wallet": "^0.18.2",
     "dnode": "^1.2.2",
     "end-of-stream": "^1.4.4",
     "extension-port-stream": "^1.0.0",

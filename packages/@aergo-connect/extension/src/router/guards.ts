@@ -9,7 +9,7 @@ export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
   const isStartTransition = from.fullPath === '/' && from.name === null;
   if (isStartTransition || to.name == 'deposit') {
       const persistedPath = store.state.ui.route.currentPath;
-      if (persistedPath && persistedPath != to.fullPath) {
+      if (persistedPath && persistedPath != '/' && persistedPath != to.fullPath) {
           return next(persistedPath);
       }
   }

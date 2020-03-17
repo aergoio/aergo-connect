@@ -2,7 +2,7 @@ import Dnode from 'dnode/browser.js';
 import { EventEmitter } from 'events';
 import { wrapClientApi, ApiMethods } from './api';
 
-export default function connectToBackground(connectionStream: any): Promise<ApiMethods> {
+export default function connectToBackground(connectionStream: any): Promise<ApiMethods & EventEmitter> {
   return new Promise((resolve) => {
     console.log('connecting to background...');
 
@@ -17,7 +17,7 @@ export default function connectToBackground(connectionStream: any): Promise<ApiM
     dnode.once('remote', function(backgroundManager: any) {
       console.log('connected to remote');
       backgroundManager.on = eventEmitter.on.bind(eventEmitter);
-      resolve(wrapClientApi(backgroundManager));
+      resolve(wrapClientApi(backgroundManager) as ApiMethods & EventEmitter);
     });
   });
 }

@@ -110,6 +110,11 @@ export default Vue.extend({
     input {
       font-size: (20/16) * 1rem;
       font-weight: 500;
+      padding-left: 4px;
+    }
+    &.type-password input {
+      font-size: 2rem;
+      overflow: hidden;
     }
   }
 }

@@ -11,7 +11,7 @@
       <div class="content">
         <Appear :delay="0.6">
           <ButtonGroup vertical>
-            <Button type="primary" :to="{ name: 'account-create' }">Create new wallet</Button>
+            <Button type="primary" :to="{ name: 'setup' }">Create new wallet</Button>
             <Button type="secondary" :to="{ name: 'account-import' }">Import your wallet</Button>
           </ButtonGroup>
         </Appear>

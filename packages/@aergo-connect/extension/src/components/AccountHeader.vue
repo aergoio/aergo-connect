@@ -5,9 +5,9 @@
       <HeaderLogo />
       <div class="account-identifier">
         <Elide class="address" :text="$route.params.address" mode="middle-fixed-tail" expect-ellipsis />
-        <Elide class="network" :text="networkName" mode="head" />
+        <Elide class="network" :text="$route.params.chainId" mode="head" />
       </div>
-      <Button @click="gotoScan" type="icon" class="scan-button"><Icon name="link" :size="36" /></Button>
+      <Button @click="gotoScan" type="icon" class="scan-button" v-if="explorerUrl"><Icon name="link" :size="36" /></Button>
     </Header>
   </InvertedColors>
 </template>
@@ -20,6 +20,7 @@ import Icon from '@aergo-connect/lib-ui/src/icons/Icon.vue';
 import { BackButton, Button } from '@aergo-connect/lib-ui/src/buttons';
 import InvertedColors from '@aergo-connect/lib-ui/src/theme/InvertedColors.vue'; 
 import { Elide } from '@aergo-connect/lib-ui/src/content';
+import { getExplorerUrl } from '../utils/chain-urls';
 
 export default Vue.extend({
   components: {
@@ -35,10 +36,13 @@ export default Vue.extend({
     networkName() {
       return `aergo.io`;
     },
+    explorerUrl() {
+      return getExplorerUrl(this.$route.params.chainId, `account/${this.$route.params.address}`);
+    }
   },
   methods: {
     gotoScan() {
-      console.log('TODO: open Aergoscan');
+      window.open(this.explorerUrl);
     },
   },
 });

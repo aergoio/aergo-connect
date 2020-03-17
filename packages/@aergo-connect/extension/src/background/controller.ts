@@ -62,7 +62,7 @@ class BackgroundController extends EventEmitter {
         // not found
       }
     });
-    for (const chain of config.chains) {
+    for (const chain of config.ChainConfigs) {
       this.wallet.useChain(chain);
     }
 

@@ -28,6 +28,10 @@ export class Api {
     return true;
   }
 
+  async isSetup() {
+    return await this.controller.wallet.isSetup();
+  }
+
   async setup({ password }: any) {
     await this.controller.setupAndUnlock(password);
     return true;
@@ -227,6 +231,13 @@ const getWrapped = (instance: Api): Record<ApiMethodNames, DnodeFunction> => {
 }
 
 /**
+ * Return the wrapped API to use with Dnode
+ */
+export function getServerApi(controller: Controller): Record<ApiMethodNames, DnodeFunction> {
+  return getWrapped(new Api(controller));
+}
+
+/**
  * This converts the client side api instance to be usable with promises
  */
 export function wrapClientApi(dnodeInstance: { [key in ApiMethodNames]: any }): ApiMethods {
@@ -235,11 +246,4 @@ export function wrapClientApi(dnodeInstance: { [key in ApiMethodNames]: any }): 
     dnodeInstance[key] = promisifySimple(dnodeInstance[key], {});
   }
   return dnodeInstance;
-}
-
-/**
- * Return the wrapped API to use with Dnode
- */
-export function getServerApi(controller: Controller): Record<ApiMethodNames, DnodeFunction> {
-  return getWrapped(new Api(controller));
 }

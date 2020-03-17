@@ -1116,38 +1116,43 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@herajs/client@^0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@herajs/client/-/client-0.17.1.tgz#0e4405cf71316b98b8b3578cb81b9d4b2df17efc"
-  integrity sha512-3wyMwabH0/QcBATQMMqTar/V5vR8AQi97gGpzM2Upz1QhZsvLEoo4LzyO8bfkNo5NvGNyQDICZdV4fbf7AuKbA==
+"@herajs/client@^0.18.2":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@herajs/client/-/client-0.18.2.tgz#a0b2c88d05107ce4c92622064dc65e8cc8d9d013"
+  integrity sha512-dhmzsl/zDlWyNfjxeAEGR0fsmD8saHdSwrToqNUK5i/sAgd61sf7tFxl4n9DBpTw3LzRIfVnkr+wPnRTPnGw9g==
   dependencies:
+    "@herajs/common" "^0.18.2"
     "@improbable-eng/grpc-web" "^0.9.1"
     "@types/google-protobuf" "^3.2.7"
-    bs58 "^4.0.1"
-    bs58check "^2.1.2"
     google-protobuf "^3.6.0"
     grpc "^1.13.1"
     hash.js "^1.1.7"
     jsbi "^3.0.0"
 
-"@herajs/crypto@^0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.17.1.tgz#ecda565dcd85540da61c2788031941188f2a5217"
-  integrity sha512-Fbafj34Tpho786RdmYAFs8U2Rpz8V4hX0ljwpSVFaLiWNaAL+ood4X7BeqOr0qBvCgZnvaxPZI0crysw+gZVEg==
+"@herajs/common@^0.18.2":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@herajs/common/-/common-0.18.2.tgz#d84a137cc821a4d39c26773f9d45578d5ddc234a"
+  integrity sha512-LICDZSOWmL2Y4kaoaWBihkMdRKEKGLg5SZwYgO6jeomUdBB1BkZDKkXXoWZmlGMKc93+ucs1zdrWsIXLzkDDVg==
   dependencies:
-    "@herajs/hdkey" "^11.1.2"
-    "@types/bs58" "^4.0.0"
+    create-hash "^1.2.0"
+    jsbi "^3.0.0"
+
+"@herajs/crypto@^0.18.2":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.18.2.tgz#9c107ebf7586629dd035cce5e08c226740583e08"
+  integrity sha512-HrcI4nZsoCcEfODaqsHjByQX9n6ooxhUOnGkKVbaHC9xAZWi8Se5ItuhCaPHWpUeBiavFPbkpCcfJGvN/JKVdQ==
+  dependencies:
+    "@herajs/common" "^0.18.2"
+    "@herajs/hdkey" "^11.2.0"
     "@types/elliptic" "^6.4.0"
     aes-js "^3.1.1"
     asmcrypto.js "^2.3.2"
     bip39 "^3.0.2"
-    bs58 "^4.0.1"
-    bs58check "^2.1.2"
     elliptic "^6.4.1"
     jsbi "^3.0.0"
     scrypt-async-modern "^3.0.12"
 
-"@herajs/hdkey@^11.1.2":
+"@herajs/hdkey@^11.2.0":
   version "11.2.0"
   resolved "https://registry.yarnpkg.com/@herajs/hdkey/-/hdkey-11.2.0.tgz#6092b8f160644719905fe0bb9527e7ec530e127d"
   integrity sha512-fBkvwmaluSu+NYfYTC5Usr7ymbaadzjoXf08wKMteNZco1NrC3sUiD4MARU4pKKU2Q+B47J5ZqA1X7Vv7RouPg==
@@ -1157,14 +1162,15 @@
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
-"@herajs/wallet@^0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.17.1.tgz#cb191a1c2d704cf2bb2bb815da6bd880b1a1ee85"
-  integrity sha512-wOnAgsj5riu1dqJGicg6EHp6qFhADc/r2iOVSj+ry4f6CxwhGdV4iX4TA6sDwugztFcUZyhaS5CeiR3bggZ18A==
+"@herajs/wallet@^0.18.2":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.18.2.tgz#357926f3b3239a9554a0ed9fa96eec3ddea0cb29"
+  integrity sha512-fLTal1ammL8C97R6dEj6txf9ER+ETJzVQ1m0V3H3OKthrQIiUGT1hg6kF33j24HzewxiLf5mUD9TYiv/zqF5uQ==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
-    "@herajs/client" "^0.17.1"
-    "@herajs/crypto" "^0.17.1"
+    "@herajs/client" "^0.18.2"
+    "@herajs/common" "^0.18.2"
+    "@herajs/crypto" "^0.18.2"
     "@types/google-protobuf" "^3.2.7"
     "@types/hashmap" "^2.0.29"
     "@types/leveldown" "^4.0.0"
@@ -1613,13 +1619,6 @@
   integrity sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==
   dependencies:
     "@types/node" "*"
-
-"@types/bs58@^4.0.0":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@types/bs58/-/bs58-4.0.1.tgz#3d51222aab067786d3bc3740a84a7f5a0effaa37"
-  integrity sha512-yfAgiWgVLjFCmRv8zAcOIHywYATEwiTVccTLnRp6UxTNavT55M9d/uhK3T03St/+8/z/wW+CRjGKUNmEqoHHCA==
-  dependencies:
-    base-x "^3.0.6"
 
 "@types/bytebuffer@^5.0.40":
   version "5.0.40"
@@ -3003,13 +3002,6 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base-x@^3.0.2, base-x@^3.0.6:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
-  integrity sha512-Rl/1AWP4J/zRrk54hhlxH4drNxPJXYUaKffODVI53/dAsV4t9fBxyxYKAVPU1XBHxYwOWP9h9H0hM2MVw4YfJA==
-  dependencies:
-    safe-buffer "^5.0.1"
-
 base64-js@^1.0.2:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
@@ -3287,22 +3279,6 @@ browserslist@^4.8.3, browserslist@^4.8.5:
     caniuse-lite "^1.0.30001027"
     electron-to-chromium "^1.3.349"
     node-releases "^1.1.49"
-
-bs58@^4.0.0, bs58@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/bs58/-/bs58-4.0.1.tgz#be161e76c354f6f788ae4071f63f34e8c4f0a42a"
-  integrity sha1-vhYedsNU9veIrkBx9j806MTwpCo=
-  dependencies:
-    base-x "^3.0.2"
-
-bs58check@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/bs58check/-/bs58check-2.1.2.tgz#53b018291228d82a5aa08e7d796fdafda54aebfc"
-  integrity sha512-0TS1jicxdU09dwJMNZtVAfzPi6Q6QeN0pM1Fkzrjn+XYHvzMKPU3pHVpva+769iNVSfIYWf7LJ6WR+BuuMf8cA==
-  dependencies:
-    bs58 "^4.0.0"
-    create-hash "^1.1.0"
-    safe-buffer "^5.1.2"
 
 buffer-from@^1.0.0:
   version "1.1.1"

@@ -25,9 +25,15 @@ async function init(name: string) {
     store,
     render: h => h(App)
   }).$mount('#app');
+
+  // React to state updates from background
+  background.on('update', function(state) {
+    if (state.hasOwnProperty('unlocked') && !state.unlocked && router.currentRoute.name !== 'lockscreen') {
+      router.push({ name: 'lockscreen' });
+    }
+  });
 }
 
 const elem = document.getElementById('app');
 const name = elem ? elem.getAttribute('data-name') || '' : '';
 init(name);
-

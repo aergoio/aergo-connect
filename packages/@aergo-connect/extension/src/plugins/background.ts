@@ -9,6 +9,6 @@ export default class Background {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $background: ApiMethods;
+    $background: ApiMethods & NodeJS.EventEmitter;
   }
 }

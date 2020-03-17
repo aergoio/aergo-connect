@@ -5,7 +5,7 @@
         <BackButton />
       </section>
       <Heading animated>Create</Heading>
-      <p>To get started, please select a network.</p>
+      <p>Please select the network for your new account.</p>
       <SelectField variant="main" :options="options" v-model="chainId" modal-sheet dropdownTitle="Network" />
     </div>
     <template #footer>
@@ -44,7 +44,10 @@ export default class Create extends mixins(PersistInputsMixin) {
       chainId: this.chainId,
     });
     console.log(account);
-    // :to="{ name: 'account-created', params: { address: 'Abc' } }"
+    this.$router.push({ name: 'account-created', params: {
+      chainId: account.chainId,
+      address: account.address,
+    } })
   }
 }
 </script>

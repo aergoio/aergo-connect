@@ -6,7 +6,7 @@
           Accounts
           <Button @click="addAccountDialogVisible = true" type="icon"><Icon name="add" :size="24" /></Button>
         </Heading>
-        <p><router-link :to="{ name: 'account-details', params: { address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw' } }" class="text-link">Example</router-link></p>
+        <p><router-link :to="{ name: 'account-details', params: { chainId: 'aergo.io', address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw' } }" class="text-link">Example</router-link></p>
         <p><router-link :to="{ name: 'welcome' }" class="text-link">Welcome view</router-link></p>
       </div>
     </ScrollView>

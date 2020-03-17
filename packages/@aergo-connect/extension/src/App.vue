@@ -15,7 +15,13 @@ export default Vue.extend({
     RouteTransition,
   },
   async mounted() {
-    console.log('isUnlocked', await this.$background.isUnlocked());
+    if (this.$router.currentRoute.meta && this.$router.currentRoute.meta.noAuthCheck) {
+      return;
+    }
+    const unlocked = await this.$background.isUnlocked();
+    if (!unlocked) {
+      this.$router.push({ name: 'lockscreen' });
+    }
   }
 });
 </script>
