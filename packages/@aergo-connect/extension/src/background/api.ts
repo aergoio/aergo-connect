@@ -19,23 +19,18 @@ export class Api {
   }
 
   async unlock({ password }: { password: string }) {
-    try {
-      await this.controller.unlock(password);
-    } catch (e) {
-      console.error(e);
-      return { error: ''+e };
-    }
-    return {};
+    await this.controller.unlock(password);
+    return true;
   }
 
   async lock() {
     this.controller.lock();
-    return {};
+    return true;
   }
 
   async setup({ password }: any) {
     await this.controller.setupAndUnlock(password);
-    return {};
+    return true;
   }
 
   async isUnlocked() {
@@ -44,7 +39,7 @@ export class Api {
 
   async reset() {
     await this.controller.wallet.deleteAllData();
-    return {};
+    return true;
   }
 
   async addNetwork({ chainId, nodeUrl }: any, ) {
@@ -62,7 +57,7 @@ export class Api {
       key: 'customChains',
       data: chains
     });
-    return {};
+    return true;
   }
 
   async getBlockchainStatus({ chainId }: any, ) {
@@ -84,24 +79,19 @@ export class Api {
 
   async createAccount({ chainId }: any, ) {
     this.controller.keepUnlocked();
-    
-    try {
-      const account = await this.controller.wallet.accountManager.createAccount(chainId);
-      this.controller.trackAccount(account);
-      return account.data.spec;
-    } catch(e) {
-      return { error: e };
-    }
+    const account = await this.controller.wallet.accountManager.createAccount(chainId);
+    this.controller.trackAccount(account);
+    return account.data.spec;
   }
 
   async removeAccount({ chainId, address }: any, ) {
     await this.controller.wallet.accountManager.removeAccount({ chainId, address });
-    return {};
+    return true;
   }
 
   async setActiveAccount({ chainId, address }: any, ) {
     await this.controller.setActiveAccount({ chainId, address });
-    return {};
+    return true;
   }
 
   async getActiveAccount() {
@@ -113,19 +103,14 @@ export class Api {
     this.controller.keepUnlocked();
     const identity = identifyFromPrivateKey(privateKey);
     const address = identity.address;
-    try {
-      const account = await this.controller.wallet.accountManager.addAccount({ address, chainId });
-      console.log('importAccount', account, privateKey);
-      await this.controller.wallet.keyManager.importKey({
+    const account = await this.controller.wallet.accountManager.addAccount({ address, chainId });
+    console.log('importAccount', account, privateKey);
+    await this.controller.wallet.keyManager.importKey({
       account: account,
       privateKey: privateKey
-      });
-      this.controller.trackAccount(account);
-      return account.data.spec;
-    } catch(e) {
-      console.error(e);
-      return { error: 'Could not import account. '+e };
-    }
+    });
+    this.controller.trackAccount(account);
+    return account.data.spec;
   }
 
   async exportAccount({ address, chainId, password, format }: any, ) {
@@ -133,7 +118,7 @@ export class Api {
     const account = await this.controller.wallet.accountManager.getOrAddAccount({ address, chainId });
     const key = await this.controller.wallet.keyManager.getUnlockedKey(account);
     const privateKey = key.data.privateKey;
-    if (!privateKey) return { error: 'Failed to unlock key' };
+    if (!privateKey) throw new Error('Failed to unlock key');
     let privkeyEncrypted;
     if (format === "wif") {
       privkeyEncrypted = encodePrivateKey(await encryptPrivateKey(Uint8Array.from(privateKey), password));
@@ -144,23 +129,13 @@ export class Api {
   }
 
   async sendTransaction(tx: any, chainId: any, ) {
-    try {
-      const txBody = await this.controller.sendTransaction({ txBody: tx, chainId });
-      return { tx: txBody };
-    } catch(e) {
-      console.error(e);
-      return { error: e.message || ''+e };
-    }
+    const txBody = await this.controller.sendTransaction({ txBody: tx, chainId });
+    return { tx: txBody };
   }
 
   async signTransaction(tx: any, chainId: any, ) {
-    try {
-      const txBody = await this.controller.signTransaction({ txData: tx, address: tx.from, chainId });
-      return { tx: txBody };
-    } catch(e) {
-      console.error(e);
-      return { error: e.message || ''+e };
-    }
+    const txBody = await this.controller.signTransaction({ txData: tx, address: tx.from, chainId });
+    return { tx: txBody };
   }
 
   async getAccountTx(accountSpec: any, ) {
@@ -180,26 +155,17 @@ export class Api {
   }
 
   async signMessage({ address, chainId, message }: any, ) {
-    try {
-        const signedMessage = await this.controller.signMessage({ address, chainId, message });
-        return { signedMessage };
-    } catch (e) {
-        console.error(e);
-        return { error: e };
-    }
+    const signedMessage = await this.controller.signMessage({ address, chainId, message });
+    return { signedMessage };
   }
 
   async getStaking({ address, chainId }: any, ) {
     this.controller.keepUnlocked();
-    try {
-      const result = await this.controller.wallet.getClient(chainId).getStaking(address);
-      return {
-        amount: result.amount.toString(),
-        when: result.when
-      };
-    } catch(e) {
-      return { error: e };
-    }
+    const result = await this.controller.wallet.getClient(chainId).getStaking(address);
+    return {
+      amount: result.amount.toString(),
+      when: result.when
+    };
   }
 
   async getPermissionRequestData(requestId: string, ) {
@@ -208,7 +174,7 @@ export class Api {
 
   async respondToPermissionRequest({ requestId, result }: any, ) {
     this.controller.respondToPermissionRequest(requestId, result);
-    return {};
+    return true;
   }
 
   async denyPermissionRequest(requestId: string, ) {
@@ -216,7 +182,7 @@ export class Api {
       this.controller.respondToPermissionRequest(requestId, null, true);
       delete this.controller.requests[requestId];
     }
-    return {};
+    return true;
   }
 
   async getChainInfo({ chainId }: any, ) {
@@ -243,13 +209,13 @@ function wrapApiCall<Ret>(fn: ApiFunction<Ret>): DnodeFunction {
       const result = await fn(...args);
       send(result);
     } catch (e) {
-      send({ error: e });
+      send({ error: `${e}` });
     }
   }
 }
 
 /**
- * This converts an Api class instance into a plain object with wrapped functions for consumption by Done
+ * This converts an Api class instance into a plain object with wrapped functions for consumption by Dnode
  * @param instance 
  */
 const getWrapped = (instance: Api): Record<ApiMethodNames, DnodeFunction> => {

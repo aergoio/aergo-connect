@@ -17,7 +17,7 @@ export function promisifySimple<Ret = any>(original: Function, context: any): ((
         original.call(context, ...args, (value: Ret) => {
           if (typeof value === 'object' && 'error' in value) {
             // @ts-ignore
-            reject(value.error);
+            reject(`${value.error}`);
           } else {
             resolve(value);
           }

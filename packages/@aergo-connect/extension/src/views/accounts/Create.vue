@@ -6,11 +6,11 @@
       </section>
       <Heading animated>Create</Heading>
       <p>To get started, please select a network.</p>
-      <SelectField variant="main" :options="options" v-model="value" modal-sheet dropdownTitle="Network" />
+      <SelectField variant="main" :options="options" v-model="chainId" modal-sheet dropdownTitle="Network" />
     </div>
     <template #footer>
       <div class="content">
-        <ContinueButton :to="{ name: 'account-created', params: { address: 'Abc' } }" />
+        <ContinueButton @click="create" />
       </div>
     </template>
   </ScrollView>
@@ -35,9 +35,17 @@ import Component, { mixins } from 'vue-class-component'
   },
 })
 export default class Create extends mixins(PersistInputsMixin) {
-  value = 'aergo.io';
-  persistFields = ['value'];
+  chainId = 'aergo.io';
+  persistFields = ['chainId'];
   options = [['aergo.io', 'Mainnet'], ['testnet.aergo.io', 'Testnet']];
+
+  async create() {
+    const account = await this.$background.createAccount({
+      chainId: this.chainId,
+    });
+    console.log(account);
+    // :to="{ name: 'account-created', params: { address: 'Abc' } }"
+  }
 }
 </script>
 
