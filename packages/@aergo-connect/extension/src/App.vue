@@ -14,6 +14,9 @@ export default Vue.extend({
   components: {
     RouteTransition,
   },
+  async mounted() {
+    console.log('isUnlocked', await this.$background.isUnlocked());
+  }
 });
 </script>
 
