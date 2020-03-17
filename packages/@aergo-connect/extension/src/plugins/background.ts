@@ -1,5 +1,5 @@
 import Vue, { VueConstructor } from 'vue';
-import { Api } from '../background/api';
+import { ApiMethods } from '../background/api';
 
 export default class Background {
   static install(Vue: VueConstructor, { background }: any) {
@@ -9,6 +9,6 @@ export default class Background {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $background: Api;
+    $background: ApiMethods;
   }
 }

@@ -7,7 +7,7 @@ import { Wallet, Account } from '@herajs/wallet';
 import config from '../config';
 import store from './store';
 import { AergoscanTransactionScanner } from './tx-scanner';
-import getAPI from './api';
+import { getServerApi } from './api';
 
 import AppState from './app-state';
 //import 'whatwg-fetch';
@@ -209,10 +209,9 @@ class BackgroundController extends EventEmitter {
   }
 
   setupCommunication(outStream: any) {
-    const api = getAPI(this);
+    const api = getServerApi(this);
     const dnode = Dnode(api);
 
-    
     pump(
       outStream,
       dnode,

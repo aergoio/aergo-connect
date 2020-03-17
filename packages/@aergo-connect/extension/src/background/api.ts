@@ -6,7 +6,12 @@ import {
 } from '@herajs/crypto';
 
 import Controller from './controller';
+import { promisifySimple } from '../utils/promisify';
 
+/**
+ * RPC API to be consumed by clients.
+ * This interface matches the object returned by client.connectToBackground.
+ */
 export class Api {
   controller: Controller;
   constructor(controller: Controller) {
@@ -220,8 +225,14 @@ export class Api {
   }
 }
 
+type ApiMethodNames = Exclude<keyof Api, 'controller'>;
+export type ApiMethods = Omit<Api, 'controller'>;
+
+// Api function as a Promise, without send method
 type ApiFunction<Ret> = (...args: any[]) => Promise<Ret>;
+// Dnode function, with send method as final argument
 type DnodeFunction = ((...args: any[]) => void);
+
 /**
  * Wraps API call to use with Dnode
  */
@@ -237,24 +248,32 @@ function wrapApiCall<Ret>(fn: ApiFunction<Ret>): DnodeFunction {
   }
 }
 
-const getWrapped = <C extends object>(instance: C): Record<keyof C, DnodeFunction> => {
-  const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)) as (keyof C)[];
+/**
+ * This converts an Api class instance into a plain object with wrapped functions for consumption by Done
+ * @param instance 
+ */
+const getWrapped = (instance: Api): Record<ApiMethodNames, DnodeFunction> => {
+  const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)) as ApiMethodNames[];
   return keys.reduce((classAsObj, key) => {
       classAsObj[key] = wrapApiCall((instance[key] as unknown as ApiFunction<any>).bind(instance));
       return classAsObj;
-  }, {} as Record<keyof C, DnodeFunction>)
+  }, {} as Record<ApiMethodNames, DnodeFunction>)
 }
 
-/*
-const getWrappedPrototype = <C extends object>(instance: C): Record<keyof C, DnodeFunction> => {
-  const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)) as (keyof C)[];
-  return keys.reduce((classAsObj, key) => {
-      classAsObj[key] = wrapApiCall(instance[key] as unknown as ApiFunction<any>);
-      return classAsObj;
-  }, {} as Record<keyof C, DnodeFunction>)
+/**
+ * This converts the client side api instance to be usable with promises
+ */
+export function wrapClientApi(dnodeInstance: { [key in ApiMethodNames]: any }): ApiMethods {
+  const apiKeys = Object.keys(getServerApi({} as any)) as ApiMethodNames[];
+  for (const key of apiKeys) {
+    dnodeInstance[key] = promisifySimple(dnodeInstance[key], {});
+  }
+  return dnodeInstance;
 }
-*/
 
-export default function getAPI(controller: Controller): Record<keyof Api, DnodeFunction> {
+/**
+ * Return the wrapped API to use with Dnode
+ */
+export function getServerApi(controller: Controller): Record<ApiMethodNames, DnodeFunction> {
   return getWrapped(new Api(controller));
 }
