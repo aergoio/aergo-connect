@@ -53,7 +53,11 @@ export default class Lockscreen extends mixins() {
   async unlock(): Promise<void> {
     try {
       await this.$background.unlock({ password: this.password });
-      this.$router.push({ name: 'accounts-list' });
+      let nextPath = this.$store.state.ui.route.previousPath;
+      if (!nextPath || nextPath === '/' || nextPath === '/locked') {
+        nextPath = { name: 'accounts-list' };
+      }
+      this.$router.push(nextPath);
     } catch(e) {
       this.errors.password = `${e}`;
     }

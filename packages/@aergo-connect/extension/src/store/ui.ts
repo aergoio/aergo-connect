@@ -11,6 +11,7 @@ interface InputData {
 export interface UiState {
   route: {
     currentPath: string;
+    previousPath: string;
   };
   input: {
     [form: string]: InputData;
@@ -22,11 +23,14 @@ const storeModule: Module<UiState, RootState> = {
   state: {
     route: {
       currentPath: '',
+      previousPath: '',
     },
     input: {},
   },
   mutations: {
     setCurrentRoute(state, route: Route) {
+      if (route.fullPath === state.route.currentPath) return;
+      state.route.previousPath = state.route.currentPath;
       state.route.currentPath = route.fullPath;
     },
     setInput(state, { key, field, value }: { key: string; field: string; value: Primitive }) {
