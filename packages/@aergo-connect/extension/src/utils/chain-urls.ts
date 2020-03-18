@@ -1,4 +1,4 @@
-import { PublicChainUrls, isPublicChainId } from '../config';
+import { PublicChainData, isPublicChainId } from '../config';
 
 /**
  * Returs the explorer url (e.g. Aergoscan) for a public chainId and path
@@ -9,7 +9,7 @@ export function getExplorerUrl(chainId: string, path: string): string {
   if (!isPublicChainId(chainId)) {
     return '';
   }
-  const base = PublicChainUrls[chainId].explorerUrl;
+  const base = PublicChainData[chainId].explorerUrl;
   return `${base}/${path}`;
 }
 
@@ -22,6 +22,6 @@ export function getApiUrl(chainId: string, path: string): string {
   if (!isPublicChainId(chainId)) {
     return '';
   }
-  const base = PublicChainUrls[chainId].apiUrl;
+  const base = PublicChainData[chainId].apiUrl;
   return `${base}/${path}`;
 }

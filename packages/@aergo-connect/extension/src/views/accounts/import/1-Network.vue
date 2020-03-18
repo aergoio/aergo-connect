@@ -22,8 +22,11 @@ import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
 import { PersistInputsMixin } from '../../../store/ui';
+import { PublicChainIds, PublicChainData } from '../../../config';
 
-import Component, { mixins } from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component';
+
+const publicChainOptions = PublicChainIds.map(chainId => [chainId, PublicChainData[chainId].label]);
 
 @Component({
   components: {
@@ -37,7 +40,8 @@ import Component, { mixins } from 'vue-class-component'
 export default class Import extends mixins(PersistInputsMixin) {
   value = 'aergo.io';
   persistFields = ['value'];
-  options = [['aergo.io', 'Mainnet'], ['testnet.aergo.io', 'Testnet']];
+  persistFieldsKey = 'account-create';
+  options = publicChainOptions;
 }
 </script>
 

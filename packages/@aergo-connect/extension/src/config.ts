@@ -35,12 +35,14 @@ export function isPublicChainId(chainId: string): chainId is PublicChainId {
   return PublicChainIds.indexOf(chainId as any) !== -1;
 }
 
-export const PublicChainUrls: Record<PublicChainId, { apiUrl: string, explorerUrl: string }> = {
+export const PublicChainData: Record<PublicChainId, { label: string; apiUrl: string; explorerUrl: string }> = {
   'aergo.io': {
+    label: 'Mainnet',
     apiUrl: 'https://api.aergoscan.io/main',
     explorerUrl: 'https://mainnet.aergoscan.io',
   },
   'testnet.aergo.io': {
+    label: 'Testnet',
     apiUrl: 'https://api.aergoscan.io/testnet',
     explorerUrl: 'https://testnet.aergoscan.io',
   },
@@ -49,5 +51,5 @@ export const PublicChainUrls: Record<PublicChainId, { apiUrl: string, explorerUr
 export default {
   ChainConfigs,
   PublicChainIds,
-  PublicChainUrls,
+  PublicChainData,
 };
