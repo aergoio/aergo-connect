@@ -14,6 +14,7 @@ import AccountsList from '../views/accounts/List.vue';
 
 import AccountContainer from '../views/account/Container.vue';
 import AccountCreated from '../views/account/Created.vue';
+import AccountImported from '../views/account/Imported.vue';
 import TabContainer from '../views/account/TabContainer.vue';
 import AccountSend from '../views/account/Send.vue';
 import AccountHistory from '../views/account/History.vue';
@@ -44,6 +45,7 @@ const routes: RouteConfig[] = [
       { path: 'history', name: 'account-history', component: AccountHistory },
     ] },
     { path: 'created', name: 'account-created', component: AccountCreated },
+    { path: 'imported', name: 'account-imported', component: AccountImported },
   ] },
 ];
 
@@ -66,6 +68,13 @@ const routes: RouteConfig[] = [
     - send
     - history
   - export
+
+- request
+ - accounts
+ - account
+   - send
+   - address
+   - sign
 */
 
 Vue.use(VueRouter);

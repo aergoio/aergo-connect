@@ -130,17 +130,20 @@ class BackgroundController extends EventEmitter {
     }, AUTO_LOCK_TIMEOUT);
   }
 
+  /**
+   * Returns true if the UI is currently open.
+   * Currently unused, but can be used in the future to detect where notifications should be shown.
+   */
   isUiOpen() {
     return this.uiState.popupOpen;
   }
 
-  trackAccount(account: Account, onceCb?: Function) {
+  trackAccount(account: Account, onceCb?: (account: Account) => void) {
     const accountTracker = this.wallet.accountManager.trackAccount(account);
     this.wallet.transactionManager.trackAccount(account);
     accountTracker.then(t => {
       t.removeAllListeners('update');
       t.on('update', account => {
-        console.log('got new state', account);
         this.emit('update', { accounts: [account] });
         if (onceCb) {
           onceCb(account);

@@ -2,11 +2,11 @@
   <ScrollView class="page">
     <div class="content">
       <section class="dialog-header">
-        <BackButton />
+        <BackButton :to="{ name: 'accounts-list' }"/>
       </section>
       <Heading animated>Import</Heading>
       <p>Please select the network for which you want to import the account.</p>
-      <SelectField variant="main" :options="options" v-model="value" modal-sheet dropdownTitle="Network" />
+      <SelectField variant="main" :options="options" v-model="chainId" modal-sheet dropdownTitle="Network" />
     </div>
     <template #footer>
       <div class="content">
@@ -38,8 +38,8 @@ const publicChainOptions = PublicChainIds.map(chainId => [chainId, PublicChainDa
   },
 })
 export default class Import extends mixins(PersistInputsMixin) {
-  value = 'aergo.io';
-  persistFields = ['value'];
+  chainId = 'aergo.io';
+  persistFields = ['chainId'];
   persistFieldsKey = 'account-create';
   options = publicChainOptions;
 }

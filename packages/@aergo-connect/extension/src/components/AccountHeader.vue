@@ -33,12 +33,12 @@ export default Vue.extend({
     Button,
   },
   computed: {
-    explorerUrl() {
+    explorerUrl(): string {
       return getExplorerUrl(this.$route.params.chainId, `account/${this.$route.params.address}`);
     }
   },
   methods: {
-    gotoExplorer() {
+    gotoExplorer(): void {
       window.open(this.explorerUrl);
     },
   },

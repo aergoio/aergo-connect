@@ -60,11 +60,12 @@ export class PersistInputsMixin extends Vue {
   persistFields: string[] = [];
   persistDebounceTime = 500;
   persistInitialValues = true;
-  get persistFieldsKey(): string {
-    return `${this.$vnode.key}`;
+  persistFieldsKey = '';
+  get persistFieldsKeyAuto(): string {
+    return this.persistFieldsKey || `${this.$vnode.key}`;
   }
   private restorePersistedValue(field: string) {
-    const key = this.persistFieldsKey;
+    const key = this.persistFieldsKeyAuto;
     const state = this.$store.state.ui as UiState;
     if (typeof state.input[key] !== 'undefined') {
       const persistedValue = state.input[key][field];
@@ -74,7 +75,7 @@ export class PersistInputsMixin extends Vue {
     }
   }
   private watchField(field: string) {
-    const key = this.persistFieldsKey;
+    const key = this.persistFieldsKeyAuto;
     const watchHandler = debounce((value: Primitive) => {
       this.$store.commit('ui/setInput', { key, field, value });
     }, this.persistDebounceTime);

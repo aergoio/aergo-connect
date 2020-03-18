@@ -4,9 +4,16 @@ import {
   encodePrivateKey,
   keystoreFromPrivateKey,
 } from '@herajs/crypto';
+import { Account } from '@herajs/wallet';
 
 import Controller from './controller';
+import { ChainConfig } from '../config';
 import { promisifySimple } from '../utils/promisify';
+
+interface AccountSpec {
+  chainId: string;
+  address: string;
+}
 
 /**
  * RPC API to be consumed by clients.
@@ -46,25 +53,25 @@ export class Api {
     return true;
   }
 
-  async addNetwork({ chainId, nodeUrl }: any, ) {
+  async addNetwork({ chainId, nodeUrl }: ChainConfig) {
     console.log('Adding chain', { chainId, nodeUrl });
     this.controller.wallet.useChain({ chainId, nodeUrl });
-    let chains: Record<string, any> = {};
-    if (!this.controller.wallet.datastore) return { error: 'Cannot open datastore' };
+    let chains: Record<string, ChainConfig> = {};
+    if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
     try {
-      chains = (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data;
+      chains = (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data as any;
     } catch(e) {
       // not found
     }
     chains[chainId] = { chainId, nodeUrl };
     await this.controller.wallet.datastore.getIndex('settings').put({
       key: 'customChains',
-      data: chains
+      data: chains as any,
     });
     return true;
   }
 
-  async getBlockchainStatus({ chainId }: any, ) {
+  async getBlockchainStatus({ chainId }: { chainId: string }) {
     const status = await this.controller.wallet.getClient(chainId).blockchain();
     return {
       blockHeight: status.bestHeight,
@@ -81,29 +88,28 @@ export class Api {
     return accounts;
   }
 
-  async createAccount({ chainId }: any, ) {
+  async createAccount({ chainId }: { chainId: string }) {
     this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.createAccount(chainId);
     this.controller.trackAccount(account);
     return account.data.spec;
   }
 
-  async removeAccount({ chainId, address }: any, ) {
+  async removeAccount({ chainId, address }: AccountSpec) {
     await this.controller.wallet.accountManager.removeAccount({ chainId, address });
     return true;
   }
 
-  async setActiveAccount({ chainId, address }: any, ) {
+  async setActiveAccount({ chainId, address }: AccountSpec) {
     await this.controller.setActiveAccount({ chainId, address });
     return true;
   }
 
   async getActiveAccount() {
-    const account = await this.controller.getActiveAccount();
-    return account;
+    return await this.controller.getActiveAccount();
   }
 
-  async importAccount({ privateKey, chainId }: any, ) {
+  async importAccount({ privateKey, chainId }: any) {
     this.controller.keepUnlocked();
     const identity = identifyFromPrivateKey(privateKey);
     const address = identity.address;
@@ -117,7 +123,7 @@ export class Api {
     return account.data.spec;
   }
 
-  async exportAccount({ address, chainId, password, format }: any, ) {
+  async exportAccount({ address, chainId, password, format }: any) {
     this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.getOrAddAccount({ address, chainId });
     const key = await this.controller.wallet.keyManager.getUnlockedKey(account);
@@ -132,56 +138,55 @@ export class Api {
     return {privateKey: privkeyEncrypted};
   }
 
-  async sendTransaction(tx: any, chainId: any, ) {
+  async sendTransaction(tx: any, chainId: string) {
     const txBody = await this.controller.sendTransaction({ txBody: tx, chainId });
     return { tx: txBody };
   }
 
-  async signTransaction(tx: any, chainId: any, ) {
+  async signTransaction(tx: any, chainId: string) {
     const txBody = await this.controller.signTransaction({ txData: tx, address: tx.from, chainId });
     return { tx: txBody };
   }
 
-  async getAccountTx(accountSpec: any, ) {
-    console.log('getAccountTx', accountSpec);
-    if (!accountSpec.address) return {};
+  async getAccountTx(accountSpec: AccountSpec) {
+    if (!accountSpec.address) throw new Error('getAccountTx: address required');
     const txs = await this.controller.wallet.transactionManager.getAccountTransactions(accountSpec);
     txs.sort((a, b) => (a.data.ts < b.data.ts ? 1 : (a.data.ts == b.data.ts ? 0 : -1)));
     return txs;
   }
 
-  async syncAccountState(accountSpec: any) {
-    if (!accountSpec.address) return {};
+  async syncAccountState(accountSpec: AccountSpec): Promise<Account> {
+    if (!accountSpec.address) throw new Error('syncAccountState: address required');
     const account = await this.controller.wallet.accountManager.getOrAddAccount(accountSpec);
-    return new Promise(resolve => {
+    return new Promise((resolve: (account: Account) => void) => {
       this.controller.trackAccount(account, resolve);
     });
   }
 
-  async signMessage({ address, chainId, message }: any, ) {
+  async signMessage({ address, chainId, message }: any) {
     const signedMessage = await this.controller.signMessage({ address, chainId, message });
     return { signedMessage };
   }
 
-  async getStaking({ address, chainId }: any, ) {
+  async getStaking(accountSpec: AccountSpec) {
     this.controller.keepUnlocked();
-    const result = await this.controller.wallet.getClient(chainId).getStaking(address);
+    const result = await this.controller.wallet.getClient(accountSpec.chainId).getStaking(accountSpec.address);
     return {
       amount: result.amount.toString(),
-      when: result.when
+      when: result.when,
     };
   }
 
-  async getPermissionRequestData(requestId: string, ) {
+  async getPermissionRequestData(requestId: string) {
     return this.controller.requests[requestId];
   }
 
-  async respondToPermissionRequest({ requestId, result }: any, ) {
+  async respondToPermissionRequest({ requestId, result }: any) {
     this.controller.respondToPermissionRequest(requestId, result);
     return true;
   }
 
-  async denyPermissionRequest(requestId: string, ) {
+  async denyPermissionRequest(requestId: string) {
     if (this.controller.requests[requestId]) {
       this.controller.respondToPermissionRequest(requestId, null, true);
       delete this.controller.requests[requestId];
@@ -189,7 +194,7 @@ export class Api {
     return true;
   }
 
-  async getChainInfo({ chainId }: any, ) {
+  async getChainInfo({ chainId }: any) {
     const chainInfo = await this.controller.wallet.getClient(chainId).getChainInfo();
     return { chainInfo: JSON.parse(JSON.stringify(chainInfo)) };
   }

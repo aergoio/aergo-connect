@@ -28,7 +28,7 @@ async function init(name: string) {
 
   // React to state updates from background
   background.on('update', function(state) {
-    if (state.hasOwnProperty('unlocked') && !state.unlocked && router.currentRoute.name !== 'lockscreen') {
+    if (Object.prototype.hasOwnProperty.call(state, 'unlocked') && !state.unlocked && router.currentRoute.name !== 'lockscreen') {
       router.push({ name: 'lockscreen' });
     }
   });

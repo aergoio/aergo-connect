@@ -1,6 +1,6 @@
 const tuple = <T extends string[]>(...args: T) => args;
 
-interface ChainConfig {
+export interface ChainConfig {
   chainId: string;
   nodeUrl: string;
 }
@@ -8,7 +8,7 @@ interface ChainConfig {
 export const ChainConfigs: ChainConfig[] = [
   {
     chainId: 'testnet.aergo.io',
-    nodeUrl: 'http://testnet-api-http.aergo.io',
+    nodeUrl: 'https://testnet-api-http.aergo.io',
   },
   {
     chainId: 'main.aergo.io',

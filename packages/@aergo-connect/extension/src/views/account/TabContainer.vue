@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <TabBar>
       <router-link :to="{ name: 'account-details' }"><Icon name="tab-wallet" :size="32" /></router-link>
       <router-link :to="{ name: 'account-send' }"><Icon name="tab-send" :size="32" /></router-link>

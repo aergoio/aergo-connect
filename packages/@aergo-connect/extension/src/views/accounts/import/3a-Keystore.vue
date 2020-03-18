@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <div class="content">
       <section class="dialog-header">
-        <BackButton />
+        <BackButton :to="{ name: 'account-import-format' }" />
       </section>
       <Heading>Import Keystore</Heading>
       <p>Enter your keystore file and password.</p>
@@ -11,7 +11,7 @@
     </div>
     <template #footer>
       <div class="content">
-        <ContinueButton @click="loadKeystore" :disabled="!canContinue" />
+        <ContinueButton @click="loadKeystore" :disabled="!canContinue || loading" :loading="loading" />
       </div>
     </template>
   </ScrollView>
@@ -22,8 +22,11 @@ import { BackButton, ContinueButton, Button, ButtonGroup } from '@aergo-connect/
 import { TextField } from '@aergo-connect/lib-ui/src/forms';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
+import { PersistInputsMixin } from '../../../store/ui';
 
 import Component, { mixins } from 'vue-class-component';
+import { identityFromKeystore } from '@herajs/crypto';
+import { waitFor } from '@herajs/common';
 
 @Component({
   components: {
@@ -36,16 +39,21 @@ import Component, { mixins } from 'vue-class-component';
     TextField,
   },
 })
-export default class Keystore extends mixins() {
-  keystoreContent = "";
+export default class Keystore extends mixins(PersistInputsMixin) {
+  chainId = '';
+  persistFields = ['chainId']; // Data from 1-Network
+  persistFieldsKey = 'account-create';
+
+  keystoreContent: any = {};
   password = "";
   errors = {
     keystore: "",
     password: "",
   };
+  loading = false;
 
   get canContinue(): boolean {
-    return Boolean(this.keystoreContent) && Boolean(this.password);
+    return Boolean(this.keystoreContent.ks_version) && Boolean(this.password);
   }
 
   setKeystore(keystoreContent: string): void {
@@ -56,10 +64,28 @@ export default class Keystore extends mixins() {
       this.errors.keystore = 'Invalid file: failed to parse as JSON';
     }
   }
-  loadKeystore(): void {
+  async loadKeystore(): Promise<void> {
     if (!this.canContinue) return;
-    console.log(this.password, this.keystoreContent);
-    this.errors.password = 'Invalid password';
+    this.loading = true;
+    await waitFor(150);
+    try {
+      const identity = await identityFromKeystore(this.keystoreContent, this.password);
+      const accountSpec = await this.$background.importAccount({
+        privateKey: Array.from(identity.privateKey),
+        chainId: this.chainId,
+      });
+      this.$router.push({ name: 'account-imported', params: accountSpec });
+    } catch(e) {
+      console.log(e);
+      if (`${e}`.match(/invalid mac value/)) {
+        this.errors.password = 'Invalid password';
+      } else {
+        this.errors.password = `${e}`;
+      }
+      
+    } finally {
+      this.loading = false;
+    }
   }
 }
 </script>

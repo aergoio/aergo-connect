@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <div class="content">
       <section class="dialog-header">
-        <BackButton />
+        <BackButton :to="{ name: 'account-import' }" />
       </section>
       <Heading>Import Format</Heading>
       <p>Please select the import format.</p>
@@ -15,11 +15,6 @@
       <p class="note">‘Keystore File’ is the recommended format. Use it when you saved your key as an encrypted file.</p>
       <p class="note">‘Import String’ is a legacy format. Use it when you copied your key as an encrypted string.</p>
     </div>
-    <template #footer>
-      <div class="content">
-        <ContinueButton :to="{ name: 'account-created', params: { address: 'Abc' } }" />
-      </div>
-    </template>
   </ScrollView>
 </template>
 
