@@ -62,7 +62,7 @@ export default Vue.extend({
         `button-type-${this.type}`,
         `button-size-${this.size}`,
         this.loading ? `button-loading` : '',
-        this.type === 'primary' ? 'inverted-colors' : '',
+        this.type.match(/^primary/) ? 'inverted-colors' : '',
       ];
     },
   },
@@ -142,7 +142,7 @@ export default Vue.extend({
     border-radius: 100%;
     line-height: 56px;
     min-height: 56px;
-    width: 56px;
+    width: 56px !important;
     &[disabled] {
       opacity: .5;
     }

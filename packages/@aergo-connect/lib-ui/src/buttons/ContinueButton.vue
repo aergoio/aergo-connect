@@ -1,6 +1,6 @@
 <template>
   <div class="next-button-wrap">
-    <Button @click="$emit('click')" :to="to" type="primary-icon" class="next-button" :disabled="disabled"><Icon name="next" :size="25" /></Button>
+    <Button @click="$emit('click')" :to="to" type="primary-icon" class="next-button" :disabled="disabled" :loading="loading"><Icon name="next" :size="25" /></Button>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default Vue.extend({
       type: [String, Object] as PropType<RawLocation>,
     },
     disabled: Boolean,
+    loading: Boolean,
   },
 });
 </script>

@@ -14,6 +14,7 @@ export const iconNames = tuple(
   'dropdown',
   'link',
   'logo',
+  'network-other',
   'next',
   'tab-history',
   'tab-send',
