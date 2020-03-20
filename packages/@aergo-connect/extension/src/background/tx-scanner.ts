@@ -26,21 +26,27 @@ export class AergoscanTransactionScanner {
             const size = 1000;
             const offset = 0;
             const url = `${baseUrl}/transactions?q=${q}&sort=blockno:desc&size=${size}&from=${offset}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(`[track account] Got ${data.hits.length} (of ${data.total}) txs for ${address} since ${blockno}.`);
-            return data.hits.map((tx: any) => new Transaction(tx.hash, {
-                chainId,
-                from: tx.meta.from,
-                to: tx.meta.to,
-                hash: tx.hash,
-                ts: tx.meta.ts,
-                blockhash: '', // TODO: remove or add?
-                blockno: tx.meta.blockno,
-                amount: tx.meta.amount,
-                type: tx.meta.type,
-                status: Transaction.Status.Confirmed
-            }));
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!data.hits) return [];
+                console.log(`[track account] Got ${data.hits.length} (of ${data.total}) txs for ${address} since ${blockno}.`);
+                return data.hits.map((tx: any) => new Transaction(tx.hash, {
+                    chainId,
+                    from: tx.meta.from,
+                    to: tx.meta.to,
+                    hash: tx.hash,
+                    ts: tx.meta.ts,
+                    blockhash: '', // TODO: remove or add?
+                    blockno: tx.meta.blockno,
+                    amount: tx.meta.amount,
+                    type: tx.meta.type,
+                    status: Transaction.Status.Confirmed
+                }));
+            } catch(e) {
+                console.log(`[track account] Failed: ${e}`);
+                return [];
+            }
         };
     }
 

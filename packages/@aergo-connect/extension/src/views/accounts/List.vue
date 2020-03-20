@@ -20,11 +20,11 @@
 
 <script lang="ts">
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
-import { Button } from '@aergo-connect/lib-ui/src/buttons';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import AddAccountDialog from '../../components/accounts/AddAccountDialog.vue';
 import AccountList from '../../components/accounts/AccountList.vue';
+import { Button } from '@aergo-connect/lib-ui/src/buttons';
 
 import Vue from 'vue';
 import Component from 'vue-class-component';
@@ -42,14 +42,12 @@ import { Account } from '@herajs/wallet';
 })
 export default class AccountsList extends Vue {
   addAccountDialogVisible = false;
-  accounts: Account[] = [];
-
-  mounted() {
-    this.fetchAccounts();
+  get accounts(): Account[] {
+    return Object.values(this.$store.state.accounts.accounts);
   }
 
-  async fetchAccounts() { 
-    this.accounts = await this.$background.getAccounts();
+  mounted() {
+    this.$store.dispatch('accounts/fetchAccounts');
   }
 }
 </script>

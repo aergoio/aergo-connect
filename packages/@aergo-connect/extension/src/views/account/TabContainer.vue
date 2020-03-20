@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;">
+  <div class="tab-container">
     <TabBar>
       <router-link :to="{ name: 'account-details' }"><Icon name="tab-wallet" :size="32" /></router-link>
       <router-link :to="{ name: 'account-send' }"><Icon name="tab-send" :size="32" /></router-link>
@@ -29,4 +29,13 @@ export default class TabFrame extends Vue {
 </script>
 
 <style lang="scss">
+.tab-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  > .scroll-view {
+    flex: 1;
+    max-height: calc(100% - 48px);
+  }
+}
 </style>

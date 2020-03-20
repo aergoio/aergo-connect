@@ -4,7 +4,10 @@
       <div class="content">
         <div class="detail-balance">
           <span class="balance-label">Balance</span>
-          <FormattedToken class="account-balance" :value="'123 aergo'" />
+          <span class="account-balance">
+            <FormattedToken :value="account.data.balance" v-if="account" />
+            <span v-else>...</span>
+          </span>
         </div>
       </div>
     </div>
@@ -28,6 +31,7 @@ import { FormattedToken, Identicon } from '@aergo-connect/lib-ui/src/content';
 
 import Vue from 'vue';
 import Component from 'vue-class-component'
+import { Account } from '@herajs/wallet';
 
 @Component({
   components: {
@@ -37,6 +41,17 @@ import Component from 'vue-class-component'
   },
 })
 export default class AccountDetails extends Vue {
+  get account(): Account {
+    return this.$store.getters['accounts/getAccount'](this.accountSpec);
+  }
+
+  get accountSpec() {
+    return { address: this.$route.params.address, chainId: this.$route.params.chainId };
+  }
+  
+  mounted() {
+    this.$store.dispatch('accounts/updateAccount', this.accountSpec);
+  }
 }
 </script>
 
@@ -52,13 +67,16 @@ export default class AccountDetails extends Vue {
   }
   .account-balance {
     line-height: 1.8;
+    font-size: (28/16)*1rem;
 
     .value {
       font-weight: 600;
-      font-size: (28/16)*1rem;
     }
     .unit {
       font-size: (20/16)*1rem;
+    }
+    .sep {
+      margin-right: 5px;
     }
   }
 }

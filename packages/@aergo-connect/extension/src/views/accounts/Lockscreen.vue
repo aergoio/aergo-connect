@@ -3,7 +3,7 @@
     <div class="welcome-content">
       <Heading class="big-title">Locked</Heading>
       <p>Please enter your wallet passphrase to continue.</p>
-      <TextField variant="main" type="password" v-model="password" :error="errors.password" />
+      <TextField variant="main" type="password" v-model="password" :error="errors.password" @submit="unlock" />
     </div>
 
     <template #footer>

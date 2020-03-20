@@ -69,7 +69,11 @@ export class PersistInputsMixin extends Vue {
     const state = this.$store.state.ui as UiState;
     if (typeof state.input[key] !== 'undefined') {
       const persistedValue = state.input[key][field];
-      if (typeof persistedValue !== 'undefined') {
+      if (typeof persistedValue === 'object') {
+        // Copy the object to get rid of observers on it
+        // @ts-ignore
+        this.$set(this, field, {...persistedValue});
+      } else if (typeof persistedValue !== 'undefined') {
         this.$set(this, field, persistedValue);
       }
     }
@@ -79,7 +83,7 @@ export class PersistInputsMixin extends Vue {
     const watchHandler = debounce((value: Primitive) => {
       this.$store.commit('ui/setInput', { key, field, value });
     }, this.persistDebounceTime);
-    this.$watch(field, watchHandler, { immediate: this.persistInitialValues });
+    this.$watch(field, watchHandler, { immediate: this.persistInitialValues, deep: true });
   }
   created() {
     for (const field of this.persistFields) {

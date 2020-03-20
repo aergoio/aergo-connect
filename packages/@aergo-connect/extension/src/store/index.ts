@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import ui, { UiState } from './ui';
+import accounts from './accounts';
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export interface RootState {
 export default new Vuex.Store<RootState>({
   modules: {
     ui,
+    accounts,
   },
   strict: process.env.NODE_ENV !== 'production',
   plugins: [

@@ -76,7 +76,7 @@ export default Vue.extend({
     },
     handleFileInput(): void {
       const $elem = this.$refs.inputElement as HTMLInputElement;
-      if (!$elem.files || $elem.files.length === 0) return;
+      if (!$elem || !$elem.files || $elem.files.length === 0) return;
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target) {
@@ -97,6 +97,7 @@ export default Vue.extend({
     padding: 15px;
     outline: none;
     background-color: transparent;
+    width: 100px;
   }
 
   &.variant-default {
