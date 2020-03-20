@@ -5,7 +5,7 @@
         <div class="detail-balance">
           <span class="balance-label">Balance</span>
           <span class="account-balance">
-            <FormattedToken :value="account.data.balance" v-if="account" />
+            <FormattedToken :value="account.data.balance" v-if="account && account.data" />
             <span v-else>...</span>
           </span>
         </div>

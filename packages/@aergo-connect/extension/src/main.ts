@@ -28,8 +28,12 @@ async function init(name: string) {
 
   // React to state updates from background
   background.on('update', function(state) {
+    console.log('update from bg', state);
     if (Object.prototype.hasOwnProperty.call(state, 'unlocked') && !state.unlocked && router.currentRoute.name !== 'lockscreen') {
       router.push({ name: 'lockscreen' });
+    }
+    if (Object.prototype.hasOwnProperty.call(state, 'accounts')) {
+      store.commit('accounts/setAccounts', state.accounts);
     }
   });
 }

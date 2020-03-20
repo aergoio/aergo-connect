@@ -43,7 +43,10 @@ import { Account } from '@herajs/wallet';
 export default class AccountsList extends Vue {
   addAccountDialogVisible = false;
   get accounts(): Account[] {
-    return Object.values(this.$store.state.accounts.accounts);
+    if (this.$store.state.accounts.keys.length) {
+      return Object.values(this.$store.state.accounts.accounts);
+    }
+    return [];
   }
 
   mounted() {

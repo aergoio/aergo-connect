@@ -4,6 +4,7 @@ import { Account, serializeAccountSpec } from '@herajs/wallet';
 import Vue from 'vue';
 
 export interface AccountsState {
+  keys: string[],
   accounts: {
     [key: string]: Account,
   },
@@ -23,10 +24,14 @@ const storeModule: Module<AccountsState, RootState> = {
   namespaced: true,
   state: {
     accounts: {},
+    // Save keys extra for reactivity as the `accounts` object is not observable in the beginning.
+    keys: [],
   },
   getters: {
-    getAccount: state => (accountSpec: AccountSpec): Account => {
+    getAccount: state => (accountSpec: AccountSpec): Account | undefined => {
       const key = serializeAccountSpec(accountSpec);
+      // Check state.keys to make the getter react to changes
+      if (state.keys.indexOf(key) === -1) return undefined;
       return state.accounts[key];
     },
   },
@@ -48,6 +53,8 @@ const storeModule: Module<AccountsState, RootState> = {
       for (const account of accounts) {
         state.accounts[account.key] = account;
       }
+      const newKeys = accounts.map(acc => acc.key).filter(key => state.keys.indexOf(key) === -1);
+      state.keys.push(...newKeys);
     },
   }
 };

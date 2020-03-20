@@ -151,6 +151,8 @@ class BackgroundController extends EventEmitter {
         }
       });
     });
+    // Make an initial update
+    this.emit('update', { accounts: [account] });
   }
 
   permissionRequest(type: string, data: any, senderURL: string, callback: Function, cancelCallback: Function) {

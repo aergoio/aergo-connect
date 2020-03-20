@@ -18,6 +18,7 @@ import AccountImported from '../views/account/Imported.vue';
 import TabContainer from '../views/account/TabContainer.vue';
 import AccountSend from '../views/account/send/1-Send.vue';
 import AccountSendConfirm from '../views/account/send/2-Confirm.vue';
+import AccountSendSuccess from '../views/account/send/3-Success.vue';
 import AccountHistory from '../views/account/History.vue';
 import AccountDetailsContainer from '../views/account/details/Container.vue';
 import AccountDetails from '../views/account/details/Details.vue';
@@ -45,6 +46,7 @@ const routes: RouteConfig[] = [
       { path: 'send', component: AccountDetailsContainer, alias: '', children: [
         { path: '', name: 'account-send', component: AccountSend },
         { path: 'confirm', name: 'account-send-confirm', component: AccountSendConfirm },
+        { path: 'success/:hash', name: 'account-send-success', component: AccountSendSuccess },
       ] },
       { path: 'history', name: 'account-history', component: AccountHistory },
     ] },
