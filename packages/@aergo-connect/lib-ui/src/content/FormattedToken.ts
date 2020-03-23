@@ -11,9 +11,10 @@ export default Vue.extend({
       required: true,
     },
     unit: String,
+    prefix: String,
   },
   render(h, ctx) {
-    const innerHTML = formatToken(ctx.props.value, ctx.props.unit);
+    const innerHTML = formatToken(ctx.props.value, ctx.props.unit, ctx.props.prefix);
     return h('span', { ...ctx.data, domProps: { innerHTML } })
   }
 })

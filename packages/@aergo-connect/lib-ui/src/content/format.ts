@@ -24,7 +24,7 @@ export function formatNumber(value: NumberLike, sep=' ', sepDecimal=''): string 
 
 const tryUnits = ['aergo', 'gaer', 'aer'];
 
-export function formatToken(_value: string, unit: string|null = null) {
+export function formatToken(_value: string, unit: string|null = null, prefix = '') {
     const value = new Amount(_value);
     let amount;
     if (unit) {
@@ -48,8 +48,8 @@ export function formatToken(_value: string, unit: string|null = null) {
     display = display.replace(/\s/g, '<span class="sep"></span>');
     // Add class for decimal point
     display = display.replace('.', '<span class="point">. </span>');
-
-    const displayHtml = `<span class="value">${display}</span>`;
+    const posneg = prefix ? `<span class="prefix">${prefix}</span>` : "";
+    const displayHtml = `<span class="value">${posneg}${display}</span>`;
     const unitHtml = `<span class="unit">${unit}</span>`;
     return `<span class="formatted-value token" title="${value}">${displayHtml} ${unitHtml}</span>`;
 }

@@ -16,15 +16,16 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@storybook/addon-actions": "^5.3.14",
     "@storybook/addon-backgrounds": "^5.3.14",
     "@storybook/addon-knobs": "^5.3.14",
     "@storybook/preset-scss": "^1.0.2",
     "@storybook/preset-typescript": "^2.1.0",
     "@storybook/vue": "^5.3.14",
+    "@types/chrome": "^0.0.100",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
-    "@types/chrome": "^0.0.100",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",
@@ -32,6 +33,7 @@
     "@vue/cli-plugin-vuex": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
     "@vue/eslint-config-typescript": "^5.0.1",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
     "patch-package": "^6.2.0",
@@ -41,7 +43,8 @@
     "storybook-vue-router": "^1.0.7",
     "typescript": "~3.7.5",
     "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.0"
   },
   "scripts": {
     "postinstall": "patch-package",

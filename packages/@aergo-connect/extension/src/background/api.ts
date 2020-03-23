@@ -155,6 +155,7 @@ export class Api {
 
   async getAccountTx(accountSpec: AccountSpec) {
     if (!accountSpec.address) throw new Error('getAccountTx: address required');
+    this.controller.keepUnlocked();
     const txs = await this.controller.wallet.transactionManager.getAccountTransactions(accountSpec);
     txs.sort((a, b) => (a.data.ts < b.data.ts ? 1 : (a.data.ts == b.data.ts ? 0 : -1)));
     return txs;
@@ -162,6 +163,7 @@ export class Api {
 
   async syncAccountState(accountSpec: AccountSpec): Promise<Account> {
     if (!accountSpec.address) throw new Error('syncAccountState: address required');
+    this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.getOrAddAccount(accountSpec);
     return new Promise((resolve: (account: Account) => void) => {
       this.controller.trackAccount(account, resolve);
@@ -169,6 +171,7 @@ export class Api {
   }
 
   async signMessage({ address, chainId, message }: any) {
+    this.controller.keepUnlocked();
     const signedMessage = await this.controller.signMessage({ address, chainId, message });
     return { signedMessage };
   }

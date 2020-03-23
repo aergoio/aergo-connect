@@ -18,24 +18,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
+
+import { TxTypes } from '@herajs/common';
+
 import { KVTable, KVTableRow } from '@aergo-connect/lib-ui/src/tables';
 import { FormattedToken } from '@aergo-connect/lib-ui/src/content';
 
-import { Tx } from '@herajs/client';
-import { capitalizeFirstLetter } from '../../utils/strings';
 import { getExplorerUrl } from '../../utils/chain-urls';
-
-export function keys<O>(o: O): (keyof O)[] {
-    return Object.keys(o) as (keyof O)[];
-}
-function getTypeLabel(type: typeof Tx.Type[keyof typeof Tx.Type]): string {
-  for (const key of keys(Tx.Type)) {
-    if (Tx.Type[key] === type) {
-      return capitalizeFirstLetter(key.toLowerCase());
-    }
-  }
-  return 'Normal';
-}
 
 @Component({
   components: {
@@ -46,7 +35,7 @@ export default class TxConfirm extends Vue {
   @Prop({type: Object, required: true}) readonly txBody!: any;
 
   get typeLabel(): string {
-    return getTypeLabel(this.txBody.type || 0);
+    return TxTypes[this.txBody.type || 0];
   }
   get amountValue(): string {
     if (this.txBody.unit) return `${this.txBody.amount} ${this.txBody.unit}`;

@@ -13,7 +13,7 @@
     <template #footer>
       <div class="content">
         <ButtonGroup vertical>
-          <Button type="primary" @click="confirm">Confirm</Button>
+          <Button type="primary" @click="confirm" :loading="loading">Confirm</Button>
         </ButtonGroup>
       </div>
     </template>
@@ -27,8 +27,10 @@ import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 
 import { PersistInputsMixin } from '../../../store/ui';
 import TxConfirm from '../../../components/account/TxConfirm.vue';
-
 import Component, { mixins } from 'vue-class-component';
+
+import { timedAsync } from 'timed-async/index.js';
+
 @Component({
   components: {
     ScrollView,
@@ -46,15 +48,17 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
 
   txBody: any = {};
   error = null;
+  loading = false;
 
   async confirm() {
+    this.loading = true;
     const txBody = {
       ...this.txBody,
       amount: `${this.txBody.amount} ${this.txBody.unit}`,
       from: this.$route.params.address,
     };
     try {
-      const result = await this.$background.sendTransaction(txBody, this.$route.params.chainId);
+      const result = await timedAsync(this.$background.sendTransaction(txBody, this.$route.params.chainId), { fastTime: 1000 });
       if ('tx' in result) {
         const hash = result.tx.hash;
         if (hash) {
@@ -64,6 +68,8 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
     } catch(e) {
       this.error = e;
       console.log(e);
+    } finally {
+      this.loading = false;
     }
   }
 }

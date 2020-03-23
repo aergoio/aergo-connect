@@ -21,7 +21,7 @@ export interface UiState {
   };
   input: {
     [form: string]: InputData;
-    settings: typeof defaultSettings,
+    settings: typeof defaultSettings;
   };
 }
 

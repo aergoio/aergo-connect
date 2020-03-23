@@ -4,10 +4,10 @@ import { Account, serializeAccountSpec } from '@herajs/wallet';
 import Vue from 'vue';
 
 export interface AccountsState {
-  keys: string[],
+  keys: string[];
   accounts: {
-    [key: string]: Account,
-  },
+    [key: string]: Account;
+  };
 }
 
 interface AccountSpec {
