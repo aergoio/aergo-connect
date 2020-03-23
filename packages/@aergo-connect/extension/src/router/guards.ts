@@ -1,5 +1,6 @@
 import { NavigationGuard, Route } from 'vue-router';
 import store from '../store';
+import { capitalizeFirstLetter } from '../utils/strings';
 
 /**
  * Load persisted route on initial load
@@ -25,10 +26,6 @@ export const persistRoute: NavigationGuard = (to, _from, next) => {
     store.commit('ui/setCurrentRoute', to);
   }
   return next();
-}
-
-function capitalizeFirstLetter(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export const updateTitle = (to: Route): void => {

@@ -68,10 +68,10 @@ const routes: RouteConfig[] = [
       { path: 'send', component: AccountDetailsContainer, alias: '', children: [
         { path: '', name: 'account-send', component: AccountSend },
         { path: 'confirm', name: 'account-send-confirm', component: AccountSendConfirm },
-        { path: 'success/:hash', name: 'account-send-success', component: AccountSendSuccess },
       ] },
       { path: 'history', name: 'account-history', component: AccountHistory },
     ] },
+    { path: 'send/success/:hash', name: 'account-send-success', component: AccountSendSuccess },
     { path: 'created', name: 'account-created', component: AccountCreated },
     { path: 'imported', name: 'account-imported', component: AccountImported },
   ] },

@@ -28,7 +28,7 @@ async function init(name: string) {
 
   // React to state updates from background
   background.on('update', function(state) {
-    const isNonAuthPage = !(router.currentRoute.meta && router.currentRoute.meta.noAuthCheck === true);
+    const isNonAuthPage = (router.currentRoute.meta && router.currentRoute.meta.noAuthCheck === true);
     if (Object.prototype.hasOwnProperty.call(state, 'unlocked') && state.unlocked === false && !isNonAuthPage) {
       router.push({ name: 'lockscreen' });
     }

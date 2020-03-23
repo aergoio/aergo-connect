@@ -4,11 +4,15 @@
 @import './_forms.scss';
 
 .content {
-    padding: 20px;
+  padding: 20px;
+}
+
+.footer-button-wrap {
+  padding: 10px 20px;
 }
 
 .text-link {
-    color: #ff337f;
+  color: #ff337f;
 }
 
 .dialog-header {

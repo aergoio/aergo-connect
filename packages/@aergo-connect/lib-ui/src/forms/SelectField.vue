@@ -1,23 +1,26 @@
 <template>
   <div class="select-container" :class="{'use-modal-sheet': modalSheet, 'use-dropdown': !modalSheet}">
-    <InputContainer :disabled="disabled" :variant="variant" :state="state" :error="error" :class="classes"
-      @cancel="close" @pointerNext="selectNext" @pointerPrevious="selectPrevious" @accept="handleAccept" @blur="handleBlur">
-      <input type="text" class="focus-target" ref="focusTarget" />
-      <span class="current-value" @click="openIfClosed">{{label}}</span>
-    
-      <div class="toggle-button" v-show="state !== 'loading'" @click="toggle">
-        <Icon name="dropdown" :size="36" />
-      </div>
+    <label>
+      <span class="input-label" v-if="label">{{label}}</span>
+      <InputContainer :disabled="disabled" :variant="variant" :state="state" :error="error" :class="classes"
+        @cancel="close" @pointerNext="selectNext" @pointerPrevious="selectPrevious" @accept="handleAccept" @blur="handleBlur">
+        <input type="text" class="focus-target" ref="focusTarget" />
+        <span class="current-value" @click="openIfClosed">{{valueLabel}}</span>
       
-      <component :is="modalSheet ? 'ModalDialog' : 'div'" class="dropdown" :visible="optionsVisible" :title="dropdownTitle">
-        <div class="dialog-options" v-if="optionsVisible">
-          <div v-for="(option, index) in optionDict" :key="option.value" class="dialog-option" @mousedown="selectOption(option.value, index)" :class="{focused: index === focusedOptionIndex}">
-            {{option.label}}
-            <Icon name="checkmark-circle" :size="20" v-if="index === selectedOptionIndex" />
-          </div>
+        <div class="toggle-button" v-show="state !== 'loading'" @click="toggle">
+          <Icon name="dropdown" :size="36" />
         </div>
-      </component>
-    </InputContainer>
+        
+        <component :is="modalSheet ? 'ModalDialog' : 'div'" class="dropdown" :visible="optionsVisible" :title="dropdownTitle">
+          <div class="dialog-options" v-if="optionsVisible">
+            <div v-for="(option, index) in optionDict" :key="option.value" class="dialog-option" @mousedown="selectOption(option.value, index)" :class="{focused: index === focusedOptionIndex}">
+              {{option.label}}
+              <Icon name="checkmark-circle" :size="20" v-if="index === selectedOptionIndex" />
+            </div>
+          </div>
+        </component>
+      </InputContainer>
+    </label>
   </div>
 </template>
 
@@ -29,7 +32,7 @@ import Icon from '../icons/Icon.vue';
 import ModalDialog from '../layouts/ModalDialog.vue';
 
 interface OptionDict {
-  value: string;
+  value: string | number;
   label: string;
 }
 
@@ -47,7 +50,8 @@ export default Vue.extend({
     };
   },
   props: {
-    value: String,
+    value: [String, Number],
+    label: String,
     variant: {
       type: String as PropType<InputVariant>,
       default: InputVariants[0],
@@ -86,9 +90,9 @@ export default Vue.extend({
         return { value: option, label: option };
       });
     },
-    label(): string {
+    valueLabel(): string {
       const selected = this.optionDict.find(option => option.value === this.value);
-      return selected ? selected.label : this.value;
+      return selected ? selected.label : `${this.value}`;
     },
   },
   mounted() {

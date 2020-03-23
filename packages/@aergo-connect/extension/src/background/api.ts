@@ -148,6 +148,11 @@ export class Api {
     return { tx: txBody };
   }
 
+  async getTransaction(chainId: string, hash: string) {
+    const tx = await this.controller.wallet.getClient(chainId).getTransaction(hash);
+    return JSON.parse(JSON.stringify(tx));
+  }
+
   async getAccountTx(accountSpec: AccountSpec) {
     if (!accountSpec.address) throw new Error('getAccountTx: address required');
     const txs = await this.controller.wallet.transactionManager.getAccountTransactions(accountSpec);

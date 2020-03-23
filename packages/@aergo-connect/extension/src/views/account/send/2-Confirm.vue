@@ -46,12 +46,13 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
   persistFieldsKey = 'send';
   persistInitialValues = false;
 
-  txBody = {};
+  txBody: any = {};
   error = null;
 
   async confirm() {
     const txBody = {
       ...this.txBody,
+      amount: `${this.txBody.amount} ${this.txBody.unit}`,
       from: this.$route.params.address,
     };
     try {
