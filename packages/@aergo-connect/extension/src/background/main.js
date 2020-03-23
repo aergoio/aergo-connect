@@ -78,6 +78,13 @@ if (!extension.runtime.id) {
       extension.tabs.create({url: "index.html"});
     }
   });
+  extension.contextMenus.create({
+    title: "Settings",
+    contexts: ["browser_action"],
+    onclick: function() {
+      extension.tabs.create({url: "index.html#/settings"});
+    }
+  });
 
   // In dev, open a new tab for easier debugging
   if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="`page-${$router.currentRoute.name}`">
     <RouteTransition>
       <router-view/>
     </RouteTransition>
@@ -20,6 +20,7 @@ export default Vue.extend({
     }
     const unlocked = await this.$background.isUnlocked();
     if (!unlocked) {
+      console.log("App: redirecting to lockscreen", this.$router.currentRoute);
       this.$router.push({ name: 'lockscreen' });
     }
   }

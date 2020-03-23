@@ -1,12 +1,18 @@
 import { Module } from 'vuex';
 import { Route } from 'vue-router';
 import { RootState } from './index';
-import { Primitive } from '../types';
+import { Json } from '../types';
 
 interface InputData {
   // Values get persisted into localstorage, so only use json-compatible types
-  [field: string]: Primitive;
+  [field: string]: Json;
 }
+
+const defaultSettings = {
+  features: {
+    enableHardwareWallet: false,
+  },
+};
 
 export interface UiState {
   route: {
@@ -15,6 +21,7 @@ export interface UiState {
   };
   input: {
     [form: string]: InputData;
+    settings: typeof defaultSettings,
   };
 }
 
@@ -25,7 +32,21 @@ const storeModule: Module<UiState, RootState> = {
       currentPath: '',
       previousPath: '',
     },
-    input: {},
+    input: {
+      settings: defaultSettings,
+    },
+  },
+  getters: {
+    getSetting: state => (keyPath: string): Json => {
+      function getKey<T extends {}>(obj: T, keyPath: string): Json {
+        const [key, rest] = keyPath.split('.', 2);
+        if (!rest) {
+          return obj[key as keyof T] as unknown as Json;
+        }
+        return getKey(obj[key as keyof T], rest);
+      }
+      return getKey(state.input.settings, keyPath);
+    },
   },
   mutations: {
     setCurrentRoute(state, route: Route) {
@@ -33,7 +54,7 @@ const storeModule: Module<UiState, RootState> = {
       state.route.previousPath = state.route.currentPath;
       state.route.currentPath = route.fullPath;
     },
-    setInput(state, { key, field, value }: { key: string; field: string; value: Primitive }) {
+    setInput(state, { key, field, value }: { key: string; field: string; value: Json }) {
       if (typeof state.input[key] === 'undefined') {
         state.input[key] = {};
       }
@@ -80,7 +101,7 @@ export class PersistInputsMixin extends Vue {
   }
   private watchField(field: string) {
     const key = this.persistFieldsKeyAuto;
-    const watchHandler = debounce((value: Primitive) => {
+    const watchHandler = debounce((value: Json) => {
       this.$store.commit('ui/setInput', { key, field, value });
     }, this.persistDebounceTime);
     this.$watch(field, watchHandler, { immediate: this.persistInitialValues, deep: true });

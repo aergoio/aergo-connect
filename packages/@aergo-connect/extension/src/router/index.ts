@@ -9,8 +9,10 @@ import Setup from '../views/accounts/Setup.vue';
 import Create from '../views/accounts/Create.vue';
 import Import from '../views/accounts/import/1-Network.vue';
 import ImportFormat from '../views/accounts/import/2-Format.vue';
-import ImporKeystore from '../views/accounts/import/3a-Keystore.vue';
+import ImportKeystore from '../views/accounts/import/3a-Keystore.vue';
+import ImportWif from '../views/accounts/import/3b-Wif.vue';
 import AccountsList from '../views/accounts/List.vue';
+import Settings from '../views/accounts/Settings.vue';
 
 import AccountContainer from '../views/account/Container.vue';
 import AccountCreated from '../views/account/Created.vue';
@@ -24,18 +26,36 @@ import AccountDetailsContainer from '../views/account/details/Container.vue';
 import AccountDetails from '../views/account/details/Details.vue';
 import AccountExport from '../views/account/details/Export.vue';
 
+enum R {
+  None = 0,
+  NoAuthCheck = 1 << 0,
+  NoTracking  = 1 << 1,
+}
+function withMeta(index: number, route: RouteConfig, flags: R = R.None): RouteConfig {
+  return {
+    ...route,
+    meta: {
+      ...route.meta,
+      index, // used for route transition animations
+      noAuthCheck: (flags & R.NoAuthCheck) === R.NoAuthCheck,
+      noTracking: (flags & R.NoTracking) === R.NoTracking,
+    }
+  }
+}
 const routes: RouteConfig[] = [
   { path: '/', redirect: '/accounts' },
   { path: '/accounts', component: AccountsContainer, children: [
-    { path: '', redirect: 'welcome' },
-    { path: '/locked', name: 'lockscreen', component: Lockscreen, meta: { noAuthCheck: true } },
-    { path: '/welcome', name: 'welcome', component: Welcome, meta: { index: 0, noAuthCheck: true } },
-    { path: '/setup', name: 'setup', component: Setup, meta: { index: 1, noAuthCheck: true } },
-    { path: 'list', name: 'accounts-list', component: AccountsList, meta: { index: 1, } },
-    { path: 'create', name: 'account-create', component: Create, meta: { index: 2, } },
-    { path: 'import', name: 'account-import', component: Import, meta: { index: 2, } },
-    { path: 'import/format', name: 'account-import-format', component: ImportFormat, meta: { index: 3, } },
-    { path: 'import/keystore', name: 'account-import-keystore', component: ImporKeystore, meta: { index: 4, } },
+    { path: '', redirect: 'list' },
+    withMeta(0, { path: '/locked', name: 'lockscreen', component: Lockscreen }, R.NoAuthCheck | R.NoTracking),
+    withMeta(0, { path: '/settings', name: 'settings', component: Settings }, R.NoAuthCheck | R.NoTracking),
+    withMeta(0, { path: '/welcome', name: 'welcome', component: Welcome }, R.NoAuthCheck),
+    withMeta(1, { path: '/setup', name: 'setup', component: Setup }, R.NoAuthCheck),
+    withMeta(1, { path: 'list', name: 'accounts-list', component: AccountsList }),
+    withMeta(2, { path: 'create', name: 'account-create', component: Create }),
+    withMeta(2, { path: 'import', name: 'account-import', component: Import }),
+    withMeta(3, { path: 'import/format', name: 'account-import-format', component: ImportFormat }),
+    withMeta(4, { path: 'import/keystore', name: 'account-import-keystore', component: ImportKeystore }),
+    withMeta(4, { path: 'import/wif', name: 'account-import-wif', component: ImportWif }),
   ] },
   { path: '/account/:chainId/:address/', component: AccountContainer, children: [
     { path: '', component: TabContainer, children: [
@@ -88,6 +108,11 @@ const router = new VueRouter({
   routes,
 });
 
+/*
+router.beforeEach(function(to, from, next) {
+  console.log('from', from.name, 'to', to.name);
+  next();
+});*/
 router.beforeEach(loadPersistedRoute);
 router.beforeEach(persistRoute);
 router.afterEach(updateTitle);

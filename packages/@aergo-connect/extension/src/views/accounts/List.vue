@@ -68,6 +68,6 @@ export default class AccountsList extends Vue {
 .account-list-wrap {
   border-radius: 2px;
   box-shadow: 0 12px 20px 0 rgba(34, 34, 34, 0.08);
-  margin: 20px 10px 25px 20px;
+  margin: 20px 20px 25px 20px;
 }
 </style>

@@ -71,8 +71,5 @@ export default class Lockscreen extends mixins() {
   margin-top: 116px;
   padding: 20px;
 }
-.big-title {
-  font-size: (44/16)*1rem;
-  font-weight: 600;
-}
+
 </style>

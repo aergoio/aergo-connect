@@ -4,7 +4,7 @@
       <Appear>
         <Heading class="big-title">Welcome to Aergo Connect</Heading>
       </Appear>
-      <p><router-link :to="{ name: 'account-details', params: { address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw' } }" class="text-link">Example</router-link></p>
+      <p><router-link :to="{ name: 'account-details', params: { address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw', chainId: 'aergo.io' } }" class="text-link">Example</router-link></p>
     </div>
 
     <template #footer>
@@ -40,11 +40,11 @@ export default Vue.extend({
 
 <style lang="scss">
 .welcome-content {
-  margin-top: 116px;
+  margin-top: 100px;
   padding: 20px;
 }
-.big-title {
-  font-size: (44/16)*1rem;
-  font-weight: 600;
+#app.page-welcome {
+  background: url(../../assets/img/welcome-bg.jpg) 0 0 no-repeat;
+  background-size: cover;
 }
 </style>

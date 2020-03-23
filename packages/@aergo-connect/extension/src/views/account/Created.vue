@@ -45,8 +45,4 @@ export default class AccountCreated extends Vue {
   color: #fff;
   min-height: 100%;
 }
-.big-title {
-  font-size: (36/16)*1rem;
-  font-weight: 600;
-}
 </style>

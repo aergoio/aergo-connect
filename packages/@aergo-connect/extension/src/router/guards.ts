@@ -6,11 +6,12 @@ import store from '../store';
  * or whenever selecting an account during permission request (TODO)
  */
 export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
-  const isStartTransition = from.fullPath === '/' && from.name === null;
-  if (isStartTransition || to.name == 'deposit') {
+  const isStartTransition = from.fullPath === '/' && from.name === null && to.name === 'accounts-list';
+  if (isStartTransition || to.name == 'account-detail') { // TODO
       const persistedPath = store.state.ui.route.currentPath;
-      if (persistedPath && persistedPath != '/' && persistedPath != to.fullPath) {
-          return next(persistedPath);
+      const exclude = ['', '/', '/welcome', to.fullPath];
+      if (persistedPath && exclude.indexOf(persistedPath) === -1) {
+        return next(persistedPath);
       }
   }
   return next();
@@ -20,7 +21,7 @@ export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
  * Persist next route to store
  */
 export const persistRoute: NavigationGuard = (to, _from, next) => {
-  if (!to.meta || to.meta.donottrack !== true) {
+  if (!(to.meta && to.meta.noTracking === true)) {
     store.commit('ui/setCurrentRoute', to);
   }
   return next();

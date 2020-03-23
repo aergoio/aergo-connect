@@ -7,8 +7,8 @@ import { Wallet, Transaction, Account } from '@herajs/wallet';
  * It is not recommended to use this data source.
  */
 export class AergoscanTransactionScanner {
-    fetchAccountTransactionsAfter(wallet: Wallet) {
-        return (next: Function) => async ({ account, blockno, limit }: { account: Account, blockno: number, limit: number }) => {
+    fetchAccountTransactionsAfter() {
+        return (next: Function) => async ({ account, blockno, limit }: { account: Account; blockno: number; limit: number }) => {
             const chainId = account.data.spec.chainId
             if (chainId !== 'testnet.aergo.io' && chainId !== 'aergo.io') {
                 return next({ account, blockno, limit });
