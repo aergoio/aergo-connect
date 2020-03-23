@@ -1,15 +1,14 @@
 <template>
   <ScrollView class="page">
-    <div class="content">
-      <BackButton :to="{ name: 'account-send' }" />
-      <Heading tag="h2">Confirm</Heading>
-      <div class="data-box">
-        <KVTable>
-          <KVTableRow label="Recipient">{{txBody.to}}</KVTableRow>
-          <KVTableRow label="Amount">{{txBody.amount}} {{txBody.unit}}</KVTableRow>
-        </KVTable>
+    <template #header>
+      <div class="content" style="padding-bottom: 0;">
+        <BackButton :to="{ name: 'account-send' }" />
+        <Heading tag="h2">Confirmation</Heading>
         {{error}}
       </div>
+    </template>
+    <div class="content" style="padding-top: 0;">
+      <TxConfirm :txBody="txBody" />
     </div>
     <template #footer>
       <div class="content">
@@ -25,9 +24,9 @@
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import { BackButton, Button, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
-import { KVTable, KVTableRow } from '@aergo-connect/lib-ui/src/tables';
 
 import { PersistInputsMixin } from '../../../store/ui';
+import TxConfirm from '../../../components/account/TxConfirm.vue';
 
 import Component, { mixins } from 'vue-class-component';
 @Component({
@@ -35,10 +34,9 @@ import Component, { mixins } from 'vue-class-component';
     ScrollView,
     BackButton,
     Heading,
-    KVTable,
-    KVTableRow,
     Button,
     ButtonGroup,
+    TxConfirm,
   },
 })
 export default class AccountSendConfirm extends mixins(PersistInputsMixin) {

@@ -5,7 +5,9 @@
       <router-link :to="{ name: 'account-send' }"><Icon name="tab-send" :size="32" /></router-link>
       <router-link :to="{ name: 'account-history' }"><Icon name="tab-history" :size="32" /></router-link>
     </TabBar>
-    <router-view></router-view>
+    <RouteTransition defaultTransition="fade">
+      <router-view></router-view>
+    </RouteTransition>
   </div>
 </template>
 

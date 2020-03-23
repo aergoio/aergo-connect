@@ -1,5 +1,5 @@
 <template>
-  <div class="route-transition-wrap">
+  <div class="route-transition-wrap" :class="`transition-name-${transitionName}`">
     <transition
       :name="transitionName"
       :mode="transitionMode"
@@ -32,18 +32,24 @@ const DEFAULT_TRANSITION_MODE = '';
  */
 export default Vue.extend({
   name: `RouteTransition`,
+  props: {
+    defaultTransition: {
+      type: String,
+      default: DEFAULT_TRANSITION,
+    },
+  },
   data() {
     return {
       prevHeight: '0px',
       prevWidth: '0px',
-      transitionName: DEFAULT_TRANSITION,
+      transitionName: this.defaultTransition,
       transitionMode: DEFAULT_TRANSITION_MODE,
       transitionEnterActiveClass: '',
     };
   },
   watch: {
     '$route'(to: RouteConfig, from: RouteConfig): void {
-      let transitionName = from.meta.transitionName || to.meta.transitionName || DEFAULT_TRANSITION;
+      let transitionName = from.meta.transitionName || to.meta.transitionName || this.defaultTransition;
       if (from.meta.transitionName === 'fade' || to.meta.transitionName === 'fade') {
         // If one of them is fade, always use that
         transitionName = 'fade';
@@ -69,7 +75,7 @@ export default Vue.extend({
     },
     enter(element: HTMLElement): void {
       //element.style.height = this.prevHeight;
-      element.style.width = this.prevWidth;
+      if (this.prevWidth !== '0px') element.style.width = this.prevWidth;
     },
     afterEnter(element: HTMLElement): void {
       //element.style.height = `auto`;
@@ -89,8 +95,8 @@ export default Vue.extend({
 
 .fade-enter-active,
 .fade-leave-active {
-  transition-duration: 0.25s;
-  transition-property: height, opacity;
+  transition-duration: .4s;
+  transition-property: opacity;
   transition-timing-function: ease;
   overflow: hidden;
 }

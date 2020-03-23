@@ -32,7 +32,7 @@ enum R {
   NoAuthCheck = 1 << 0,
   NoTracking  = 1 << 1,
 }
-function withMeta(index: number, route: RouteConfig, flags: R = R.None): RouteConfig {
+function withMeta(index: number | undefined, route: RouteConfig, flags: R = R.None): RouteConfig {
   return {
     ...route,
     meta: {
