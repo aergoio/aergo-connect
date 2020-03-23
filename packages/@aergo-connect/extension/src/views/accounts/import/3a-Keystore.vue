@@ -7,7 +7,7 @@
       <Heading>Import Keystore</Heading>
       <p>Enter your keystore file and password.</p>
       <TextField label="Keystore file" type="file" @file="setKeystore" :error="errors.keystore" />
-      <TextField v-model="password" type="password" label="Keystore password" :error="errors.password" autoComplete="no" />  
+      <TextField v-model="password" type="password" label="Keystore passphrase" :error="errors.password" autoComplete="no" />  
     </div>
     <template #footer>
       <div class="content">

@@ -93,6 +93,14 @@ export default Vue.extend({
       align-items: center;
       cursor: pointer;
       user-select: none;
+
+      > span {
+        display: flex;
+        align-items: center;
+        .icon {
+          margin-right: 20px;
+        }
+      }
     }
   }
 }

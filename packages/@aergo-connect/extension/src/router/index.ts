@@ -24,7 +24,8 @@ import AccountSendSuccess from '../views/account/send/3-Success.vue';
 import AccountHistory from '../views/account/History.vue';
 import AccountDetailsContainer from '../views/account/details/Container.vue';
 import AccountDetails from '../views/account/details/Details.vue';
-import AccountExport from '../views/account/details/Export.vue';
+import AccountExportKeystore from '../views/account/export/Keystore.vue';
+import AccountExportWif from '../views/account/export/Wif.vue';
 
 enum R {
   None = 0,
@@ -61,7 +62,8 @@ const routes: RouteConfig[] = [
     { path: '', component: TabContainer, children: [
       { path: 'details', component: AccountDetailsContainer, alias: '', children: [
         { path: '', name: 'account-details', component: AccountDetails },
-        { path: 'export', name: 'account-export', component: AccountExport },
+        { path: 'export/keystore', name: 'account-export-keystore', component: AccountExportKeystore },
+        { path: 'export/wif', name: 'account-export-wif', component: AccountExportWif },
       ] },
       { path: 'send', component: AccountDetailsContainer, alias: '', children: [
         { path: '', name: 'account-send', component: AccountSend },

@@ -45,13 +45,3 @@ export default class AddAccountDialog extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.dialog-options > * > span {
-  display: flex;
-  align-items: center;
-  .icon {
-    margin-right: 20px;
-  }
-}
-</style>

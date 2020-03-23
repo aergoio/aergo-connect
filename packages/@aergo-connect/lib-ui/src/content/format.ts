@@ -47,7 +47,7 @@ export function formatToken(_value: string, unit: string|null = null) {
     // Turn spaces into html to not mess up copy and paste
     display = display.replace(/\s/g, '<span class="sep"></span>');
     // Add class for decimal point
-    display = display.replace('.', '<span class="point">.</span>');
+    display = display.replace('.', '<span class="point">. </span>');
 
     const displayHtml = `<span class="value">${display}</span>`;
     const unitHtml = `<span class="unit">${unit}</span>`;

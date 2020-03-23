@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <div class="content">
      <BackButton />
-    <Heading tag="h2">Export</Heading>
+    <Heading tag="h2">Export as Enc. String</Heading>
     </div>
   </ScrollView>
 </template>
@@ -22,7 +22,7 @@ import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
     Heading,
   },
 })
-export default class AccountExport extends Vue {
+export default class AccountExportWif extends Vue {
 }
 </script>
 

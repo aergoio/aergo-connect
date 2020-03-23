@@ -1,15 +1,11 @@
 <template>
   <ScrollView class="page detail-page">
-    <div class="detail-top">
-      <div class="content">
-        <div class="detail-balance">
-          <span class="balance-label">Balance</span>
-          <span class="account-balance">
-            <FormattedToken :value="account.data.balance" v-if="account && account.data" />
-            <span v-else>...</span>
-          </span>
-        </div>
-      </div>
+    <ExportAccountDialog :visible="exportAccountDialogVisible" @close="exportAccountDialogVisible=false" />
+
+    <div class="content detail-top">
+      <AccountBalance :account="account" />
+
+      <Button @click="exportAccountDialogVisible = true" type="icon"><Icon name="account-export" :size="36" /></Button>
     </div>
     <div class="detail-bottom">
       <div class="content">
@@ -18,7 +14,6 @@
             <Identicon :text="$route.params.address" />
             <span class="account-address">{{$route.params.address}}</span>
           </div>
-          <p><router-link :to="{ name: 'account-export' }" class="text-link">Export</router-link></p>
         </div>
       </div>
     </div>
@@ -28,19 +23,29 @@
 <script lang="ts">
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import { FormattedToken, Identicon } from '@aergo-connect/lib-ui/src/content';
+import { Icon } from '@aergo-connect/lib-ui/src/icons';
+import { Button } from '@aergo-connect/lib-ui/src/buttons';
+import AccountBalance from '../../../components/account/Balance.vue';
 
 import Vue from 'vue';
 import Component from 'vue-class-component'
 import { Account } from '@herajs/wallet';
+import ExportAccountDialog from '../../../components/account/ExportAccountDialog.vue';
 
 @Component({
   components: {
     ScrollView,
     FormattedToken,
     Identicon,
+    Button,
+    Icon,
+    AccountBalance,
+    ExportAccountDialog,
   },
 })
 export default class AccountDetails extends Vue {
+  exportAccountDialogVisible = false;
+
   get account(): Account {
     return this.$store.getters['accounts/getAccount'](this.accountSpec);
   }
@@ -56,30 +61,6 @@ export default class AccountDetails extends Vue {
 </script>
 
 <style lang="scss">
-.detail-balance {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-
-  .balance-label {
-    font-size: (12/16)*1rem;
-    font-weight: 500;
-  }
-  .account-balance {
-    line-height: 1.8;
-    font-size: (28/16)*1rem;
-
-    .value {
-      font-weight: 600;
-    }
-    .unit {
-      font-size: (20/16)*1rem;
-    }
-    .sep {
-      margin-right: 5px;
-    }
-  }
-}
 .detail-box {
   border-radius: 2px;
   box-shadow: 0 12px 20px 0 rgba(34, 34, 34, 0.08);
@@ -98,9 +79,15 @@ export default class AccountDetails extends Vue {
 }
 
 /* Two-tone trick effect. Extend the upper (white) box and then pull the lower (black) box up */
-.detail-top {
+.content.detail-top {
   background-color: #fff;
   padding-bottom: 80px;
+  display: flex;
+  align-items: flex-start;
+
+  .detail-balance {
+    flex: 1;
+  }
 }
 .detail-bottom {
   margin-top: -100px;
