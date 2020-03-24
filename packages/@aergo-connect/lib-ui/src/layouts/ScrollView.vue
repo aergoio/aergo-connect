@@ -45,27 +45,29 @@ export default Vue.extend({
   * https://stackoverflow.com/a/45420691/700283
   */
 $scrollBarSize: 6px;
+$trackSize: 20px;
+$margin: ($trackSize - $scrollBarSize)/2;
 .scroll-view main {
   &::-webkit-scrollbar {
-    width: $scrollBarSize*3;
+    width: $trackSize;
   }
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 $scrollBarSize*1.5 $scrollBarSize*1.5 rgba(0, 0, 0, 0.15);
-    border: solid $scrollBarSize transparent;
-    border-radius: $scrollBarSize*3;
+    box-shadow: inset 0 0 $margin $margin rgba(0, 0, 0, 0.15);
+    border: solid $margin transparent;
+    border-radius: $trackSize;
   }
   &::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 $scrollBarSize*1.5 $scrollBarSize*1.5 rgba(0, 0, 0, 0.35);
-    border: solid $scrollBarSize transparent;
-    border-radius: $scrollBarSize*3;
+    box-shadow: inset 0 0 $margin $margin rgba(0, 0, 0, 0.35);
+    border: solid $margin transparent;
+    border-radius: $trackSize;
   }
 }
 .inverted-colors .scroll-view main {
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 $scrollBarSize*1.5 $scrollBarSize*1.5 rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 $margin $margin rgba(255, 255, 255, 0.3);
   }
   &::-webkit-scrollbar-thumb {
-    box-shadow: inset 0 0 $scrollBarSize*1.5 $scrollBarSize*1.5 rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 $margin $margin rgba(255, 255, 255, 0.5);
   }
 }
 </style>
