@@ -5,8 +5,12 @@ Vue + Typescript
 
 ## Development
 
-    # Install dependencies
+Install dependencies
+
     yarn
 
-    # Run dev server
-    yarn serve-extension
+Run dev build
+
+    yarn build-dev
+
+Add the dist-dev folder as an "unpacked extension" to Chrome.

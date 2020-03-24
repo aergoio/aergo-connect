@@ -1,7 +1,7 @@
 <template>
-  <ScrollView class="page">
+  <ScrollView class="page send-page">
     <div class="content">
-      <Heading tag="h2">Send</Heading>
+      <Heading tag="h2" style="margin-top: 0">Send</Heading>
       <TextField label="Recipient" v-model="txBody.to" :error="errors.to" />
       <div class="amount-unit">
         <TextField label="Amount" type="number" variant="main" v-model="txBody.amount" :error="errors.amount" />
