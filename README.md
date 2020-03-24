@@ -3,6 +3,10 @@
 Chrome browser extension built using
 Vue + Typescript
 
+## Install
+
+*Coming soon*
+
 ## Development
 
 Install dependencies
