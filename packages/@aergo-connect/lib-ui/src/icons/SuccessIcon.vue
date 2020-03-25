@@ -1,6 +1,6 @@
 <template>
   <div class="icon icon-success icon-success-animated">
-    <svg width="64" height="64" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg :width="size" :height="size" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g stroke="#000" stroke-width="5">
         <circle cx="65" cy="65" r="62"/>
         <path d="M40.5 67.5L59.5 83L93.5 48.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -8,6 +8,20 @@
     </svg>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+  name: 'SuccessIcon',
+  props: {
+    size: {
+      type: Number,
+      default: 64,
+    },
+  },
+});
+</script>
 
 <style lang="scss">
 .icon-success-animated {

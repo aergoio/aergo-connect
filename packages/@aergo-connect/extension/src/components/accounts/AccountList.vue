@@ -1,15 +1,15 @@
 <template>
   <ul class="account-list">
     <li v-for="[chainId, accounts] in accountsByChainId" :key="chainId">
-      <div class="chainid-group">
+      <div class="chainid-group" v-if="groupByChain">
         <span class="chain-id-icon">
           <Icon :name="isPublicChainId(chainId) ? 'logo' : 'network-other'" :size="36" />
         </span>
         <span class="chain-id">{{chainId}}</span>
       </div>
       <ul>
-        <li v-for="account in accounts" :key="account.key" class="account-item-li">
-          <router-link :to="{ name: 'account-details', params: account.data.spec }">
+        <li v-for="account in accounts" :key="account.key" class="account-item-li" @click.capture="$emit('select', account)">
+          <router-link :to="{ name: accountRoute, params: account.data.spec }">
             <div class="account-item">
               <Identicon :text="account.data.spec.address" class="circle" />
               
@@ -45,6 +45,8 @@ import { isPublicChainId } from '../../config';
 })
 export default class AccountList extends Vue {
   @Prop({type: Array, required: true}) readonly accounts!: Account[];
+  @Prop({type: Boolean, default: true}) readonly groupByChain!: boolean;
+  @Prop({type: String, default: 'account-details'}) readonly accountRoute!: string;
 
   get sortedAccounts() {
     const accounts = [...this.accounts];
@@ -54,6 +56,7 @@ export default class AccountList extends Vue {
   }
 
   get accountsByChainId() {
+    if (this.groupByChain === false) return [['ALL', this.sortedAccounts]];
     const result = groupBy(this.sortedAccounts, item => item?.data?.spec?.chainId || '');
     return Array.from(result);
   }
@@ -88,7 +91,7 @@ export default class AccountList extends Vue {
     border-top: 1px solid #f0f0f0;
   }
   .chainid-group, .account-item {
-    padding: 16px 24px;
+    padding: 16px 20px;
   }
   .account-item {
     padding-bottom: 0;

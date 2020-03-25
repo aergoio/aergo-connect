@@ -2,6 +2,7 @@ import extension from 'extensionizer';
 import { EventEmitter } from 'events';
 import pump from 'pump';
 import Dnode from 'dnode/browser.js';
+import Transport from '@ledgerhq/hw-transport-webusb';
 
 import { Wallet, Account } from '@herajs/wallet';
 import config from '../config';
@@ -211,6 +212,13 @@ class BackgroundController extends EventEmitter {
     }, txBody);
     console.log(txTracker, txTracker.transaction.txBody);
     return txTracker.transaction.txBody;
+  }
+
+  async connectLedger(): Promise<void> {
+    if (this.wallet.ledger) return;
+    console.log('Connecting Ledger...');
+    const transport = await Transport.create(30000, 1500);
+    this.wallet.connectLedger(transport);
   }
 
   setupCommunication(outStream: any) {

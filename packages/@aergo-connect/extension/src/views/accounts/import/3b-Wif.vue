@@ -69,7 +69,7 @@ export default class Keystore extends mixins(PersistInputsMixin) {
         privateKey: Array.from(identity.privateKey),
         chainId: this.chainId,
       });
-      this.$router.push({ name: 'account-imported', params: accountSpec });
+      this.$router.push({ name: 'account-imported', params: {...accountSpec} });
     } catch(e) {
       console.log(e);
       if (`${e}`.match(/invalid mac value/)) {

@@ -41,9 +41,24 @@ const typeOptions: [number, string][] = [];
 export function keys<O>(o: O): (keyof O)[] {
     return Object.keys(o) as (keyof O)[];
 }
-for (const key of keys(Tx.Type)) {
+/**
+ * This functions takes an object,
+ * gets the keys, excluding some, orders some of the keys to the beginning, and returns
+ * a typed tuple of the remaining keys.
+ */
+function keysFilteredReordered<O, E extends Partial<O>>(
+  enumObj: O,
+  orderFront: (keyof O)[],
+  exclude: (keyof E)[] = []
+): Exclude<keyof O, keyof E>[] {
+  const filtered = keys(enumObj).filter(a => exclude.indexOf(a) === -1);
+  return Array.from(new Set([...orderFront, ...filtered])) as Exclude<(keyof O), (keyof E)>[];
+}
+const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY']);
+for (const key of orderedTypes) {
   typeOptions.push([Tx.Type[key], capitalizeFirstLetter(key.toLowerCase())]);
 }
+
 @Component({
   components: {
     ScrollView,
@@ -66,7 +81,7 @@ export default class AccountSend extends mixins(PersistInputsMixin) {
     unit: 'aergo',
     payload: '',
     limit: 0,
-    type: 0,
+    type: Tx.Type.TRANSFER,
   };
 
   errors: any = {

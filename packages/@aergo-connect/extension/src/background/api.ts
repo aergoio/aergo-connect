@@ -88,6 +88,11 @@ export class Api {
     return accounts;
   }
 
+  async getLedgerAddress({ path }: { path: string }) {
+    await this.controller.connectLedger();
+    return await this.controller.wallet.accountManager.getAddressFromLedger(path);
+  }
+
   async createAccount({ chainId }: { chainId: string }) {
     this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.createAccount(chainId);
@@ -109,15 +114,21 @@ export class Api {
     return await this.controller.getActiveAccount();
   }
 
-  async importAccount({ privateKey, chainId }: any) {
+  async addAccount(accountData: Account["data"]): Promise<AccountSpec> {
+    const account = await this.controller.wallet.accountManager.addAccount(accountData.spec, accountData);
+    console.log('addAccount', account);
+    this.controller.trackAccount(account);
+    return account.data.spec;
+  }
+
+  async importAccount({ privateKey, chainId }: any): Promise<AccountSpec> {
     this.controller.keepUnlocked();
     const identity = identifyFromPrivateKey(privateKey);
     const address = identity.address;
     const account = await this.controller.wallet.accountManager.addAccount({ address, chainId });
-    console.log('importAccount', account, privateKey);
     await this.controller.wallet.keyManager.importKey({
       account: account,
-      privateKey: privateKey
+      privateKey: privateKey,
     });
     this.controller.trackAccount(account);
     return account.data.spec;
@@ -168,6 +179,14 @@ export class Api {
     return new Promise((resolve: (account: Account) => void) => {
       this.controller.trackAccount(account, resolve);
     });
+  }
+
+  async getAccountState(accountSpec: AccountSpec) {
+    const state = await this.controller.wallet.getClient(accountSpec.chainId).getState(accountSpec.address);
+    return {
+      ...state,
+      balance: state.balance.toString(),
+    };
   }
 
   async signMessage({ address, chainId, message }: any) {

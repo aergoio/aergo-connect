@@ -5,14 +5,16 @@
     <div class="content detail-top">
       <AccountBalance :account="account" />
 
-      <Button @click="exportAccountDialogVisible = true" type="icon"><Icon name="account-export" :size="36" /></Button>
+      <Button v-if="canExport" @click="exportAccountDialogVisible = true" type="icon"><Icon name="account-export" :size="36" /></Button>
+      <div v-if="account && account.data && account.data.type === 'ledger'" class="account-storage-note">Stored on Ledger</div>
+
     </div>
     <div class="detail-bottom">
       <div class="content">
         <div class="detail-box">
           <div class="account-detail-address">
             <Identicon :text="$route.params.address" />
-            <span class="account-address">{{$route.params.address}}</span>
+            <div class="account-address">{{$route.params.address}}</div>
           </div>
         </div>
       </div>
@@ -53,6 +55,10 @@ export default class AccountDetails extends Vue {
   get accountSpec() {
     return { address: this.$route.params.address, chainId: this.$route.params.chainId };
   }
+
+  get canExport() {
+    return !(this.account?.data?.type === 'ledger');
+  }
   
   mounted() {
     this.$store.dispatch('accounts/updateAccount', this.accountSpec);
@@ -76,6 +82,11 @@ export default class AccountDetails extends Vue {
   .account-detail-address {
     padding: 24px;
   }
+}
+
+.account-storage-note {
+  color: #777;
+  font-size: (12/16)*1rem;
 }
 
 /* Two-tone trick effect. Extend the upper (white) box and then pull the lower (black) box up */

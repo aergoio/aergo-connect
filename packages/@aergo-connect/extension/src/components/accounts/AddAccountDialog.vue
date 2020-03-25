@@ -13,7 +13,7 @@
           Import Account
         </span>
       </router-link>
-      <router-link :to="{ name: 'account-connect' }" v-if="isHardwareWalletEnabled">
+      <router-link :to="{ name: 'account-connect-hw' }" v-if="isHardwareWalletEnabled">
         <span>
           <Icon name="account-connect" :size="36" />
           Connect Hardware Wallet
@@ -40,7 +40,7 @@ import { Prop } from 'vue-property-decorator';
 export default class AddAccountDialog extends Vue {
   @Prop(Boolean) readonly visible = false;
 
-  get isHardwareWalletEnabled() {
+  get isHardwareWalletEnabled(): boolean {
     return this.$store.getters['ui/getSetting']('features.enableHardwareWallet');
   }
 }
