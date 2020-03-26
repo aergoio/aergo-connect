@@ -14,6 +14,7 @@ import AppState from './app-state';
 //import 'whatwg-fetch';
 
 import { Buffer } from 'buffer';
+import { hashTransaction } from '@herajs/crypto';
 
 const AUTO_LOCK_TIMEOUT = 60*1000 * 3; // 3 minutes
 
@@ -75,6 +76,9 @@ class BackgroundController extends EventEmitter {
       this.emit('update', { unlocked: true });
       console.log('[lock] unlocked');
     });
+
+    // Background script cannot access USB device
+    this.wallet.keyManager.useExternalLedger = true;
 
     this.state.on('idle', () => {
       console.log('[state] idle, pausing trackers');
@@ -206,10 +210,18 @@ class BackgroundController extends EventEmitter {
 
   async sendTransaction({ txBody, chainId }: any) {
     this.keepUnlocked();
-    const txTracker = await this.wallet.sendTransaction({
+    const accountSpec = {
       address: txBody.from,
       chainId: chainId
-    }, txBody);
+    };
+    let tx = txBody;
+    if (txBody.sign) {
+      // Externally pre-signed transaction
+      tx = await this.wallet.prepareTransaction(accountSpec, txBody);
+      tx.txBody.sign = txBody.sign;
+      tx.txBody.hash = await hashTransaction(txBody, 'base58');
+    }
+    const txTracker = await this.wallet.sendTransaction(accountSpec, tx);
     console.log(txTracker, txTracker.transaction.txBody);
     return txTracker.transaction.txBody;
   }

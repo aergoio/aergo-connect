@@ -34,7 +34,6 @@
 <script lang="ts">
 import { BackButton, ContinueButton, Button, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView, LoadingDialog } from '@aergo-connect/lib-ui/src/layouts';
-import { LoadingIndicator } from '@aergo-connect/lib-ui/src/icons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
 import { PersistInputsMixin } from '../../../store/ui';
@@ -54,7 +53,6 @@ import LedgerAppAergo from '@herajs/ledger-hw-app-aergo';
     Heading,
     SelectField,
     ContinueButton,
-    LoadingIndicator,
     Button,
     ButtonGroup,
     LoadingDialog,
@@ -81,7 +79,7 @@ export default class Import extends mixins(PersistInputsMixin) {
     try {
       const transport = await timedAsync(Transport.create(), { fastTime: 1000 });
       const app = new LedgerAppAergo(transport);
-      this.connectStatus = 'Loading addresses...';
+      this.connectStatus = 'Loading accounts...';
       const accounts = await this.loadAccounts(app, 0, 5);
       this.accounts.push(...accounts);
       this.dialogState = 'success';
@@ -106,7 +104,6 @@ export default class Import extends mixins(PersistInputsMixin) {
     const statePromises = [];
     for (let i = from; i < to; i++) {
       const path = 'm/44\'/441\'/0\'/0/' + i;
-      //const address = await this.$background.getLedgerAddress({ path });
       const address = await app.getWalletAddress(path);
       const spec = {
         address: `${address}`,
@@ -125,17 +122,15 @@ export default class Import extends mixins(PersistInputsMixin) {
       });
       accounts.push(account);
       statePromises.push(this.$background.getAccountState(spec).then(state => {
-        console.log('got state', state);
         account.data.balance = `${state.balance}`;
       }));
     }
-    // Wait for all state promises to resolve
+    // Wait for remaining state promises to resolve
     await Promise.all(statePromises);
     return accounts;
   }
 
   async selectAccount(account: Account): Promise<void> {
-    console.log('our chance to save the account before continuing', account);
     await this.$background.addAccount(account.data);
   }
 }

@@ -1253,6 +1253,21 @@
     jsbi "^3.0.0"
     scrypt-async-modern "^3.0.12"
 
+"@herajs/crypto@^0.19.4":
+  version "0.19.4"
+  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.19.4.tgz#16a0646ac33a06badd27c08caa235e3e7d7b4cda"
+  integrity sha512-bMwp20PErFeJ2maMrUifrUHoNLNEWlgM2hDD2Vje4FA9W+frpo4HSVK8IJ6/TBbzcugJJT1HMekUq3RqZFjOag==
+  dependencies:
+    "@herajs/common" "^0.19.0"
+    "@herajs/hdkey" "^11.2.0"
+    "@types/elliptic" "^6.4.0"
+    aes-js "^3.1.1"
+    asmcrypto.js "^2.3.2"
+    bip39 "^3.0.2"
+    elliptic "^6.4.1"
+    jsbi "^3.0.0"
+    scrypt-async-modern "^3.0.12"
+
 "@herajs/hdkey@^11.2.0":
   version "11.2.0"
   resolved "https://registry.yarnpkg.com/@herajs/hdkey/-/hdkey-11.2.0.tgz#6092b8f160644719905fe0bb9527e7ec530e127d"
@@ -1263,25 +1278,25 @@
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
-"@herajs/ledger-hw-app-aergo@^0.19.3":
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.19.3.tgz#5ae1625174282eedefc118f64803ed313efb7f2e"
-  integrity sha512-vNeisgg1BqLNNOFVwW1IrqdR7O8ehVHe6ucQez1laDIBOASDtk3NU8nYw17yGObuS/owBwizBoz+kl8+Dfaevg==
+"@herajs/ledger-hw-app-aergo@^0.19.6":
+  version "0.19.6"
+  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.19.6.tgz#c317b1ef5efd34327eebd9cb3e6d3f772ef26b73"
+  integrity sha512-sZxTfs+GnKIJtks8ETE6Ouj6Ieo8ywHymSoN00MhxZ43idzwCV5HNLxK6gJq6u9RcFV5hwvAJpCI0+ouWCRcLw==
   dependencies:
     "@herajs/client" "^0.19.1"
     "@herajs/common" "^0.19.0"
-    "@herajs/crypto" "^0.19.0"
+    "@herajs/crypto" "^0.19.4"
 
-"@herajs/wallet@^0.19.3":
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.19.3.tgz#de774cb01389239e20baedbaae3e82bc1d8cf75d"
-  integrity sha512-n6Zk43+WO5MGVpO6ej5oaJ6RdA4qyKC7SBA3PFp5h6C0K5XdRha0f6oGUFQbl4qTn3QNNctLpz8Wti3uvzjBmg==
+"@herajs/wallet@^0.19.6":
+  version "0.19.6"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.19.6.tgz#5bce642231c7cae0752c7bdc876b3d74ec551816"
+  integrity sha512-EGa8XDRXq4HlayiIcsTrhp7GEO2JZAfD6JKETQrY+zUhGvvPSKzShdlCp72lQlUaNNrgmn5e3kR+khmdSRACLA==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
     "@herajs/client" "^0.19.1"
     "@herajs/common" "^0.19.0"
-    "@herajs/crypto" "^0.19.0"
-    "@herajs/ledger-hw-app-aergo" "^0.19.3"
+    "@herajs/crypto" "^0.19.4"
+    "@herajs/ledger-hw-app-aergo" "^0.19.6"
     "@types/google-protobuf" "^3.2.7"
     "@types/hashmap" "^2.0.29"
     "@types/leveldown" "^4.0.0"

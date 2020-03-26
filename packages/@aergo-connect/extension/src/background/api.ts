@@ -154,6 +154,12 @@ export class Api {
     return { tx: txBody };
   }
 
+  async prepareTransaction(tx: any, chainId: string) {
+    console.log('preparing', this.controller.wallet);
+    const prearedTx = await this.controller.wallet.prepareTransaction({ address: tx.from, chainId }, tx);
+    return { tx: prearedTx.txBody };
+  }
+
   async signTransaction(tx: any, chainId: string) {
     const txBody = await this.controller.signTransaction({ txData: tx, address: tx.from, chainId });
     return { tx: txBody };
