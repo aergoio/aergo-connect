@@ -78,23 +78,29 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
   }
 
   async signWithLedger(txBody: any) {
-    console.log('gonna prepare tx', txBody);
     const { tx } = await this.$background.prepareTransaction(txBody, this.$route.params.chainId);
     tx.payload = txBody.payload;
-    console.log('received prepared transaction', tx);
-
     this.setStatus('loading', 'Connecting to Ledger device...');
-    const transport = await timedAsync(Transport.create(), { fastTime: 1000 });
+    const transport = await timedAsync(Transport.create(5000), { fastTime: 1000 });
     const app = new LedgerAppAergo(transport);
-    this.setStatus('loading', 'Confirm transaction on device');
-    const { signature } = await app.signTransaction(tx);
-    tx.sign = signature;
-    return tx;
+    this.setStatus('loading', 'Please confirm transaction on device!');
+    try {
+      const { signature } = await app.signTransaction(tx);
+      tx.sign = signature;
+      return tx;
+    } catch (e) {
+      if (`${e}`.match(/0x6982/)) {
+        throw new Error('Transaction was rejected.');
+      } else {
+        throw e;
+      }
+    }
   }
 
   async sendTransaction(txBody: any): Promise<string> {
     if (!this.account) {
-      throw new Error('Could not load account, please reload page and try again');
+      // This shouldn't happen normally
+      throw new Error('Could not load account, please reload page and try again.');
     }
     if (this.account.data.type === 'ledger') {
       txBody = await this.signWithLedger(txBody);
@@ -104,7 +110,8 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
     if ('tx' in result) {
       return result.tx.hash;
     } else {
-      throw new Error('result is missing transaction information');
+      // This shouldn't happen normally
+      throw new Error('Result is missing transaction information.');
     }
   }
 

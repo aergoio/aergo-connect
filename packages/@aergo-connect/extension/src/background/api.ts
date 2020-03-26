@@ -155,7 +155,6 @@ export class Api {
   }
 
   async prepareTransaction(tx: any, chainId: string) {
-    console.log('preparing', this.controller.wallet);
     const prearedTx = await this.controller.wallet.prepareTransaction({ address: tx.from, chainId }, tx);
     return { tx: prearedTx.txBody };
   }
@@ -167,6 +166,11 @@ export class Api {
 
   async getTransaction(chainId: string, hash: string) {
     const tx = await this.controller.wallet.getClient(chainId).getTransaction(hash);
+    return JSON.parse(JSON.stringify(tx));
+  }
+
+  async getTransactionReceipt(chainId: string, hash: string) {
+    const tx = await this.controller.wallet.getClient(chainId).waitForTransactionReceipt(hash);
     return JSON.parse(JSON.stringify(tx));
   }
 

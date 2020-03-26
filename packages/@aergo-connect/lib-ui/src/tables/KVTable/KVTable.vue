@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-$padding: 10px;
+$padding: 7px;
 $lineHeight: 20px;
 
 .key-value-table {
