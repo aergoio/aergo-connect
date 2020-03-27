@@ -18,7 +18,7 @@
       </ScrollView>
       
       <template #footer>
-        <div class="footer-button-wrap">
+        <div class="footer-content">
           <ButtonGroup vertical>
             <Button type="secondary" :to="{ name: 'account-send' }">Go back to Send page</Button>
           </ButtonGroup>

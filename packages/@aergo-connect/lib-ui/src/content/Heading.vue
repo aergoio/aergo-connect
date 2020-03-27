@@ -38,4 +38,8 @@ export default Vue.extend({
   font-size: (44/16)*1rem;
   font-weight: 600;
 }
+.semi-big-title {
+  font-size: (32/16)*1rem;
+  font-weight: 600;
+}
 </style>
