@@ -40,10 +40,14 @@ export default class Setup extends mixins() {
     password: "",
   };
 
+  next() {
+    this.$router.push({ name: this.$route.params.next || 'account-create' });
+  }
+
   async beforeMount(): Promise<void> {
     const isSetup = await this.$background.isSetup();
     if (isSetup) {
-      this.$router.push({ name: 'lockscreen' });
+      this.next();
     }
   }
 
@@ -56,9 +60,8 @@ export default class Setup extends mixins() {
       password: this.password,
     });
     if (check) {
-      this.$router.push({ name: 'account-create' });
+      this.next();
     }
-    // :to="{ name: 'account-created', params: { address: 'Abc' } }"
   }
 }
 </script>

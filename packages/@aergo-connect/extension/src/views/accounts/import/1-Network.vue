@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <div class="content">
       <section class="dialog-header">
-        <BackButton :to="{ name: 'accounts-list' }"/>
+        <BackButton :to="$store.state.ui.route.previousPath" />
       </section>
       <Heading animated>Import</Heading>
       <p>Please select the network for which you want to import the account.</p>

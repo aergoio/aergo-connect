@@ -4,15 +4,14 @@
       <Appear>
         <Heading class="big-title">Welcome to Aergo Connect</Heading>
       </Appear>
-      <p><router-link :to="{ name: 'account-details', params: { address: 'AmgVbUZiReUVFXdYb4UVMru4ZqyicSsFPqumRx8LfwMKLFk66SNw', chainId: 'aergo.io' } }" class="text-link">Example</router-link></p>
     </div>
 
     <template #footer>
       <div class="content">
         <Appear :delay="0.6">
           <ButtonGroup vertical>
-            <Button type="primary" :to="{ name: 'setup' }">Create new wallet</Button>
-            <Button type="secondary" :to="{ name: 'account-import' }">Import your wallet</Button>
+            <Button type="primary" :to="{ name: 'setup', params: { next: 'account-create' } }">Create new wallet</Button>
+            <Button type="secondary" :to="{ name: 'setup', params: { next: 'account-import' } }">Import your wallet</Button>
           </ButtonGroup>
         </Appear>
       </div>

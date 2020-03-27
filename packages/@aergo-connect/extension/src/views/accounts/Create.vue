@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <div class="content">
       <section class="dialog-header">
-        <BackButton />
+        <BackButton :to="$store.state.ui.route.previousPath" />
       </section>
       <Heading animated>Create</Heading>
       <p>Please select the network for your new account.</p>

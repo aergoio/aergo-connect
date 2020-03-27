@@ -68,7 +68,7 @@ export default Vue.extend({
   },
   methods: {
     handleClick() {
-      if (typeof this.to !== 'undefined' && typeof this.$router !== 'undefined') {
+      if (typeof this.to !== 'undefined' && this.to && typeof this.$router !== 'undefined') {
         this.$router.push(this.to);
       } else {
         this.$emit('click');

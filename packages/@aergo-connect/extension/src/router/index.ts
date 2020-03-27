@@ -52,7 +52,7 @@ const routes: RouteConfig[] = [
     withMeta(0, { path: '/locked', name: 'lockscreen', component: Lockscreen }, R.NoAuthCheck | R.NoTracking),
     withMeta(0, { path: '/settings', name: 'settings', component: Settings }, R.NoAuthCheck | R.NoTracking),
     withMeta(0, { path: '/welcome', name: 'welcome', component: Welcome }, R.NoAuthCheck),
-    withMeta(1, { path: '/setup', name: 'setup', component: Setup }, R.NoAuthCheck),
+    withMeta(1, { path: '/setup/:next', name: 'setup', component: Setup }, R.NoAuthCheck | R.NoTracking),
     withMeta(1, { path: 'list', name: 'accounts-list', component: AccountsList }),
     withMeta(2, { path: 'create', name: 'account-create', component: Create }),
     withMeta(2, { path: 'import', name: 'account-import', component: Import }),
