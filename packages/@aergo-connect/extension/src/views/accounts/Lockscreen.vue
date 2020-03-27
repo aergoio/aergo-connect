@@ -1,7 +1,8 @@
 <template>
   <ScrollView class="page">
-    <div class="welcome-content">
-      <Heading class="big-title">Locked</Heading>
+    <div class="locked-content">
+      <Icon name="title-security" :size="36" />
+      <Heading>Your wallet is locked.</Heading>
       <p>Please enter your wallet passphrase to continue.</p>
       <TextField variant="main" type="password" v-model="password" :error="errors.password" @submit="unlock" />
     </div>
@@ -18,6 +19,7 @@
 import Component, { mixins } from 'vue-class-component';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import { Button, ButtonGroup, ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
+import { Icon } from '@aergo-connect/lib-ui/src/icons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import Appear from '@aergo-connect/lib-ui/src/animations/Appear.vue';
 import { TextField } from '@aergo-connect/lib-ui/src/forms';
@@ -31,6 +33,7 @@ import { TextField } from '@aergo-connect/lib-ui/src/forms';
     Heading,
     Appear,
     TextField,
+    Icon,
   },
 })
 export default class Lockscreen extends mixins() {
@@ -67,9 +70,12 @@ export default class Lockscreen extends mixins() {
 </script>
 
 <style lang="scss">
-.welcome-content {
-  margin-top: 116px;
+.locked-content {
+  margin-top: 15px;
   padding: 20px;
-}
 
+  .icon {
+    margin-bottom: 15px;
+  }
+}
 </style>
