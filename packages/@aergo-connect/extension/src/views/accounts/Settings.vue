@@ -2,6 +2,7 @@
   <ScrollView class="page">
     <div class="content">
       <Heading>Settings</Heading>
+      <p class="settings-group">Accounts</p>
       <SwitchButton v-model="features.enableHardwareWallet" label="Enable experimental hardware wallet support" />
     </div>
   </ScrollView>
@@ -32,5 +33,10 @@ export default class Import extends mixins(PersistInputsMixin) {
 </script>
 
 <style lang="scss">
-
+.settings-group {
+  font-size: (13/16)*1rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: .5em;
+}
 </style>

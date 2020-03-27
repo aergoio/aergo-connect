@@ -1,7 +1,7 @@
 <template>
   <label class="component switch-button" v-on:click="!disabled && $emit('input', !value)">
-    <span class="switch-button-toggle" :class="{checked: !!value, disabled: disabled}"></span>
     <slot>{{label}}</slot>
+    <span class="switch-button-toggle" :class="{checked: !!value, disabled: disabled}"></span>
   </label>
 </template>
 
@@ -29,14 +29,17 @@ export default Vue.extend({
 .component.switch-button {
   display: flex;
   align-items: center;
+  font-size: (13/16)*1rem;
+  color: #222;
 
   .switch-button-toggle {
     flex-shrink: 0;
-    margin-right: 10px;
-    font-size: 22px;
+    margin-left: auto;
+    font-size: 18px;
     background-color: #aaa;
     border-radius: 1em;
-    width: 1.7em;
+    border: 1px solid #ccc;
+    width: 1.85em;
     height: 1em;
     display: inline-block;
     position: relative;
@@ -48,10 +51,10 @@ export default Vue.extend({
       font-size: 16px;
       content: "";
       position: absolute;
-      top: .2em;
-      left: .2em;
-      width: 1em;
-      height: 1em;
+      top: .1em;
+      left: .1em;
+      width: 16px;
+      height: 16px;
       border-radius: 1em;
       background-color: #fff;
       transition: all .15s;
@@ -68,11 +71,11 @@ export default Vue.extend({
     }
 
     &.checked {
-      border-color: #ff337f;
+      border-color: lighten(#ff337f, 20%);
       background-color: #ff337f;
 
       &:after {
-        left: 1.1em;
+        left: 1em;
       }
 
       &.disabled {

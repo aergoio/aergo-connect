@@ -129,7 +129,8 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
       }, 1000);
     } catch(e) {
       console.log(e);
-      this.setStatus('error', `${e}`);
+      const errorMsg = `${e}`.replace("UNDEFINED_ERROR:", "");
+      this.setStatus('error', errorMsg);
     }
   }
 }
