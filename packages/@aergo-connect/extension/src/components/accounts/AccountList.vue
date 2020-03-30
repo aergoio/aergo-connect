@@ -50,9 +50,34 @@ export default class AccountList extends Vue {
 
   get sortedAccounts() {
     const accounts = [...this.accounts];
+    // Order by balance, reversed
     accounts.sort((a, b) => !a.data ? 0 : - (new Amount(a.data.balance)).compare((new Amount(b.data.balance))));
+    // Order by chainID. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
     accounts.sort((a, b) => !a.data ? 0 : a.data.spec.chainId.localeCompare(b.data.spec.chainId) );
+    // Order the most recent account first
+    accounts.sort((a, b) => this.recentlyNewAccount && a.key === this.recentlyNewAccount.key ? -1 : 0 );
     return accounts;
+  }
+
+  /**
+   * Returns the most recently added account, if any
+   */
+  get recentlyNewAccount(): Account | null {
+    const MaxAge = 1000*60*5; // 5 min 
+    const accounts = [...this.accounts];
+    // Reverse sort by date added
+    accounts.sort((a, b) => {
+      if (!a.data) return 0;
+      const aAdded = typeof a.data.added === 'string' ? + new Date(a.data.added) : 0;
+      const bAdded = typeof b.data.added === 'string' ? + new Date(b.data.added) : 0;
+      return - (aAdded - bAdded);
+    });
+    // Pick the most recent one
+    const mostRecentAdded = typeof accounts[0].data.added === 'string' ? + new Date(accounts[0].data.added) : 0;
+    if (+ new Date() - mostRecentAdded < MaxAge) {
+      return accounts[0];
+    }
+    return null;
   }
 
   get accountsByChainId() {

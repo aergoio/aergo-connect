@@ -109,17 +109,11 @@ export default class Import extends mixins(PersistInputsMixin) {
         address: `${address}`,
         chainId: this.chainId,
       };
-      const account = new Account(serializeAccountSpec(spec), {
+      const account = new Account(serializeAccountSpec(spec), Account.getDefaultData({
         spec,
         type: 'ledger',
         derivationPath: path,
-        privateKey: [],
-        publicKey: Array.from(address.asBytes()),
-        nonce: 0,
-        name: '',
-        lastSync: null,
-        balance: '0 aer',
-      });
+      }));
       accounts.push(account);
       statePromises.push(this.$background.getAccountState(spec).then(state => {
         account.data.balance = `${state.balance}`;

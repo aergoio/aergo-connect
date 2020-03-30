@@ -14,7 +14,10 @@
         <div class="detail-box">
           <div class="account-detail-address">
             <Identicon :text="$route.params.address" />
-            <div class="account-address">{{$route.params.address}}</div>
+            <div class="account-address">
+              <span>{{$route.params.address}}</span>
+              <ClipboardButton :value="$route.params.address" />
+            </div>
           </div>
         </div>
       </div>
@@ -26,13 +29,13 @@
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import { FormattedToken, Identicon } from '@aergo-connect/lib-ui/src/content';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
-import { Button } from '@aergo-connect/lib-ui/src/buttons';
-import AccountBalance from '../../../components/account/Balance.vue';
+import { Button, ClipboardButton } from '@aergo-connect/lib-ui/src/buttons';
 
 import Vue from 'vue';
 import Component from 'vue-class-component'
 import { Account } from '@herajs/wallet';
 import ExportAccountDialog from '../../../components/account/ExportAccountDialog.vue';
+import AccountBalance from '../../../components/account/Balance.vue';
 
 @Component({
   components: {
@@ -43,6 +46,7 @@ import ExportAccountDialog from '../../../components/account/ExportAccountDialog
     Icon,
     AccountBalance,
     ExportAccountDialog,
+    ClipboardButton,
   },
 })
 export default class AccountDetails extends Vue {
@@ -78,6 +82,11 @@ export default class AccountDetails extends Vue {
     word-break: break-all;
     line-height: 1.3;
     color: #000;
+    display: flex;
+    align-items: center;
+    .copy-button {
+      margin-left: 10px;
+    }
   }
   .account-detail-address {
     padding: 24px;
