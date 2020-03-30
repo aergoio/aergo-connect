@@ -15,7 +15,7 @@
               <span v-if="tx.data.to == tx.data.from">self-transfer</span>
               <Elide v-else class="address" :text="address == tx.data.from ? tx.data.to : tx.data.from" mode="middle-fixed-tail" expect-ellipsis />
             </span>
-            <FormattedToken :class="['amount', address == tx.data.from ? 'negative' : 'positive']" :prefix="address == tx.data.from ? '-' : '+'" :value="`${tx.data.amount} aer`" />
+            <FormattedToken :class="['amount', address == tx.data.from ? 'negative' : 'positive']" :prefix="tx.data.from == tx.data.to ? '' : address == tx.data.to ? '+' : '-'" :value="`${tx.data.amount} aer`" />
           </span>
           <span class="date-category">
             <span class="date">{{formatTimestamp(tx.data.ts)}}</span>
