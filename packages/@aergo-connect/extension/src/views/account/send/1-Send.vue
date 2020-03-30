@@ -39,7 +39,6 @@ import Component, { mixins } from 'vue-class-component';
 import { Tx } from '@herajs/client';
 import { Address } from '@herajs/common';
 import { capitalizeFirstLetter } from '../../../utils/strings';
-import { parsePayload } from '../../../utils/payload';
 
 const typeOptions: [number, string][] = [];
 export function keys<O>(o: O): (keyof O)[] {

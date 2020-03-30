@@ -4,7 +4,7 @@
       <section class="dialog-header">
         <BackButton :to="{ name: 'account-import-format' }" />
       </section>
-      <Heading>Import Enc. String</Heading>
+      <Heading>Import Encrypted String</Heading>
       <p>Enter your encrypted private key and password.</p>
       <TextField label="Encrypted private key" v-model="encryptedKey" :error="errors.keystore" />
       <TextField v-model="password" type="password" label="Encryption password" :error="errors.password" autoComplete="no" />  
