@@ -29,6 +29,7 @@ import AccountDetails from '../views/account/details/Details.vue';
 import AccountExportKeystore from '../views/account/export/Keystore.vue';
 import AccountExportWif from '../views/account/export/Wif.vue';
 import AccountNameCreate from '../views/account/name/Create.vue';
+import AccountNameUpdate from '../views/account/name/Update.vue';
 
 enum R {
   None = 0,
@@ -70,6 +71,7 @@ const routes: RouteConfig[] = [
         { path: 'export/keystore', name: 'account-export-keystore', component: AccountExportKeystore },
         { path: 'export/wif', name: 'account-export-wif', component: AccountExportWif },
         { path: 'name/create', name: 'account-name-create', component: AccountNameCreate },
+        { path: 'name/:name/update', name: 'account-name-update', component: AccountNameUpdate },
       ] },
       { path: 'send', component: AccountDetailsContainer, alias: '', children: [
         { path: '', name: 'account-send', component: AccountSend },
