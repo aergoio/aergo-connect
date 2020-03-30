@@ -117,6 +117,15 @@ export default class AccountSend extends mixins(PersistInputsMixin) {
       this.errors.amount =  '';
     }
     if (this.errors.to || this.errors.amount) return;
+    if (this.txBody.payload) {
+      try {
+        // Reparse JSON to make sure it can be read by Ledger
+        const json = JSON.parse(this.txBody.payload);
+        this.txBody.payload = JSON.stringify(json);
+      } catch (e) {
+        // Ignore
+      }
+    }
     this.$router.push({ name: 'account-send-confirm' });
   }
 }
