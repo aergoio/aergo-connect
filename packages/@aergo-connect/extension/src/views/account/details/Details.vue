@@ -66,6 +66,8 @@ export default class AccountDetails extends Vue {
   
   mounted() {
     this.$store.dispatch('accounts/updateAccount', this.accountSpec);
+    // Clear Send dialog's persisted input
+    this.$store.commit('ui/clearInput', { key: 'send' });
   }
 }
 </script>

@@ -63,6 +63,9 @@ const storeModule: Module<UiState, RootState> = {
     setInputs(state, { key, data }: { key: string; data: InputData }) {
       state.input[key] = data;
     },
+    clearInput(state, { key }) {
+      state.input[key] = {};
+    },
   }
 };
 

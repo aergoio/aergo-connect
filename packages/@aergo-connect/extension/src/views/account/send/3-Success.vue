@@ -71,6 +71,7 @@ export default class AccountSendConfirm extends mixins() {
 
   mounted() {
     this.$store.dispatch('accounts/updateAccount', this.accountSpec);
+    this.$store.commit('ui/clearInput', { key: 'send' });
     this.$background.getTransactionReceipt(this.$route.params.chainId, this.$route.params.hash).then(result => {
       this.txReceipt = result;
     });

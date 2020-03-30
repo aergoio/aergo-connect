@@ -72,6 +72,8 @@ export default class AccountHistory extends Vue {
 
   mounted() {
     this.reload();
+    // Clear Send dialog's persisted input
+    this.$store.commit('ui/clearInput', { key: 'send' });
   }
 }
 </script>
