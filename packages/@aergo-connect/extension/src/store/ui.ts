@@ -66,6 +66,15 @@ const storeModule: Module<UiState, RootState> = {
     clearInput(state, { key }) {
       state.input[key] = {};
     },
+  },
+  actions: {
+    setTxBody({ commit }, txBody) {
+      commit('setInput', {
+        key: 'send',
+        field: 'txBody',
+        value: txBody,
+      });
+    }
   }
 };
 

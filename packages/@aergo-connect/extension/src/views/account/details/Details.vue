@@ -19,6 +19,7 @@
               <ClipboardButton :value="$route.params.address" />
             </div>
           </div>
+          <NameDetails :address="$route.params.address" />
         </div>
       </div>
     </div>
@@ -36,6 +37,7 @@ import Component from 'vue-class-component'
 import { Account } from '@herajs/wallet';
 import ExportAccountDialog from '../../../components/account/ExportAccountDialog.vue';
 import AccountBalance from '../../../components/account/Balance.vue';
+import NameDetails from '../../../components/account/NameDetails.vue';
 
 @Component({
   components: {
@@ -47,6 +49,7 @@ import AccountBalance from '../../../components/account/Balance.vue';
     AccountBalance,
     ExportAccountDialog,
     ClipboardButton,
+    NameDetails,
   },
 })
 export default class AccountDetails extends Vue {
@@ -77,7 +80,7 @@ export default class AccountDetails extends Vue {
   border-radius: 2px;
   box-shadow: 0 12px 20px 0 rgba(34, 34, 34, 0.08);
   min-height: 200px;
-  background-color: #fff;
+  background-color: #fafafa;
   font-size: (13/16)*1rem;
 
   .account-address {
@@ -89,9 +92,12 @@ export default class AccountDetails extends Vue {
     .copy-button {
       margin-left: 10px;
     }
+    
   }
   .account-detail-address {
-    padding: 24px;
+    padding: 24px 24px 18px;
+    box-shadow: inset 0 -1px 0 0 #f2f2f2;
+    background-color: #fff;
   }
 }
 
@@ -113,8 +119,29 @@ export default class AccountDetails extends Vue {
 }
 .detail-bottom {
   margin-top: -100px;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  
+  .content {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .detail-box {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 .detail-page {
   background-color: #222;
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
