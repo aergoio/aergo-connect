@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/vue';
-import { number, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import Identicon from './Identicon.vue';
 
 storiesOf('Content/Identicon', module)

@@ -88,5 +88,8 @@ export default Vue.extend({
   .invertible-stroke {
     stroke: #fff;
   }
+  .invertible-fill {
+    fill: #aaa;
+  }
 }
 </style>

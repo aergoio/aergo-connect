@@ -10,6 +10,7 @@ export const iconNames = tuple(
   'back',
   'checkmark',
   'checkmark-circle',
+  'copy',
   'close',
   'danger',
   'danger-big',
