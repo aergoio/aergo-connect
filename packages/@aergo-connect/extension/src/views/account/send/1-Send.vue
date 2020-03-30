@@ -2,7 +2,7 @@
   <ScrollView class="page send-page">
     <div class="content">
       <Heading tag="h2" style="margin-top: 0">Send</Heading>
-      <TextField label="Recipient" v-model="txBody.to" :error="errors.to" />
+      <AddressField label="Recipient" v-model="txBody.to" :error="errors.to" />
       <div class="amount-unit">
         <TextField label="Amount" type="number" variant="main" v-model="txBody.amount" :error="errors.amount" />
         <SelectField variant="main" modal-sheet v-model="txBody.unit" :options="unitOptions" dropdownTitle="Unit" />
@@ -29,12 +29,13 @@
 <script lang="ts">
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
-import { TextField, SelectField } from '@aergo-connect/lib-ui/src/forms';
+import { TextField, AddressField, SelectField } from '@aergo-connect/lib-ui/src/forms';
 import { Button, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 import { PersistInputsMixin } from '../../../store/ui';
 
 import Component, { mixins } from 'vue-class-component';
 import { Tx } from '@herajs/client';
+import { Address } from '@herajs/common';
 import { capitalizeFirstLetter } from '../../../utils/strings';
 
 const typeOptions: [number, string][] = [];
@@ -64,6 +65,7 @@ for (const key of orderedTypes) {
     ScrollView,
     Heading,
     TextField,
+    AddressField,
     SelectField,
     Button,
     ButtonGroup,
@@ -98,9 +100,18 @@ export default class AccountSend extends mixins(PersistInputsMixin) {
   checkData() {
     if (!this.txBody.to) {
       this.errors.to = 'Required';
+    } else {
+      try {
+        new Address(this.txBody.to);
+        this.errors.to = '';
+      } catch (e) {
+        this.errors.to = 'Invalid address';
+      }
     }
     if (!this.txBody.amount) {
       this.errors.amount = 'Required';
+    } else {
+      this.errors.amount =  '';
     }
     if (this.errors.to || this.errors.amount) return;
     this.$router.push({ name: 'account-send-confirm' });

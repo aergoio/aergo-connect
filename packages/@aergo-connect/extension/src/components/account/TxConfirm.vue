@@ -34,7 +34,7 @@ import { getExplorerUrl } from '../../utils/chain-urls';
 })
 export default class TxConfirm extends Vue {
   @Prop({type: Object, required: true}) readonly txBody!: any;
-  @Prop({type: Array, default: []}) readonly keys!: any;
+  @Prop({type: Array, default: () => ([])}) readonly keys!: any;
 
   get typeLabel(): string {
     return TxTypes[this.txBody.type || 0];
