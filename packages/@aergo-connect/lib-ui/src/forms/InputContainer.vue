@@ -99,4 +99,24 @@ export default Vue.extend({
     margin-right: 15px;
   }
 }
+.input-label {
+  font-size: (13/16)*1rem;
+  font-weight: 500;
+  letter-spacing: -0.16px;
+  color: rgba(34, 34, 34, 0.65);
+  display: block;
+  margin-bottom: .5em;
+}
+.input-error-text {
+  font-size: (12/16)*1rem;
+  color: #EE4648;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 12px;
+  margin-top: -7px;
+  .icon {
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+}
 </style>

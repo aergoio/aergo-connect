@@ -3,17 +3,16 @@
     <label>
       <span class="input-label" v-if="label">{{label}}</span>
       <InputContainer :disabled="disabled" :variant="variant" :state="state" :error="error" :class="classes">
-        <input
+        <Identicon :text="value" />
+        <textarea
           :value="value"
-          :type="type"
           :disabled="disabled"
           :autoComplete="autoComplete"
           @input="handleInput"
-          @change="handleFileInput"
           @blur="handleBlur"
           @keyup.enter="handleEnter"
-          accept=".txt"
-          ref="inputElement" />
+          autocorrect="off" autocapitalize="off" spellcheck="false"
+          />
       </InputContainer>
       <span class="input-error-text" v-if="error">{{error}} <Icon name="danger" :size="16" /></span>
     </label>
@@ -22,22 +21,31 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { InputVariant, InputVariants, InputType, InputTypes, InputStates, InputState } from './types';
+import { InputVariant, InputVariants, InputStates, InputState } from './types';
 import InputContainer from './InputContainer.vue';
+import Identicon from '../content/Identicon.vue';
 import Icon from '../icons/Icon.vue';
+
+import { Address } from '@herajs/common';
+
+function sanitizeInput(text: string): string {
+  try {
+    const address = new Address(text);
+    return `${address}`;
+  } catch(e) {
+    return text;
+  }
+}
 
 export default Vue.extend({
   components: {
     InputContainer,
     Icon,
+    Identicon,
   },
   props: {
-    value: [String, Number],
+    value: String,
     label: String,
-    type: {
-      type: String as PropType<InputType>,
-      default: InputTypes[0],
-    },
     variant: {
       type: String as PropType<InputVariant>,
       default: InputVariants[0],
@@ -60,44 +68,49 @@ export default Vue.extend({
     classes(): string[] {
       return [
         'text-field',
-        `type-${this.type}`,
+        'address-field',
       ];
+    },
+    sanitizedValue() {
+      try {
+        const address = new Address(this.value);
+        return `${address}`;
+      } catch (e) {
+        return '';
+      }
     }
   },
   methods: {
     handleInput(event: InputEvent): void {
-      this.$emit('input', (event.target as HTMLFormElement).value);
+      this.$emit('input', sanitizeInput((event.target as HTMLFormElement).value));
     },
     handleBlur(event: FocusEvent): void {
-      this.$emit('blur', (event.target as HTMLFormElement).value);
+      this.$emit('blur', sanitizeInput((event.target as HTMLFormElement).value));
     },
     handleEnter(event: KeyboardEvent): void {
-      this.$emit('submit', (event.target as HTMLFormElement).value);
+      this.$emit('submit', sanitizeInput((event.target as HTMLFormElement).value));
     },
-    handleFileInput(): void {
-      const $elem = this.$refs.inputElement as HTMLInputElement;
-      if (!$elem || !$elem.files || $elem.files.length === 0) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target) {
-          this.$emit('file', e.target.result);
-        }
-      };
-      reader.readAsText($elem.files[0]);
-    }
   }
 });
 </script>
 
 <style lang="scss">
-.text-field {
-  input {
+.address-field {
+  .identicon {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  textarea {
     border: 0;
     flex: 1;
-    padding: 15px;
+    padding: 0 12px;
     outline: none;
     background-color: transparent;
     width: 100px;
+    font-size: (13/16)*1rem;
+    line-height: 1.3;
+    resize: none;
   }
 
   &.variant-default {
