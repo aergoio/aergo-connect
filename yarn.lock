@@ -1278,25 +1278,25 @@
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
-"@herajs/ledger-hw-app-aergo@^0.19.7":
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.19.7.tgz#390965b00923bee9bad69462559f87b788d45683"
-  integrity sha512-f54r04kgBIzcFWlcawdD+8eXy+g8vqe+S6WPr/EpT0NCwdVA9lIcxM9LpgntTQg7sydWO+AF1vPx4FusU4ozaQ==
+"@herajs/ledger-hw-app-aergo@^0.19.8":
+  version "0.19.8"
+  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.19.8.tgz#d78e951eeccc0a2cce38fb9ec6ae631900a3b787"
+  integrity sha512-rFGJm9xQBQFjsr0Y9o5vOuTPsyewY6piRcYvO81xdCYM67XSsnmhd/rxycWpCw7Hi7J/ruf/2sg42IHMwsN7gQ==
   dependencies:
     "@herajs/client" "^0.19.1"
     "@herajs/common" "^0.19.0"
     "@herajs/crypto" "^0.19.4"
 
-"@herajs/wallet@^0.19.7":
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.19.7.tgz#6e54e7c798dacc46f11e74f4a428e14738808acc"
-  integrity sha512-2u1g3oc9ozIVlMaqlSPz4ykral5SXAUkNcE/OGj6u+Pwo+F6dPZDKp9yzsSg7POyVZDl4LqOpnRMoyAtzXVLZQ==
+"@herajs/wallet@^0.19.8":
+  version "0.19.8"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.19.8.tgz#d8da789ec5fe5f5e5ca2b629e7dc554bbcfe8fec"
+  integrity sha512-Wthj+wb+vJUmG9Zj0pY9wnH74lvKYShFUE7BgG0BZ+Z8gyqzWvXheexC9jNrg2BS6NEueOBuJO0SNpYaIkKYRg==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
     "@herajs/client" "^0.19.1"
     "@herajs/common" "^0.19.0"
     "@herajs/crypto" "^0.19.4"
-    "@herajs/ledger-hw-app-aergo" "^0.19.7"
+    "@herajs/ledger-hw-app-aergo" "^0.19.8"
     "@types/google-protobuf" "^3.2.7"
     "@types/hashmap" "^2.0.29"
     "@types/leveldown" "^4.0.0"
