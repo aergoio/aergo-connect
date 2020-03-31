@@ -32,7 +32,7 @@ import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 export default class NameDetails extends Vue {
   @Prop({type: String, required: true}) readonly address!: string;
   state: 'initial' | 'loading' | 'loaded' | 'error' = 'initial';
-  names: string[] = [];
+  names: {}[] = [];
 
   mounted() {
     this.load();
