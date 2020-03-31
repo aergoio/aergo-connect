@@ -1204,12 +1204,12 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@herajs/client@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@herajs/client/-/client-0.19.0.tgz#eabe0b5b4464d422a4be526de12f05a26dad3b4f"
-  integrity sha512-ZJqY231nDzkSDWV4YVndEEC35XjRmaSWJSkjf/RC9djVSJQA2BvEzSScILsydFV2sXYaMCkY7YNAbjfbooE2qg==
+"@herajs/client@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@herajs/client/-/client-0.20.0.tgz#03664da5f4975f7679a3c749315b93de1f864a15"
+  integrity sha512-9infbaH5/FaQz38WbD9VY9G72QBzN6wtGNPmqli/iJKoERv5+a/A2PTtV4kbHPW9y4xy+Z96cbvu2FwwolxDWw==
   dependencies:
-    "@herajs/common" "^0.19.0"
+    "@herajs/common" "^0.20.0"
     "@improbable-eng/grpc-web" "^0.9.1"
     "@types/google-protobuf" "^3.2.7"
     google-protobuf "^3.6.0"
@@ -1217,48 +1217,20 @@
     hash.js "^1.1.7"
     jsbi "^3.0.0"
 
-"@herajs/client@^0.19.1":
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/@herajs/client/-/client-0.19.1.tgz#9428156531e01079f358eee5e6b536ea72f81c27"
-  integrity sha512-GC5QeahDBmA9hqkhEcLQbQmSXIw4Z7ZXRZHIw5dCbdJ6O/QSgKr+4Ci94uE9yDfNqgRMTZa9vhuSGuVjVpb1+Q==
-  dependencies:
-    "@herajs/common" "^0.19.0"
-    "@improbable-eng/grpc-web" "^0.9.1"
-    "@types/google-protobuf" "^3.2.7"
-    google-protobuf "^3.6.0"
-    grpc "^1.13.1"
-    hash.js "^1.1.7"
-    jsbi "^3.0.0"
-
-"@herajs/common@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@herajs/common/-/common-0.19.0.tgz#ea089b4d6356217b629c0267ee70ba7436dc2ce6"
-  integrity sha512-qFjPJO7KJdaMlaCX+KkE77pX/bW61ji0Sa4ski9wRI/cKU8EGG+IeVdjONPuhERwXvsvn2kbU9Gumwz8Sw8C1A==
+"@herajs/common@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@herajs/common/-/common-0.20.0.tgz#c0367f49443190b8c541c03befc207523840492f"
+  integrity sha512-/aIureGA6LnRT9LX8iCoOChVjabjobnv2JIdG+3KFW3qKmb8D9/tmL8fzOzlK84bQyfR+kW00zNRYd+EStnlOw==
   dependencies:
     create-hash "^1.2.0"
     jsbi "^3.0.0"
 
-"@herajs/crypto@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.19.0.tgz#bf5501e39f0a7f6dce67509063ec4426ac0c5230"
-  integrity sha512-r/uiX5a6nXGe8TWZeP+GnlUfMgD8KF17IzMMuEVv5xsSM5VU3RKOibNBfi76WQ0Dkg2TGPdCpH8HFE+F35ciTw==
+"@herajs/crypto@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.20.0.tgz#46a7481185848c0cdb79806a4bf8be07db01e1dc"
+  integrity sha512-VEDCoeiCVSQKXkUQ75dwlWDqs3+I1C0WVOaRWVO8o57C/uKDtBuBOsA+uyuHP2xWUUA+7aQ2wKoFynruc/hibw==
   dependencies:
-    "@herajs/common" "^0.19.0"
-    "@herajs/hdkey" "^11.2.0"
-    "@types/elliptic" "^6.4.0"
-    aes-js "^3.1.1"
-    asmcrypto.js "^2.3.2"
-    bip39 "^3.0.2"
-    elliptic "^6.4.1"
-    jsbi "^3.0.0"
-    scrypt-async-modern "^3.0.12"
-
-"@herajs/crypto@^0.19.4":
-  version "0.19.4"
-  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.19.4.tgz#16a0646ac33a06badd27c08caa235e3e7d7b4cda"
-  integrity sha512-bMwp20PErFeJ2maMrUifrUHoNLNEWlgM2hDD2Vje4FA9W+frpo4HSVK8IJ6/TBbzcugJJT1HMekUq3RqZFjOag==
-  dependencies:
-    "@herajs/common" "^0.19.0"
+    "@herajs/common" "^0.20.0"
     "@herajs/hdkey" "^11.2.0"
     "@types/elliptic" "^6.4.0"
     aes-js "^3.1.1"
@@ -1278,25 +1250,25 @@
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
-"@herajs/ledger-hw-app-aergo@^0.19.8":
-  version "0.19.8"
-  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.19.8.tgz#d78e951eeccc0a2cce38fb9ec6ae631900a3b787"
-  integrity sha512-rFGJm9xQBQFjsr0Y9o5vOuTPsyewY6piRcYvO81xdCYM67XSsnmhd/rxycWpCw7Hi7J/ruf/2sg42IHMwsN7gQ==
+"@herajs/ledger-hw-app-aergo@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.20.0.tgz#02c1fe9b703ff950e043d40eb7ddea648577fc8d"
+  integrity sha512-AHI6K4IsGSJtSvw69TkjNp42rJ5JW8Qx6KJftUt/OHTYMB/PpbTlmJEeugns67U2uYYDTHXulzBEpfae8MYZPw==
   dependencies:
-    "@herajs/client" "^0.19.1"
-    "@herajs/common" "^0.19.0"
-    "@herajs/crypto" "^0.19.4"
+    "@herajs/client" "^0.20.0"
+    "@herajs/common" "^0.20.0"
+    "@herajs/crypto" "^0.20.0"
 
-"@herajs/wallet@^0.19.8":
-  version "0.19.8"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.19.8.tgz#d8da789ec5fe5f5e5ca2b629e7dc554bbcfe8fec"
-  integrity sha512-Wthj+wb+vJUmG9Zj0pY9wnH74lvKYShFUE7BgG0BZ+Z8gyqzWvXheexC9jNrg2BS6NEueOBuJO0SNpYaIkKYRg==
+"@herajs/wallet@^0.20.1":
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.20.1.tgz#9ae3c9ef74aaafae6a4274c8fcedb082858cea58"
+  integrity sha512-ptj1R2YzssIzOmDBHgFoMrWyzXR1P6SnnZM8fn5E6FNOfG8gwQSOGUCF8OdZzGdBrWY/8qIaQVK6RFyRPlbWFA==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
-    "@herajs/client" "^0.19.1"
-    "@herajs/common" "^0.19.0"
-    "@herajs/crypto" "^0.19.4"
-    "@herajs/ledger-hw-app-aergo" "^0.19.8"
+    "@herajs/client" "^0.20.0"
+    "@herajs/common" "^0.20.0"
+    "@herajs/crypto" "^0.20.0"
+    "@herajs/ledger-hw-app-aergo" "^0.20.0"
     "@types/google-protobuf" "^3.2.7"
     "@types/hashmap" "^2.0.29"
     "@types/leveldown" "^4.0.0"

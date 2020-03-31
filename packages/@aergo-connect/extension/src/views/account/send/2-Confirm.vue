@@ -2,7 +2,7 @@
   <ScrollView class="page">
     <template #header>
       <div class="content" style="padding-bottom: 0;">
-        <BackButton :to="{ name: 'account-send' }" />
+        <BackButton />
         <Heading tag="h2">Confirmation</Heading>
       </div>
     </template>

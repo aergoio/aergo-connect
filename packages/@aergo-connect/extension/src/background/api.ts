@@ -4,6 +4,7 @@ import {
   encodePrivateKey,
   keystoreFromPrivateKey,
 } from '@herajs/crypto';
+import { Amount } from '@herajs/common';
 import { Account } from '@herajs/wallet';
 
 import Controller from './controller';
@@ -86,6 +87,27 @@ export class Api {
       this.controller.trackAccount(account);
     }
     return accounts;
+  }
+
+  async getNames(accountSpec: AccountSpec) {
+    this.controller.keepUnlocked();
+    return await this.controller.wallet.nameManager.getNames(accountSpec);
+  }
+
+  async addName(accountSpec: AccountSpec, name: string) {
+    this.controller.keepUnlocked();
+    let wasAdded = false;
+    try {
+      await this.controller.wallet.nameManager.addName(accountSpec, name);
+    } catch (e) {
+      wasAdded = true;
+    }
+    const nameObj = await this.controller.wallet.nameManager.updateName(accountSpec, name);
+    if (!wasAdded && !nameObj.data.destination) {
+      // Remove it again as this was just a test
+      this.controller.wallet.nameManager.removeName(accountSpec, name);
+    }
+    return nameObj;
   }
 
   async getLedgerAddress({ path }: { path: string }) {
@@ -234,6 +256,23 @@ export class Api {
   async getChainInfo({ chainId }: any) {
     const chainInfo = await this.controller.wallet.getClient(chainId).getChainInfo();
     return { chainInfo: JSON.parse(JSON.stringify(chainInfo)) };
+  }
+
+  async getCreateNameTransaction(accountSpec: AccountSpec, name: string) {
+    const tx = await this.controller.wallet.nameManager.getCreateNameTransaction(accountSpec, name);
+    return {
+      ...tx,
+      amount: new Amount(tx.amount as any).formatNumber('aergo'),
+      unit: 'aergo',
+    };
+  }
+  async getUpdateNameTransaction(accountSpec: AccountSpec, name: string, newOwner: string) {
+    const tx = await this.controller.wallet.nameManager.getUpdateNameTransaction(accountSpec, name, newOwner);
+    return {
+      ...tx,
+      amount: new Amount(tx.amount as any).formatNumber('aergo'),
+      unit: 'aergo',
+    };
   }
 }
 

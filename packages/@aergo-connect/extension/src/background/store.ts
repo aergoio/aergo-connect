@@ -1,5 +1,6 @@
 import { IndexedDbStorage } from "@herajs/wallet";
 
-const store = new IndexedDbStorage('data', 2);
+const VERSION = 3;
+const store = new IndexedDbStorage('data', VERSION);
 
 export default store;

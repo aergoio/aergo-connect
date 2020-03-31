@@ -27,7 +27,8 @@ import { BackButton, Button, ButtonGroup } from '@aergo-connect/lib-ui/src/butto
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import { AddressField } from '@aergo-connect/lib-ui/src/forms';
 
-import { Address, TxTypes } from '@herajs/common';
+import { Address } from '@herajs/common';
+import { timedAsync } from 'timed-async';
 
 @Component({
   components: {
@@ -62,15 +63,11 @@ export default class AccountNameUpdate extends Vue {
         throw new Error('cannot be same as current');
       }
       // TODO: Update name in internal db
-      // TODO: Get current name price instead of hard-coding 20 aergo
-      this.$store.dispatch('ui/setTxBody', {
-        to: 'aergo.name',
-        payload: JSON.stringify({ Name: 'v1updateName', Args: [this.$route.params.name, this.destination]}),
-        amount: '20',
-        unit: 'aergo',
-        limit: 0,
-        type: TxTypes.Governance,
-      });
+      const txBody = await timedAsync(this.$background.getUpdateNameTransaction({
+        address: this.$route.params.address,
+        chainId: this.$route.params.chainId,
+      }, this.$route.params.name, `${address}`));
+      this.$store.dispatch('ui/setTxBody', txBody);
       this.$router.push({ name: 'account-send-confirm' });
     } catch (e) {
       let msg = `${e}`;

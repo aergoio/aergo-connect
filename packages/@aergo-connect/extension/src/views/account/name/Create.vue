@@ -28,7 +28,8 @@ import { BackButton, Button, ButtonGroup } from '@aergo-connect/lib-ui/src/butto
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import { TextField } from '@aergo-connect/lib-ui/src/forms';
 
-import { Address, TxTypes } from '@herajs/common';
+import { Address } from '@herajs/common';
+import { timedAsync } from 'timed-async';
 
 @Component({
   components: {
@@ -47,6 +48,13 @@ export default class AccountNameCreate extends Vue {
   };
   loading = false;
 
+  get accountSpec() {
+    return {
+      address: this.$route.params.address,
+      chainId: this.$route.params.chainId,
+    };
+  }
+
   async gotoSend() {
     this.loading = true;
     this.errors.name = '';
@@ -61,17 +69,22 @@ export default class AccountNameCreate extends Vue {
       if (address.isEmpty() || address.isSystemAddress() || !address.isName) {
         throw new Error('not a valid name');
       }
-      // TODO: Check if name exists. if yes and we are the current owner, add to internal db. if no, error
-      // TODO: Get current name price instead of hard-coding 20 aergo
-      this.$store.dispatch('ui/setTxBody', {
-        to: 'aergo.name',
-        payload: JSON.stringify({ Name: 'v1createName', Args: [this.name]}),
-        amount: '20',
-        unit: 'aergo',
-        limit: 0,
-        type: TxTypes.Governance,
-      });
+      // Check if name already exists
+      const name = await timedAsync(this.$background.addName(this.accountSpec, this.name));
+      if (name.data.destination) {
+        // If we are the owner, add it and go back to the detail page.
+        if (name.data.destination === this.$route.params.address) {
+          alert('You have already registered this name. It has now been added.');
+          this.$router.push({ name: 'account-details' });
+          return;
+        }
+        throw new Error(`Name is already registered to account ${name.data.destination}`);
+      }
+
+      const txBody = await timedAsync(this.$background.getCreateNameTransaction(this.accountSpec, this.name));
+      this.$store.dispatch('ui/setTxBody', txBody );
       this.$router.push({ name: 'account-send-confirm' });
+      // TODO: When to actually save the new name? Should be after tx send....
     } catch (e) {
       this.errors.name = `${e}`;
       console.error(e);

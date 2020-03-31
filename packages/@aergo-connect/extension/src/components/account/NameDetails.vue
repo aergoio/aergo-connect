@@ -13,7 +13,7 @@
       <LoadingIndicator v-if="state === 'loading'" :size="40" />
       <div v-if="state === 'loaded' && names.length === 0" class="empty-state">No names registered.</div>
       <ul v-if="state === 'loaded' && names.length" class="name-list">
-        <router-link v-for="name in names" :key="name" :to="{ name: 'account-name-update', params: { name: name }}"><li>{{name}}</li></router-link>
+        <router-link v-for="name in names" :key="name.key" :to="{ name: 'account-name-update', params: { name: name.data.spec.name }}"><li>{{name.data.spec.name}}</li></router-link>
       </ul>
     </ScrollView>
   </div>
@@ -35,12 +35,22 @@ export default class NameDetails extends Vue {
   names: string[] = [];
 
   mounted() {
-    this.state = 'loading';
-    setTimeout(() => {
-      this.state = 'loaded';
-      // TODO
-      this.names = ['123456789012'];
-    }, 1000);
+    this.load();
+  }
+
+  get accountSpec() {
+    return {
+      address: this.$route.params.address,
+      chainId: this.$route.params.chainId,
+    };
+  }
+
+  async load() {
+    if (this.state === 'initial') {
+      this.state = 'loading';
+    }
+    this.names = await this.$background.getNames(this.accountSpec);
+    this.state = 'loaded';
   }
 }
 </script>
