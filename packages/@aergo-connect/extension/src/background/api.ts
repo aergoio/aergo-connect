@@ -88,6 +88,11 @@ export class Api {
     return accounts;
   }
 
+  async getLedgerAddress({ path }: { path: string }) {
+    await this.controller.connectLedger();
+    return await this.controller.wallet.accountManager.getAddressFromLedger(path);
+  }
+
   async createAccount({ chainId }: { chainId: string }) {
     this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.createAccount(chainId);

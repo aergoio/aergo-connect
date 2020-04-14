@@ -11,6 +11,8 @@ import Import from '../views/accounts/import/1-Network.vue';
 import ImportFormat from '../views/accounts/import/2-Format.vue';
 import ImportKeystore from '../views/accounts/import/3a-Keystore.vue';
 import ImportWif from '../views/accounts/import/3b-Wif.vue';
+import ConnectHw from '../views/accounts/connect-hw/1-Network.vue';
+import ConnectHwAccounts from '../views/accounts/connect-hw/2-Accounts.vue';
 import AccountsList from '../views/accounts/List.vue';
 import Settings from '../views/accounts/Settings.vue';
 
@@ -57,6 +59,8 @@ const routes: RouteConfig[] = [
     withMeta(3, { path: 'import/format', name: 'account-import-format', component: ImportFormat }),
     withMeta(4, { path: 'import/keystore', name: 'account-import-keystore', component: ImportKeystore }),
     withMeta(4, { path: 'import/wif', name: 'account-import-wif', component: ImportWif }),
+    withMeta(2, { path: 'connect-hw', name: 'account-connect-hw', component: ConnectHw }),
+    withMeta(3, { path: 'connect-hw/accounts', name: 'account-connect-hw-accounts', component: ConnectHwAccounts }),
   ] },
   { path: '/account/:chainId/:address/', component: AccountContainer, children: [
     { path: '', component: TabContainer, children: [
