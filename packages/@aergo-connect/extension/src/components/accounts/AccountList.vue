@@ -11,7 +11,10 @@
         <li v-for="account in accounts" :key="account.key" class="account-item-li" @click.capture="$emit('select', account)">
           <router-link :to="{ name: accountRoute, params: account.data.spec }">
             <div class="account-item">
-              <Identicon :text="account.data.spec.address" class="circle" />
+              <span>
+                <Identicon :text="account.data.spec.address" class="circle" />
+                <span v-if="isNew(account)" class="account-new-label">new</span>
+              </span>
               
               <span class="account-address-balance">
                 <span class="account-address">{{account.data.spec.address}}</span>
@@ -50,34 +53,20 @@ export default class AccountList extends Vue {
 
   get sortedAccounts() {
     const accounts = [...this.accounts];
+    // Order by address A-Z
+    accounts.sort((a, b) => a.data.spec.address.localeCompare(b.data.spec.address));
     // Order by balance, reversed
     accounts.sort((a, b) => !a.data ? 0 : - (new Amount(a.data.balance)).compare((new Amount(b.data.balance))));
-    // Order by chainID. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
+    // Order by chainID A-Z. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
     accounts.sort((a, b) => !a.data ? 0 : a.data.spec.chainId.localeCompare(b.data.spec.chainId) );
-    // Order the most recent account first
-    accounts.sort((a, b) => this.recentlyNewAccount && a.key === this.recentlyNewAccount.key ? -1 : 0 );
-    return accounts;
-  }
-
-  /**
-   * Returns the most recently added account, if any
-   */
-  get recentlyNewAccount(): Account | null {
-    const MaxAge = 1000*60*5; // 5 min 
-    const accounts = [...this.accounts];
-    // Reverse sort by date added
+    // Order the most recent accounts first, but only if they are new
     accounts.sort((a, b) => {
-      if (!a.data) return 0;
-      const aAdded = typeof a.data.added === 'string' ? + new Date(a.data.added) : 0;
-      const bAdded = typeof b.data.added === 'string' ? + new Date(b.data.added) : 0;
-      return - (aAdded - bAdded);
+      // Use 0 for non-new accounts to not affect order, otherwise the added timestamp
+      const addedA = this.isNew(a) && typeof a.data.added === 'string' ? + new Date(a.data.added) : 0;
+      const addedB = this.isNew(b) && typeof b.data.added === 'string' ? + new Date(b.data.added) : 0;
+      return - (addedA - addedB);
     });
-    // Pick the most recent one
-    const mostRecentAdded = typeof accounts[0].data.added === 'string' ? + new Date(accounts[0].data.added) : 0;
-    if (+ new Date() - mostRecentAdded < MaxAge) {
-      return accounts[0];
-    }
-    return null;
+    return accounts;
   }
 
   get accountsByChainId() {
@@ -88,6 +77,12 @@ export default class AccountList extends Vue {
 
   isPublicChainId(chainId: string) {
     return isPublicChainId(chainId);
+  }
+
+  isNew(account: Account) {
+    const MaxAge = 1000*60*5; // 5 min 
+    const added = typeof account.data.added === 'string' ? + new Date(account.data.added) : 0;
+    return (+ new Date() - added) < MaxAge;
   }
 }
 </script>
@@ -134,11 +129,26 @@ export default class AccountList extends Vue {
   .account-item-li:last-child .account-address-balance {
     border-bottom: 0;
   }
+  .account-balance {
+    color: #666;
+  }
 
   .account-address {
     word-break: break-all;
     padding-bottom: 10px;
     line-height: 1.3;
+  }
+  .account-new-label {
+    display: inline-block;
+    transform: translateY(-5px);
+    border-radius: 10px;
+    background-color: #ff4f9f;
+    font-size: (8/16)*1rem;
+    text-transform: uppercase;
+    line-height: 19px;
+    width: 36px;
+    text-align: center;
+    color: #fff;
   }
 }
 </style>
