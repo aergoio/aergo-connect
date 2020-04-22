@@ -60,6 +60,14 @@ async function setupController() {
     }
   }
   extension.runtime.onConnect.addListener(connectRemote);
+
+  // Setup idle detection
+  extension.idle.setDetectionInterval(60);
+  extension.idle.onStateChanged.addListener((newState) => {
+    if (newState === 'idle' || newState === 'locked') {
+      controller.lock();
+    }
+  });
 }
 
 console.log('AERGO Wallet Background Script');

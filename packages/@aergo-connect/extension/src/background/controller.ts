@@ -16,8 +16,6 @@ import AppState from './app-state';
 import { Buffer } from 'buffer';
 import { hashTransaction } from '@herajs/crypto';
 
-const AUTO_LOCK_TIMEOUT = 60*1000 * 3; // 3 minutes
-
 class BackgroundController extends EventEmitter {
   wallet: Wallet;
   id: string;
@@ -80,7 +78,9 @@ class BackgroundController extends EventEmitter {
     // Background script cannot access USB device
     this.wallet.keyManager.useExternalLedger = true;
 
+    // On idle (60s after UI becoming inactive)
     this.state.on('idle', () => {
+      this.lock();
       console.log('[state] idle, pausing trackers');
       this.wallet.accountManager.pause();
       this.wallet.transactionManager.pause();
@@ -107,12 +107,10 @@ class BackgroundController extends EventEmitter {
   
   async unlock(passphrase: string) {
     await this.wallet.unlock(passphrase);
-    this.keepUnlocked();
   }
 
   async setupAndUnlock(passphrase: string) {
     await this.wallet.setupAndUnlock(passphrase);
-    this.keepUnlocked();
   }
 
   async setActiveAccount({ chainId, address }: any) {
@@ -123,16 +121,6 @@ class BackgroundController extends EventEmitter {
 
   async getActiveAccount() {
     return this.activeAccount;
-  }
-
-  keepUnlocked() {
-    if (this._lockTimeout) {
-      clearTimeout(this._lockTimeout);
-    }
-    this._lockTimeout = setTimeout(() => {
-      console.log('[lock] auto-locking...');
-      this.lock();
-    }, AUTO_LOCK_TIMEOUT);
   }
 
   /**
@@ -196,20 +184,17 @@ class BackgroundController extends EventEmitter {
   }
 
   async signMessage({ address, chainId, message }: any) {
-    this.keepUnlocked(); 
     const account = await this.wallet.accountManager.getOrAddAccount({ address, chainId });
     return await this.wallet.keyManager.signMessage(account, Buffer.from(message));
   }
 
   async signTransaction({ address, chainId, txData }: any) {
-    this.keepUnlocked(); 
     const account = await this.wallet.accountManager.getOrAddAccount({ address, chainId });
     const preparedTxData = await this.wallet.accountManager.prepareTransaction(account, txData);
     return await this.wallet.keyManager.signTransaction(account, preparedTxData);
   }
 
   async sendTransaction({ txBody, chainId }: any) {
-    this.keepUnlocked();
     const accountSpec = {
       address: txBody.from,
       chainId: chainId
