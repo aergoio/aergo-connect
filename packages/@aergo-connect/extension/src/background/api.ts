@@ -1,8 +1,9 @@
 import {
-  identifyFromPrivateKey,
   encryptPrivateKey,
   encodePrivateKey,
   keystoreFromPrivateKey,
+  generateMnemonic,
+  privateKeyFromMnemonic,
 } from '@herajs/crypto';
 import { Amount } from '@herajs/common';
 import { Account } from '@herajs/wallet';
@@ -81,7 +82,6 @@ export class Api {
   }
 
   async getAccounts() {
-    this.controller.keepUnlocked();
     const accounts = await this.controller.wallet.accountManager.getAccounts();
     for (const account of accounts) {
       this.controller.trackAccount(account);
@@ -90,12 +90,10 @@ export class Api {
   }
 
   async getNames(accountSpec: AccountSpec) {
-    this.controller.keepUnlocked();
     return await this.controller.wallet.nameManager.getNames(accountSpec);
   }
 
   async addName(accountSpec: AccountSpec, name: string) {
-    this.controller.keepUnlocked();
     let wasAdded = false;
     try {
       await this.controller.wallet.nameManager.addName(accountSpec, name);
@@ -110,14 +108,30 @@ export class Api {
     return nameObj;
   }
 
-  async getLedgerAddress({ path }: { path: string }) {
+  async getLedgerAddress({ path }: { path: string }): Promise<string> {
     await this.controller.connectLedger();
     return await this.controller.wallet.accountManager.getAddressFromLedger(path);
   }
 
-  async createAccount({ chainId }: { chainId: string }) {
-    this.controller.keepUnlocked();
+  async createAccount({ chainId }: { chainId: string }): Promise<AccountSpec> {
     const account = await this.controller.wallet.accountManager.createAccount(chainId);
+    this.controller.trackAccount(account);
+    return account.data.spec;
+  }
+
+  async createAccountWithMnemonic({ chainId }: { chainId: string }): Promise<{ account: AccountSpec; mnemonic: string}> {
+    const mnemonic = generateMnemonic();
+    const privateKey = await privateKeyFromMnemonic(mnemonic);
+    const account = await this.controller.wallet.accountManager.importAccount(privateKey, chainId);
+    this.controller.trackAccount(account);
+    return {
+      account: account.data.spec,
+      mnemonic,
+    };
+  }
+
+  async importAccount({ privateKey, chainId }: any): Promise<AccountSpec> {
+    const account = await this.controller.wallet.accountManager.importAccount(privateKey, chainId);
     this.controller.trackAccount(account);
     return account.data.spec;
   }
@@ -143,21 +157,7 @@ export class Api {
     return account.data.spec;
   }
 
-  async importAccount({ privateKey, chainId }: any): Promise<AccountSpec> {
-    this.controller.keepUnlocked();
-    const identity = identifyFromPrivateKey(privateKey);
-    const address = identity.address;
-    const account = await this.controller.wallet.accountManager.addAccount({ address, chainId });
-    await this.controller.wallet.keyManager.importKey({
-      account: account,
-      privateKey: privateKey,
-    });
-    this.controller.trackAccount(account);
-    return account.data.spec;
-  }
-
   async exportAccount({ address, chainId, password, format }: any) {
-    this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.getOrAddAccount({ address, chainId });
     const key = await this.controller.wallet.keyManager.getUnlockedKey(account);
     const privateKey = key.data.privateKey;
@@ -198,7 +198,6 @@ export class Api {
 
   async getAccountTx(accountSpec: AccountSpec) {
     if (!accountSpec.address) throw new Error('getAccountTx: address required');
-    this.controller.keepUnlocked();
     const txs = await this.controller.wallet.transactionManager.getAccountTransactions(accountSpec);
     txs.sort((a, b) => (a.data.ts < b.data.ts ? 1 : (a.data.ts == b.data.ts ? 0 : -1)));
     return txs;
@@ -206,7 +205,6 @@ export class Api {
 
   async syncAccountState(accountSpec: AccountSpec): Promise<Account> {
     if (!accountSpec.address) throw new Error('syncAccountState: address required');
-    this.controller.keepUnlocked();
     const account = await this.controller.wallet.accountManager.getOrAddAccount(accountSpec);
     return new Promise((resolve: (account: Account) => void) => {
       this.controller.trackAccount(account, resolve);
@@ -222,13 +220,11 @@ export class Api {
   }
 
   async signMessage({ address, chainId, message }: any) {
-    this.controller.keepUnlocked();
     const signedMessage = await this.controller.signMessage({ address, chainId, message });
     return { signedMessage };
   }
 
   async getStaking(accountSpec: AccountSpec) {
-    this.controller.keepUnlocked();
     const result = await this.controller.wallet.getClient(accountSpec.chainId).getStaking(accountSpec.address);
     return {
       amount: result.amount.toString(),

@@ -16,7 +16,7 @@
     <template #footer>
       <div class="footer-content">
         <ButtonGroup vertical>
-          <Button type="secondary">Backup Recovery Phrase</Button>
+          <Button type="secondary" :to="{ name: 'account-seedphrase-view' }">Backup Recovery Phrase</Button>
         </ButtonGroup>
       </div>
     </template>

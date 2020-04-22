@@ -26,7 +26,7 @@
     "@herajs/client": "^0.20.0",
     "@herajs/common": "^0.20.0",
     "@herajs/crypto": "^0.20.0",
-    "@herajs/wallet": "^0.20.1",
+    "@herajs/wallet": "^0.20.2",
     "@herajs/ledger-hw-app-aergo": "^0.20.0",
     "@ledgerhq/hw-transport-webusb": "^5.12.0",
     "dnode": "^1.2.2",

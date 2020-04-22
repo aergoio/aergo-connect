@@ -18,6 +18,8 @@ import Settings from '../views/accounts/Settings.vue';
 
 import AccountContainer from '../views/account/Container.vue';
 import AccountCreated from '../views/account/Created.vue';
+import ViewSeedPhrase from '../views/account/seedphrase/View.vue';
+import VerifySeedPhrase from '../views/account/seedphrase/Verify.vue';
 import AccountImported from '../views/account/Imported.vue';
 import TabContainer from '../views/account/TabContainer.vue';
 import AccountSend from '../views/account/send/1-Send.vue';
@@ -80,7 +82,9 @@ const routes: RouteConfig[] = [
       { path: 'history', name: 'account-history', component: AccountHistory },
     ] },
     { path: 'send/success/:hash', name: 'account-send-success', component: AccountSendSuccess },
-    { path: 'created', name: 'account-created', component: AccountCreated },
+    withMeta(1, { path: 'created', name: 'account-created', component: AccountCreated }),
+    withMeta(2, { path: 'seedphrase', name: 'account-seedphrase-view', component: ViewSeedPhrase }),
+    withMeta(3, { path: 'seedphrase-verify', name: 'account-seedphrase-verify', component: VerifySeedPhrase }),
     { path: 'imported', name: 'account-imported', component: AccountImported },
   ] },
 ];

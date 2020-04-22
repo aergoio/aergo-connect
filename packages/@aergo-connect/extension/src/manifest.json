@@ -43,6 +43,7 @@
 		"unlimitedStorage",
 		"clipboardWrite",
 		"notifications",
-		"contextMenus"
+		"contextMenus",
+		"idle"
 	]
 }

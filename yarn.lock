@@ -1259,10 +1259,10 @@
     "@herajs/common" "^0.20.0"
     "@herajs/crypto" "^0.20.0"
 
-"@herajs/wallet@^0.20.1":
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.20.1.tgz#9ae3c9ef74aaafae6a4274c8fcedb082858cea58"
-  integrity sha512-ptj1R2YzssIzOmDBHgFoMrWyzXR1P6SnnZM8fn5E6FNOfG8gwQSOGUCF8OdZzGdBrWY/8qIaQVK6RFyRPlbWFA==
+"@herajs/wallet@^0.20.2":
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.20.2.tgz#c845c8fcfc46026e2e032683c06001e891526bc2"
+  integrity sha512-H8yTEtk0OYL63K+erdu/b7sIT6WidKWZ++z3kQy+HMbUZVjsCpt3rjTL+BIkQRjBYqOGFw0nlQ+Q8efTc02+jg==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
     "@herajs/client" "^0.20.0"

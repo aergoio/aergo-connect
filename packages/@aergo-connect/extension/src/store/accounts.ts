@@ -8,6 +8,7 @@ export interface AccountsState {
   accounts: {
     [key: string]: Account;
   };
+  lastSeedPhrase: string;
 }
 
 interface AccountSpec {
@@ -26,6 +27,7 @@ const storeModule: Module<AccountsState, RootState> = {
     accounts: {},
     // Save keys extra for reactivity as the `accounts` object is not observable in the beginning.
     keys: [],
+    lastSeedPhrase: '',
   },
   getters: {
     getAccount: state => (accountSpec: AccountSpec): Account | undefined => {
@@ -55,6 +57,9 @@ const storeModule: Module<AccountsState, RootState> = {
       }
       const newKeys = accounts.map(acc => acc.key).filter(key => state.keys.indexOf(key) === -1);
       state.keys.push(...newKeys);
+    },
+    setSeedPhrase(state, phrase: string) {
+      state.lastSeedPhrase = phrase;
     },
   }
 };
