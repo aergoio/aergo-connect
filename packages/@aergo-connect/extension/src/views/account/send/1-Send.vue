@@ -57,7 +57,7 @@ function keysFilteredReordered<O, E extends Partial<O>>(
   const filtered = keys(enumObj).filter(a => exclude.indexOf(a) === -1);
   return Array.from(new Set([...orderFront, ...filtered])) as Exclude<(keyof O), (keyof E)>[];
 }
-const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY']);
+const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY', 'FEEDELEGATION']);
 for (const key of orderedTypes) {
   typeOptions.push([Tx.Type[key], capitalizeFirstLetter(key.toLowerCase())]);
 }
