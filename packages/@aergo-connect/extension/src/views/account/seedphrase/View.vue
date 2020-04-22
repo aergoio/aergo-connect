@@ -1,12 +1,15 @@
 <template>
   <ScrollView class="page">
-    <div class="content">
+    <div class="content" style="padding-bottom: 0">
       <Heading>Recovery phrase</Heading>
       <p>
         For a safe backup, write down this recovery phrase on paper.
         You need to verify it in the next step.
       </p>
-      <p v-if="!seedPhrase" class="input-error-text">The seed phrase is no longer available because you reloaded the page after creating the account. Please create a new account.</p>
+      <p v-if="!seedPhrase" class="input-error-text">
+        The seed phrase is no longer available because you reloaded the page after creating the account.<br>
+        Please go back and create a new account.
+      </p>
       <div class="seed-phrase" v-if="seedPhrase">
         <span class="word" v-for="word in seedPhraseWords" :key="word">{{word}}</span>
       </div>
@@ -42,7 +45,6 @@ import Component from 'vue-class-component'
 })
 export default class ViewSeedPhrase extends Vue {
   get seedPhrase(): string {
-    return 'foo bar baz';
     return this.$store.state.accounts.lastSeedPhrase;
   }
   get seedPhraseWords(): string[] {
@@ -56,16 +58,16 @@ export default class ViewSeedPhrase extends Vue {
 
 <style lang="scss">
 .seed-phrase {
-  line-height: 52px;
+  line-height: 50px;
   counter-reset: wordIndex;
-  font-size: (14/16)*1rem;
+  font-size: (13/16)*1rem;
 
   .word {
     display: inline-block;
     background-color: #d9d9d9;
-    padding: 0 20px;
+    padding: 0 15px;
     border-radius: 26px;
-    margin: 0 8px 8px 0;
+    margin: 0 8px 9px 0;
     font-weight: 500;
 
     &:before {
