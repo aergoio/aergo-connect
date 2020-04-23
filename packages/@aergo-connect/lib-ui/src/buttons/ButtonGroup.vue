@@ -36,6 +36,9 @@ export default Vue.extend({
 
   &.button-group-horizontal {
     align-items: center;
+    > * {
+      flex: 1;
+    }
     > * + * { margin-left: 10px; }
   }
 }

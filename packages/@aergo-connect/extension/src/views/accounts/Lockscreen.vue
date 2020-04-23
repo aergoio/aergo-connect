@@ -1,7 +1,9 @@
 <template>
   <ScrollView class="page">
-    <div class="locked-content">
-      <Icon name="title-security" :size="36" />
+    <div class="content">
+      <div class="icon-header">
+        <Icon name="title-security" :size="36" />
+      </div>
       <Heading>Your wallet is locked.</Heading>
       <p>Please enter your wallet passphrase to continue.</p>
       <TextField variant="main" type="password" v-model="password" :error="errors.password" @submit="unlock" />
@@ -70,12 +72,5 @@ export default class Lockscreen extends mixins() {
 </script>
 
 <style lang="scss">
-.locked-content {
-  margin-top: 15px;
-  padding: 20px;
 
-  .icon {
-    margin-bottom: 15px;
-  }
-}
 </style>

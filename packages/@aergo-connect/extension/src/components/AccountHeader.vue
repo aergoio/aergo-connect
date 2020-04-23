@@ -1,7 +1,7 @@
 <template>
   <InvertedColors>
     <Header class="account-header">
-      <BackButton :to="{ name: 'accounts-list' }" />
+      <BackButton :to="{ name: backRouteName }" />
       <HeaderLogo />
       <div class="account-identifier">
         <Elide class="address" :text="$route.params.address" mode="middle-fixed-tail" expect-ellipsis />
@@ -23,6 +23,12 @@ import { Elide } from '@aergo-connect/lib-ui/src/content';
 import { getExplorerUrl } from '../utils/chain-urls';
 
 export default Vue.extend({
+  props: {
+    backRouteName: {
+      type: String,
+      default: 'accounts-list',
+    },
+  },
   components: {
     Header,
     HeaderLogo,

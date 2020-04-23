@@ -33,6 +33,15 @@ import AccountExportWif from '../views/account/export/Wif.vue';
 import AccountNameCreate from '../views/account/name/Create.vue';
 import AccountNameUpdate from '../views/account/name/Update.vue';
 
+import RequestContainer from '../views/request/Container.vue';
+import RequestSelectAccount from '../views/request/SelectAccount.vue';
+import RequestSelectAction from '../views/request/SelectAction.vue';
+import RequestAccountContainer from '../views/request/AccountContainer.vue';
+import RequestAccountList from '../views/request/AccountList.vue';
+import RequestAddress from '../views/request/Address.vue';
+
+import Dummy from '../views/Dummy.vue';
+
 enum R {
   None = 0,
   NoAuthCheck = 1 << 0,
@@ -87,35 +96,19 @@ const routes: RouteConfig[] = [
     withMeta(3, { path: 'seedphrase-verify', name: 'account-seedphrase-verify', component: VerifySeedPhrase }),
     { path: 'imported', name: 'account-imported', component: AccountImported },
   ] },
+  { path: '/request', component: RequestContainer, children: [
+    { path: '', name: 'request-select-account', component: RequestSelectAccount },
+    { path: 'list', name: 'request-accounts-list', component: RequestAccountList },
+    { path: 'account/:chainId/:address/', component: RequestAccountContainer, children: [
+      { path: '', name: 'request-select-action', component: RequestSelectAction },
+      { path: 'address', name: 'request-address', component: RequestAddress },
+      { path: 'sign', name: 'request-sign', component: Dummy },
+      { path: 'sign-tx', name: 'request-sign-tx', component: Dummy },
+      { path: 'send', name: 'request-send', component: Dummy },
+      { path: 'send/success/:hash', name: 'request-send-success', component: Dummy },
+    ] },
+  ] },
 ];
-
-/*
-- accounts
-  - welcome
-  - list
-  - add
-    - create
-    - import
-    - select network
-  
-- account
-  - created
-  - tabs
-    - balance
-      - name
-        - create
-        - update
-    - send
-    - history
-  - export
-
-- request
- - accounts
- - account
-   - send
-   - address
-   - sign
-*/
 
 Vue.use(VueRouter);
 const router = new VueRouter({

@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-undef
 const port = chrome.runtime.connect({ name: 'external' });
-console.log('hello from the content');
 
 // Message from website to extension
 window.addEventListener("message", (event) => {

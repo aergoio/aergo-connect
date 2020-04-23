@@ -11,6 +11,7 @@ import { AergoscanTransactionScanner } from './tx-scanner';
 import { getServerApi } from './api';
 
 import AppState from './app-state';
+import { ExternalRequest } from './request';
 //import 'whatwg-fetch';
 
 import { Buffer } from 'buffer';
@@ -19,7 +20,7 @@ import { hashTransaction } from '@herajs/crypto';
 class BackgroundController extends EventEmitter {
   wallet: Wallet;
   id: string;
-  requests: Record<string, any>;
+  requests: Record<string, ExternalRequest>;
   lastRequestId: number;
   state: AppState;
   _lockTimeout?: NodeJS.Timeout;
@@ -148,39 +149,33 @@ class BackgroundController extends EventEmitter {
     this.emit('update', { accounts: [account] });
   }
 
-  permissionRequest(type: string, data: any, senderURL: string, callback: Function, cancelCallback: Function) {
+  permissionRequest(request: ExternalRequest) {
     const requestId = this.lastRequestId++;
-    this.requests[requestId] = {
-      type,
-      data,
-      senderURL,
-      callback,
-      cancelCallback,
-    };
+    this.requests[requestId] = request;
     extension.windows.getCurrent((window: any) => {
-      const left = Math.max(0, window.left + window.width - 330);
+      const left = Math.max(0, window.left + window.width - 360);
       extension.windows.create({
         // @ts-ignore
-        url: chrome.runtime.getURL(`popup-request.html?request=${requestId}`),
+        url: extension.runtime.getURL(`popup-request.html?request=${requestId}`),
         type: "popup",
-        width: 330,
-        height: 525,
+        width: 360,
+        height: 600,
         top: window.top,
         left,
       });
     });
   }
 
-  respondToPermissionRequest(requestId: any, result: any, respondCancel = false) {
+  respondToPermissionRequest(requestId: string, result: any, respondCancel = false) {
     const request = this.requests[requestId];
     if (!request) return;
     if (respondCancel) {
-      request.cancelCallback({
+      request.sendCancel({
         error: 'user cancelled request',
-      });
+      })
       return;
     }
-    request.callback(result);
+    request.sendSuccess(result);
   }
 
   async signMessage({ address, chainId, message }: any) {

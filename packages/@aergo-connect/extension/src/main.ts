@@ -9,8 +9,15 @@ import extension from 'extensionizer';
 import PortStream from 'extension-port-stream';
 
 import '@aergo-connect/lib-ui/src/styles/base.scss';
+import { enforceRequest } from './router/guards';
 
 Vue.config.productionTip = false;
+
+function getRequestId() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestId = urlParams.get('request');
+  return requestId;
+}
 
 async function init(name: string) {
   const extensionPort = extension.runtime.connect({ name });
@@ -19,6 +26,12 @@ async function init(name: string) {
 
   Vue.use(Background, { background });
   Vue.use(IndexedDb);
+
+  const requestId = getRequestId();
+  if (requestId) {
+    router.beforeEach(enforceRequest);
+    store.commit('request/setRequestId', requestId);
+  }
 
   new Vue({
     router,

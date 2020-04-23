@@ -233,7 +233,12 @@ export class Api {
   }
 
   async getPermissionRequestData(requestId: string) {
-    return this.controller.requests[requestId];
+    const request = this.controller.requests[requestId];
+    if (!request) {
+      throw new Error('invalid requestId');
+    }
+    const { action, origin, data } = request;
+    return { action, origin, data };
   }
 
   async respondToPermissionRequest({ requestId, result }: any) {

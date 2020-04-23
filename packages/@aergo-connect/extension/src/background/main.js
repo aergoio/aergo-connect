@@ -7,46 +7,20 @@ import endOfStream from 'end-of-stream';
 import PortStream from 'extension-port-stream';
 
 import BackgroundController from './controller';
+import { ExternalRequest } from './request';
 
 async function setupController() {
   const controller = new BackgroundController();
-
-  function handleExternalMessage(msg, port) {
-    if (msg.type !== 'AERGO_REQUEST') return;
-  
-    const actions = ['ACTIVE_ACCOUNT', 'SIGN', 'SIGN_TX', 'SEND_TX'];
-    const actionsToEventName = {
-      'ACTIVE_ACCOUNT': 'AERGO_ACTIVE_ACCOUNT',
-      'SIGN': 'AERGO_SIGN_RESULT',
-      'SIGN_TX': 'AERGO_SIGN_TX_RESULT',
-      'SEND_TX': 'AERGO_SEND_TX_RESULT',
-    }
-    const action = msg.action || '';
-    if (actions.indexOf(action) === -1) {
-      console.log('message with invalid action type', action);
-    }
-    const origin = (new URL(port.sender.url)).origin;
-    controller.permissionRequest(action, msg.data, origin, (result) => {
-      port.postMessage({
-        type: 'AERGO_RESPONSE',
-        eventName: actionsToEventName[action],
-        result
-      });
-    }, (result) => {
-      port.postMessage({
-        type: 'AERGO_CANCEL',
-        eventName: actionsToEventName[action],
-        result,
-      });
-    });
-  }
 
   function connectRemote(remotePort) {
     const processName = remotePort.name;
     console.log('Establishing connection with', processName);
 
     if (processName === 'external') {
-      remotePort.onMessage.addListener(handleExternalMessage);
+      remotePort.onMessage.addListener((msg, port) => {
+        const request = ExternalRequest.fromPortMessage(port, msg);
+        controller.permissionRequest(request);
+      });
     } else {
       const portStream = new PortStream(remotePort);
       controller.state.set('active');

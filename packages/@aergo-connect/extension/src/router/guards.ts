@@ -28,8 +28,23 @@ export const persistRoute: NavigationGuard = (to, _from, next) => {
   return next();
 }
 
+/**
+ * afterEach hook to update document title
+ */
 export const updateTitle = (to: Route): void => {
   setTimeout(() => {
     document.title = to.meta && to.meta.title || capitalizeFirstLetter(to.name || '') + ' - Aergo Connect';
   });
+}
+
+/**
+ * This guard is added if we are in request mode.
+ * It overrides all other guards and redirects to 'request-select' if not in a request route.
+ */
+export const enforceRequest: NavigationGuard = (to, _from, next) => {
+  if (!to.fullPath.match(/request/) && to.fullPath !== '/locked') {
+    console.log('Enforcing request route');
+    return next({ name: 'request-select-account' });
+  }
+  return next();
 }
