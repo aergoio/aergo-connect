@@ -32,6 +32,7 @@ export class ExternalRequest {
   constructor(port: any, action: Action, data: any) {
     this.port = port;
     this.action = action;
+    this.data = data;
     this.origin = port.sender.origin;
   }
 

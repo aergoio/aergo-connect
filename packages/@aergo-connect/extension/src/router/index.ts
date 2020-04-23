@@ -39,6 +39,7 @@ import RequestSelectAction from '../views/request/SelectAction.vue';
 import RequestAccountContainer from '../views/request/AccountContainer.vue';
 import RequestAccountList from '../views/request/AccountList.vue';
 import RequestAddress from '../views/request/Address.vue';
+import RequestSign from '../views/request/Sign.vue';
 
 import Dummy from '../views/Dummy.vue';
 
@@ -102,7 +103,7 @@ const routes: RouteConfig[] = [
     { path: 'account/:chainId/:address/', component: RequestAccountContainer, children: [
       { path: '', name: 'request-select-action', component: RequestSelectAction },
       { path: 'address', name: 'request-address', component: RequestAddress },
-      { path: 'sign', name: 'request-sign', component: Dummy },
+      { path: 'sign', name: 'request-sign', component: RequestSign },
       { path: 'sign-tx', name: 'request-sign-tx', component: Dummy },
       { path: 'send', name: 'request-send', component: Dummy },
       { path: 'send/success/:hash', name: 'request-send-success', component: Dummy },

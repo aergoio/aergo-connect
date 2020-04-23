@@ -22,7 +22,7 @@ export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
  * Persist next route to store
  */
 export const persistRoute: NavigationGuard = (to, _from, next) => {
-  if (!(to.meta && to.meta.noTracking === true)) {
+  if (!(to.meta && to.meta.noTracking === true || to.fullPath.match(/request/))) {
     store.commit('ui/setCurrentRoute', to);
   }
   return next();
