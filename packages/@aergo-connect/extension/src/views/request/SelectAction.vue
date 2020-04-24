@@ -24,7 +24,10 @@ export default class RequestSelect extends Vue {
       'SEND_TX': 'request-send',
     };
     const routeName = actionToRouteName[action];
-    this.$router.push({ name: routeName });
+    // Check that we're still on the correct route
+    if (this.$router.currentRoute.name === 'request-select-action') {
+      this.$router.push({ name: routeName });
+    }
   }
 }
 </script>

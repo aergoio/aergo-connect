@@ -144,7 +144,6 @@ export default class TxBase extends mixins(RequestMixin) {
       this.setStatus('loading', 'Sending to network...');
       const result = await timedAsync(this.$background.sendTransaction(txBody, this.$route.params.chainId));
       if ('tx' in result) {
-        // TODO: go to SendSuccess and don't close window automatically
         return {
           hash: result.tx.hash,
         };

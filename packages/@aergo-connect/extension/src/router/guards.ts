@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from '../utils/strings';
  */
 export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
   const isStartTransition = from.fullPath === '/' && from.name === null && to.name === 'accounts-list';
-  if (isStartTransition || to.name == 'account-detail') { // TODO
+  if (isStartTransition) {
       const persistedPath = store.state.ui.route.currentPath;
       const exclude = ['', '/', '/welcome', to.fullPath];
       if (persistedPath && exclude.indexOf(persistedPath) === -1) {
@@ -43,7 +43,6 @@ export const updateTitle = (to: Route): void => {
  */
 export const enforceRequest: NavigationGuard = (to, _from, next) => {
   if (!to.fullPath.match(/request/) && to.fullPath !== '/locked') {
-    console.log('Enforcing request route');
     return next({ name: 'request-select-account' });
   }
   return next();

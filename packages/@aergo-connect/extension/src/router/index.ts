@@ -43,8 +43,6 @@ import RequestSign from '../views/request/Sign.vue';
 import RequestSendTx from '../views/request/Send.vue';
 import RequestSignTx from '../views/request/SignTx.vue';
 
-import Dummy from '../views/Dummy.vue';
-
 enum R {
   None = 0,
   NoAuthCheck = 1 << 0,
@@ -108,7 +106,6 @@ const routes: RouteConfig[] = [
       { path: 'sign', name: 'request-sign', component: RequestSign },
       { path: 'sign-tx', name: 'request-sign-tx', component: RequestSignTx },
       { path: 'send', name: 'request-send', component: RequestSendTx },
-      { path: 'send/success/:hash', name: 'request-send-success', component: Dummy },
     ] },
   ] },
 ];
