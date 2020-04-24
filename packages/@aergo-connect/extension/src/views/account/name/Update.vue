@@ -62,7 +62,6 @@ export default class AccountNameUpdate extends Vue {
       if (address.equal(this.$route.params.address)) {
         throw new Error('cannot be same as current');
       }
-      // TODO: Update name in internal db, AFTER tx is confirmed
       const txBody = await timedAsync(this.$background.getUpdateNameTransaction({
         address: this.$route.params.address,
         chainId: this.$route.params.chainId,

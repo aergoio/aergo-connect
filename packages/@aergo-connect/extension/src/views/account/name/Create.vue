@@ -72,7 +72,9 @@ export default class AccountNameCreate extends Vue {
       // Check if name already exists
       const name = await timedAsync(this.$background.addName(this.accountSpec, this.name));
       if (name.data.destination) {
-        // If we are the owner, add it and go back to the detail page.
+        // If we are the owner, keep it added and go back to the detail page.
+        // This is the expected flow when users want to add an already existing name to Aergo Connect
+        // as there is not way to automatically identify assigned names.
         if (name.data.destination === this.$route.params.address) {
           alert('You have already registered this name. It has now been added.');
           this.$router.push({ name: 'account-details' });
@@ -80,11 +82,9 @@ export default class AccountNameCreate extends Vue {
         }
         throw new Error(`Name is already registered to account ${name.data.destination}`);
       }
-
       const txBody = await timedAsync(this.$background.getCreateNameTransaction(this.accountSpec, this.name));
       this.$store.dispatch('ui/setTxBody', txBody );
       this.$router.push({ name: 'account-send-confirm' });
-      // TODO: Add name to internal db, AFTER confirm
     } catch (e) {
       this.errors.name = `${e}`;
       console.error(e);
