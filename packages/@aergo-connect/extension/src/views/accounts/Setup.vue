@@ -6,7 +6,7 @@
       </section>
       <Heading animated>Set your passphrase</Heading>
       <p>To get started, please configure a passphrase for your wallet. This passphrase will be used to secure all your accounts.</p>
-      <TextField variant="main" type="password" v-model="password" :error="errors.password" />
+      <PasswordStrengthField variant="main" v-model="password" />
     </div>
     <template #footer>
       <div class="content">
@@ -20,25 +20,22 @@
 import { ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
-import { TextField } from '@aergo-connect/lib-ui/src/forms';
+import { PasswordStrengthField } from '@aergo-connect/lib-ui/src/forms';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
 
-import Component, { mixins } from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component';
 
 @Component({
   components: {
     ScrollView,
     Heading,
-    TextField,
+    PasswordStrengthField,
     ContinueButton,
     Icon,
   },
 })
 export default class Setup extends mixins() {
   password = "";
-  errors = {
-    password: "",
-  };
 
   next() {
     this.$router.push({ name: this.$route.params.next || 'account-create' });
@@ -65,7 +62,3 @@ export default class Setup extends mixins() {
   }
 }
 </script>
-
-<style lang="scss">
-
-</style>

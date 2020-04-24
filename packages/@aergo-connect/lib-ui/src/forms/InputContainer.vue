@@ -118,5 +118,11 @@ export default Vue.extend({
     vertical-align: text-bottom;
     margin-left: 2px;
   }
+  &.warning {
+    color: #ef8a26;
+    .adjustable-stroke {
+      stroke: #ef8a26;
+    }
+  }
 }
 </style>

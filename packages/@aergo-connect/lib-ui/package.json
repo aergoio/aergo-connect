@@ -8,7 +8,9 @@
     "build-storybook": "build-storybook -c .storybook"
   },
   "dependencies": {
-    "jdenticon": "^2.2.0"
+    "jdenticon": "^2.2.0",
+    "zxcvbn": "^4.4.2",
+    "@types/zxcvbn": "^4.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "*",

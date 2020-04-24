@@ -1962,6 +1962,11 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.1.tgz#c8e84705e08eed430b5e15b39c65b0944e4d1422"
   integrity sha512-eWN5ElDTeBc5lRDh95SqA8x18D0ll2pWudU3uWiyfsRmIZcmUXpEsxPU+7+BsdCrO2vfLRC629u/MmjbmF+2tA==
 
+"@types/zxcvbn@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@types/zxcvbn/-/zxcvbn-4.4.0.tgz#fbc1d941cc6d9d37d18405c513ba6b294f89b609"
+  integrity sha512-GQLOT+SN20a+AI51y3fAimhyTF4Y0RG+YP3gf91OibIZ7CJmPFgoZi+ZR5a+vRbS01LbQosITWum4ATmJ1Z6Pg==
+
 "@typescript-eslint/eslint-plugin@^2.18.0":
   version "2.21.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.21.0.tgz#a34de84a0791cae0357c4dda805c5b4e8203b6c6"
@@ -12640,3 +12645,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zxcvbn@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
+  integrity sha1-KOwXzwl0PtyrBW3dixsGJizHPDA=

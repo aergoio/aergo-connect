@@ -15,7 +15,7 @@
           accept=".txt"
           ref="inputElement" />
       </InputContainer>
-      <span class="input-error-text" v-if="error">{{error}} <Icon name="danger" :size="16" /></span>
+      <span class="input-error-text" :class="errorType" v-if="error">{{error}} <Icon name="danger" :size="16" /></span>
     </label>
   </div>
 </template>
@@ -53,6 +53,10 @@ export default Vue.extend({
     error: {
       type: String,
       default: '',
+    },
+    errorType: {
+      type: String as PropType<'error' | 'warning'>,
+      default: 'error',
     },
     autoComplete: String,
   },
