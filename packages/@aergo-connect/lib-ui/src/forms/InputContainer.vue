@@ -114,6 +114,7 @@ export default Vue.extend({
   display: block;
   margin-bottom: 12px;
   margin-top: -7px;
+  word-break: break-word;
   .icon {
     vertical-align: text-bottom;
     margin-left: 2px;

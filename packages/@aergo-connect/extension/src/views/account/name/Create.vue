@@ -84,7 +84,7 @@ export default class AccountNameCreate extends Vue {
       const txBody = await timedAsync(this.$background.getCreateNameTransaction(this.accountSpec, this.name));
       this.$store.dispatch('ui/setTxBody', txBody );
       this.$router.push({ name: 'account-send-confirm' });
-      // TODO: When to actually save the new name? Should be after tx send....
+      // TODO: Add name to internal db, AFTER confirm
     } catch (e) {
       this.errors.name = `${e}`;
       console.error(e);

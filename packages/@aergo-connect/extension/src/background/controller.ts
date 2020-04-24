@@ -4,7 +4,7 @@ import pump from 'pump';
 import Dnode from 'dnode/browser.js';
 import Transport from '@ledgerhq/hw-transport-webusb';
 
-import { Wallet, Account } from '@herajs/wallet';
+import { Wallet, Account, Transaction } from '@herajs/wallet';
 import config from '../config';
 import store from './store';
 import { AergoscanTransactionScanner } from './tx-scanner';
@@ -16,6 +16,7 @@ import { ExternalRequest } from './request';
 
 import { Buffer } from 'buffer';
 import { hashTransaction } from '@herajs/crypto';
+import { TxTypes } from '@herajs/common';
 
 class BackgroundController extends EventEmitter {
   wallet: Wallet;
@@ -203,7 +204,39 @@ class BackgroundController extends EventEmitter {
     }
     const txTracker = await this.wallet.sendTransaction(accountSpec, tx);
     console.log(txTracker, txTracker.transaction.txBody);
+    txTracker.getReceipt().then(receipt => {
+      if (receipt.status === 'SUCCESS') {
+        this.handleConfirmedTx(txTracker.transaction);
+      };
+    });
     return txTracker.transaction.txBody;
+  }
+
+  /**
+   * Handle confirmed transactions sent through the wallet
+   */
+  async handleConfirmedTx(transaction: Transaction) {
+    if (!transaction.txBody) return;
+    // Apply name transactions to internal db
+    if (transaction.txBody.type === TxTypes.Governance && transaction.txBody.to === 'aergo.name') {
+      const client = this.wallet.getClient(transaction.data.chainId);
+      const blockhash = transaction.data.blockhash as string;
+      const block = await client.getBlockMetadata(blockhash);
+      const events = await client.getEvents({
+        address: 'aergo.name',
+        blockfrom: block.header.blockno,
+        blockto: block.header.blockno,
+      });
+      for (const event of events) {
+        if (event.eventName === 'update name' || event.eventName === 'create name') {
+          //console.log('Handling name event...', event);
+          this.wallet.nameManager.updateName({
+            address: event.args[1] as string || transaction.data.from,
+            chainId: transaction.data.chainId,
+          }, event.args[0] as string);
+        }
+      }
+    }
   }
 
   async connectLedger(): Promise<void> {
