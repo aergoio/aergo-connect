@@ -40,6 +40,8 @@ import RequestAccountContainer from '../views/request/AccountContainer.vue';
 import RequestAccountList from '../views/request/AccountList.vue';
 import RequestAddress from '../views/request/Address.vue';
 import RequestSign from '../views/request/Sign.vue';
+import RequestSendTx from '../views/request/Send.vue';
+import RequestSignTx from '../views/request/SignTx.vue';
 
 import Dummy from '../views/Dummy.vue';
 
@@ -104,8 +106,8 @@ const routes: RouteConfig[] = [
       { path: '', name: 'request-select-action', component: RequestSelectAction },
       { path: 'address', name: 'request-address', component: RequestAddress },
       { path: 'sign', name: 'request-sign', component: RequestSign },
-      { path: 'sign-tx', name: 'request-sign-tx', component: Dummy },
-      { path: 'send', name: 'request-send', component: Dummy },
+      { path: 'sign-tx', name: 'request-sign-tx', component: RequestSignTx },
+      { path: 'send', name: 'request-send', component: RequestSendTx },
       { path: 'send/success/:hash', name: 'request-send-success', component: Dummy },
     ] },
   ] },

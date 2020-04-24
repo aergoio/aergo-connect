@@ -172,8 +172,16 @@ export class Api {
   }
 
   async sendTransaction(tx: any, chainId: string) {
-    const txBody = await this.controller.sendTransaction({ txBody: tx, chainId });
-    return { tx: txBody };
+    try {
+      const txBody = await this.controller.sendTransaction({ txBody: tx, chainId });
+      return { tx: txBody };
+    } catch (e) {
+      if (`${e}`.match(/gas/)) {
+        throw new Error(`Insufficient gas limit or account balance. ${e}`);
+      } else {
+        throw e;
+      }
+    }
   }
 
   async prepareTransaction(tx: any, chainId: string) {

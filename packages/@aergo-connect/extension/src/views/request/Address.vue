@@ -15,13 +15,17 @@
           <Button type="primary" @click="confirm">Confirm</Button>
         </ButtonGroup>
       </div>
+      <LoadingDialog :visible="statusDialogVisible" @close="statusDialogVisible=false" :state="dialogState">
+        <p v-if="dialogState !== 'error'">{{statusText}}</p>
+        <p v-else class="error">{{statusText}}</p>
+      </LoadingDialog>
     </template>
   </ScrollView>
 </template>
 
 <script lang="ts">
 import Component, { mixins } from 'vue-class-component';
-import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
+import { ScrollView, LoadingDialog } from '@aergo-connect/lib-ui/src/layouts';
 import { Button, ButtonGroup, ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
@@ -30,6 +34,7 @@ import { RequestMixin } from './mixin';
 @Component({
   components: {
     ScrollView,
+    LoadingDialog,
     Button,
     ContinueButton,
     ButtonGroup,

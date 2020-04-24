@@ -159,7 +159,7 @@ class BackgroundController extends EventEmitter {
         url: extension.runtime.getURL(`popup-request.html?request=${requestId}`),
         type: "popup",
         width: 360,
-        height: 600,
+        height: 620,
         top: window.top,
         left,
       });

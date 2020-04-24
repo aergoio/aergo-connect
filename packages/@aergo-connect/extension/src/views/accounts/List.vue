@@ -58,7 +58,6 @@ export default class AccountsList extends Vue {
 <style lang="scss">
 .account-list-view {
   height: 100%;
-  padding-bottom: 10px;
   box-sizing: border-box;
 }
 .account-list-header {

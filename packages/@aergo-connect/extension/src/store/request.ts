@@ -4,7 +4,7 @@ import Vue from 'vue';
 
 export interface RequestState {
   currentRequestId: string;
-  currentRequest: {} | null,
+  currentRequest: {} | null;
 }
 
 function getVueInstance(instance: any): Vue {

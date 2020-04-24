@@ -38,7 +38,9 @@ export class RequestMixin extends Vue {
       const result = await this.confirmHandler();
       this.setStatus('success', 'Done');
       await this.$background.respondToPermissionRequest({ requestId: this.requestId, result });
-      window.close();
+      window.setTimeout(() => {
+        window.close();
+      }, 1000);
     } catch (e) {
       this.setStatus('error', `${e}`);
     }
