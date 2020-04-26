@@ -49,6 +49,7 @@ import { isPublicChainId } from '../../config';
 export default class AccountList extends Vue {
   @Prop({type: Array, required: true}) readonly accounts!: Account[];
   @Prop({type: Boolean, default: true}) readonly groupByChain!: boolean;
+  @Prop({type: Boolean, default: true}) readonly highlightNew!: boolean;
   @Prop({type: String, default: 'account-details'}) readonly accountRoute!: string;
 
   get sortedAccounts() {
@@ -60,12 +61,14 @@ export default class AccountList extends Vue {
     // Order by chainID A-Z. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
     accounts.sort((a, b) => !a.data ? 0 : a.data.spec.chainId.localeCompare(b.data.spec.chainId) );
     // Order the most recent accounts first, but only if they are new
-    accounts.sort((a, b) => {
-      // Use 0 for non-new accounts to not affect order, otherwise the added timestamp
-      const addedA = this.isNew(a) && typeof a.data.added === 'string' ? + new Date(a.data.added) : 0;
-      const addedB = this.isNew(b) && typeof b.data.added === 'string' ? + new Date(b.data.added) : 0;
-      return - (addedA - addedB);
-    });
+    if (this.highlightNew) {
+      accounts.sort((a, b) => {
+        // Use 0 for non-new accounts to not affect order, otherwise the added timestamp
+        const addedA = this.isNew(a) && typeof a.data.added === 'string' ? + new Date(a.data.added) : 0;
+        const addedB = this.isNew(b) && typeof b.data.added === 'string' ? + new Date(b.data.added) : 0;
+        return - (addedA - addedB);
+      });
+    }
     return accounts;
   }
 
@@ -80,6 +83,7 @@ export default class AccountList extends Vue {
   }
 
   isNew(account: Account) {
+    if (!this.highlightNew) return false;
     const MaxAge = 1000*60*5; // 5 min 
     const added = typeof account.data.added === 'string' ? + new Date(account.data.added) : 0;
     return (+ new Date() - added) < MaxAge;

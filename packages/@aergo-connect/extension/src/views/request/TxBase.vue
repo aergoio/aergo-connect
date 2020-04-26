@@ -123,10 +123,9 @@ export default class TxBase extends mixins(RequestMixin) {
     if (this.account.data.type === 'ledger') {
       txBody = await this.signWithLedger(txBody);
       if (this.actionVerb === 'sign') {
-        // TODO: Verify that this works
         return {
           account: this.accountSpec,
-          signature: txBody.signature,
+          signature: txBody.sign,
         };
       }
     }

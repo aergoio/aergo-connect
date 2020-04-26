@@ -14,7 +14,12 @@
     </template>
 
     <div class="ledger-account-list-wrap">
-      <AccountList v-if="accounts.length" :accounts="accounts" :groupByChain="false" accountRoute="account-imported" @select="selectAccount" />
+      <AccountList v-if="accounts.length"
+        :accounts="accounts"
+        :groupByChain="false" :highlightNew="false"
+        accountRoute="account-imported"
+        @select="selectAccount"
+      />
     </div>
 
     <template #footer>
