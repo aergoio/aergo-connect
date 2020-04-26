@@ -79,6 +79,11 @@ export default Vue.extend({
     fill: #777;
   }
 }
+.icon:hover {
+  .hover-remove-opacity {
+    opacity: 0.8;
+  }
+}
 .icon.active, .router-link-active .icon {
   .active-remove-opacity {
     opacity: 1;

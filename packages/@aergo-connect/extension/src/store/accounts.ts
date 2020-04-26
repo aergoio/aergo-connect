@@ -58,6 +58,13 @@ const storeModule: Module<AccountsState, RootState> = {
       const newKeys = accounts.map(acc => acc.key).filter(key => state.keys.indexOf(key) === -1);
       state.keys.push(...newKeys);
     },
+    removeAccounts(state, accountSpecs: AccountSpec[]) {
+      const keys = accountSpecs.map(spec => serializeAccountSpec(spec));
+      state.keys = state.keys.filter(key => keys.indexOf(key) === -1);
+      for (const key of keys) {
+        delete state.accounts[key];
+      }
+    },
     setSeedPhrase(state, phrase: string) {
       state.lastSeedPhrase = phrase;
     },

@@ -18,7 +18,10 @@
               
               <span class="account-address-balance">
                 <span class="account-address">{{account.data.spec.address}}</span>
-                <FormattedToken class="account-balance" :value="account.data.balance" />
+                <span class="balance-actions">
+                  <FormattedToken class="account-balance" :value="account.data.balance" />
+                  <router-link class="delete-button" :to="{name:'account-remove', params: account.data.spec }"><Icon name="trash" :size="10" /></router-link>
+                </span>
               </span>
             </div>
           </router-link>
@@ -51,6 +54,7 @@ export default class AccountList extends Vue {
   @Prop({type: Boolean, default: true}) readonly groupByChain!: boolean;
   @Prop({type: Boolean, default: true}) readonly highlightNew!: boolean;
   @Prop({type: String, default: 'account-details'}) readonly accountRoute!: string;
+  @Prop({type: Boolean, default: false}) readonly canDelete!: boolean;
 
   get sortedAccounts() {
     const accounts = [...this.accounts];
@@ -135,6 +139,30 @@ export default class AccountList extends Vue {
   }
   .account-balance {
     color: #666;
+  }
+  .balance-actions {
+    display: flex;
+    align-items: center;
+    .account-balance {
+      flex: 1;
+    }
+  }
+  .delete-button {
+    opacity: 0;
+  }
+  .account-item-li:hover .delete-button {
+    opacity: 1;
+  }
+  .delete-button .icon {
+    border-radius: 100%;
+    width: 24px !important;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      background-color: #d9d9d9;
+    }
   }
 
   .account-address {

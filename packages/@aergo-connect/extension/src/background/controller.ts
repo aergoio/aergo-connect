@@ -77,6 +77,10 @@ class BackgroundController extends EventEmitter {
       console.log('[lock] unlocked');
     });
 
+    this.wallet.accountManager.on('remove', (accountSpec) => {
+      this.emit('update', { accountsRemoved: [accountSpec] });
+    });
+
     // Background script cannot access USB device
     this.wallet.keyManager.useExternalLedger = true;
 

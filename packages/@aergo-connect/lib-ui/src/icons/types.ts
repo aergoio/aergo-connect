@@ -27,6 +27,8 @@ export const iconNames = tuple(
   'title-network',
   'title-request',
   'title-security',
+  'title-trash',
+  'trash',
   'tx-in',
   'tx-out',
   'tx-self',

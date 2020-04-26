@@ -32,6 +32,7 @@ import AccountExportKeystore from '../views/account/export/Keystore.vue';
 import AccountExportWif from '../views/account/export/Wif.vue';
 import AccountNameCreate from '../views/account/name/Create.vue';
 import AccountNameUpdate from '../views/account/name/Update.vue';
+import AccountRemove from '../views/account/Remove.vue';
 
 import RequestContainer from '../views/request/Container.vue';
 import RequestSelectAccount from '../views/request/SelectAccount.vue';
@@ -96,6 +97,7 @@ const routes: RouteConfig[] = [
     withMeta(2, { path: 'seedphrase', name: 'account-seedphrase-view', component: ViewSeedPhrase }),
     withMeta(3, { path: 'seedphrase-verify', name: 'account-seedphrase-verify', component: VerifySeedPhrase }),
     { path: 'imported', name: 'account-imported', component: AccountImported },
+    { path: 'remove', name: 'account-remove', component: AccountRemove },
   ] },
   { path: '/request', component: RequestContainer, children: [
     { path: '', name: 'request-select-account', component: RequestSelectAccount },

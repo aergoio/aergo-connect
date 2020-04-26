@@ -10,7 +10,7 @@
         </div>
       </template>
       <div class="account-list-wrap">
-        <AccountList :accounts="accounts" />
+        <AccountList :accounts="accounts" :canDelete="true" />
       </div>
     </ScrollView>
 
