@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from '../utils/strings';
 
 /**
  * Load persisted route on initial load
- * or whenever selecting an account during permission request (TODO)
+ * or whenever selecting an account during permission request
  */
 export const loadPersistedRoute: NavigationGuard = (to, from, next) => {
   const isStartTransition = from.fullPath === '/' && from.name === null && to.name === 'accounts-list';
