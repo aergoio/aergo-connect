@@ -3,7 +3,7 @@
     <ExportAccountDialog :visible="exportAccountDialogVisible" @close="exportAccountDialogVisible=false" />
 
     <div class="content detail-top">
-      <AccountBalance :account="account" />
+      <AccountBalance :account="account" :tokenPriceInfo="tokenPriceInfo" />
 
       <Button v-if="canExport" @click="exportAccountDialogVisible = true" type="icon"><Icon name="account-export" :size="36" /></Button>
       <div v-if="account && account.data && account.data.type === 'ledger'" class="account-storage-note">Stored on Ledger</div>
@@ -54,6 +54,7 @@ import NameDetails from '../../../components/account/NameDetails.vue';
 })
 export default class AccountDetails extends Vue {
   exportAccountDialogVisible = false;
+  tokenPriceInfo = {};
 
   get account(): Account {
     return this.$store.getters['accounts/getAccount'](this.accountSpec);
@@ -71,6 +72,10 @@ export default class AccountDetails extends Vue {
     this.$store.dispatch('accounts/updateAccount', this.accountSpec);
     // Clear Send dialog's persisted input
     this.$store.commit('ui/clearInput', { key: 'send' });
+    this.$background.getTokenPrice(this.$route.params.chainId).then(priceInfo => {
+      console.log('price', priceInfo);
+      this.tokenPriceInfo = priceInfo;
+    });
   }
 }
 </script>

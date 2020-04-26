@@ -17,6 +17,13 @@ interface AccountSpec {
   address: string;
 }
 
+interface TokenPriceInfo {
+  lastUpdatedAt: number;
+  price: number;
+  currency: string;
+}
+const tokenPriceCache: Record<string, TokenPriceInfo> = {};
+
 /**
  * RPC API to be consumed by clients.
  * This interface matches the object returned by client.connectToBackground.
@@ -282,6 +289,36 @@ export class Api {
       amount: new Amount(tx.amount as any).formatNumber('aergo'),
       unit: 'aergo',
     };
+  }
+  async getTokenPrice(chainId: string): Promise<TokenPriceInfo | null> {
+    if (chainId !== 'aergo.io') {
+      return null;
+    }
+    const currency = 'usd';
+    const cachedData = tokenPriceCache[currency];
+    if (cachedData) {
+      const age = + new Date() - + new Date(cachedData.lastUpdatedAt * 1000);
+      //console.log('getTokenPrice cache age', age / 1000);
+      if (age < 5 * 60 * 1000) { // cache for maximum of 5 minutes
+        return cachedData;
+      }
+    }
+    const params = {
+      'contract_addresses': '0xae31b85bfe62747d0836b82608b4830361a3d37a',
+      'vs_currencies': currency,
+      'include_last_updated_at': 'true',
+    }
+    const query = new URLSearchParams(params).toString();
+    const url = `https://api.coingecko.com/api/v3/simple/token_price/ethereum?${query}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const tokenData = data[params.contract_addresses];
+    tokenPriceCache[currency] = {
+      lastUpdatedAt: tokenData['last_updated_at'],
+      currency,
+      price: tokenData[params.vs_currencies],
+    };
+    return tokenPriceCache[currency];
   }
 }
 
