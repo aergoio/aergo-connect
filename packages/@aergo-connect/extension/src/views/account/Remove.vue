@@ -13,7 +13,7 @@
     <template #footer>
       <div class="content">
         <ButtonGroup horizontal>
-          <Button type="secondary" :to="{ name: 'account-list' }">Cancel</Button>
+          <Button type="secondary" :to="{ name: 'accounts-list' }">Cancel</Button>
           <Button type="primary" @click="confirm">Confirm</Button>
         </ButtonGroup>
       </div>
