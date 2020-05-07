@@ -12,7 +12,7 @@
       </p>
       <div v-if="showExtraFields">
         <SelectField label="Type" modal-sheet v-model="txBody.type" :options="typeOptions" dropdownTitle="Type" />
-        <TextField label="Message" v-model="txBody.payload" :error="errors.payload" />
+        <TextField label="Data (payload)" v-model="txBody.payload" :error="errors.payload" />
         <p class="note">Enter any text (e.g. ascii, utf8, json).</p>
         <TextField label="Gas limit" type="number" v-model="txBody.limit" :error="errors.limit" />
         <p class="note">Use a gas limit of 0 to use as much gas as available.</p>
