@@ -40,6 +40,16 @@ import { Tx } from '@herajs/client';
 import { Address } from '@herajs/common';
 import { capitalizeFirstLetter } from '../../../utils/strings';
 
+function typeToLabel(type: keyof typeof Tx.Type) {
+  if (type === 'FEEDELEGATION') {
+    return 'Call with fee delegation';
+  }
+  if (type === 'NORMAL') {
+    return 'Normal (legacy)';
+  }
+  return capitalizeFirstLetter(type.toLowerCase());
+}
+
 const typeOptions: [number, string][] = [];
 export function keys<O>(o: O): (keyof O)[] {
     return Object.keys(o) as (keyof O)[];
@@ -57,9 +67,9 @@ function keysFilteredReordered<O, E extends Partial<O>>(
   const filtered = keys(enumObj).filter(a => exclude.indexOf(a) === -1);
   return Array.from(new Set([...orderFront, ...filtered])) as Exclude<(keyof O), (keyof E)>[];
 }
-const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY', 'FEEDELEGATION']);
+const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'FEEDELEGATION', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY']);
 for (const key of orderedTypes) {
-  typeOptions.push([Tx.Type[key], capitalizeFirstLetter(key.toLowerCase())]);
+  typeOptions.push([Tx.Type[key], typeToLabel(key)]);
 }
 
 @Component({
