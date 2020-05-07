@@ -13,7 +13,8 @@
             <div class="account-item">
               <span>
                 <Identicon :text="account.data.spec.address" class="circle" />
-                <span v-if="isNew(account)" class="account-new-label">new</span>
+                <span v-if="account.data.type === 'ledger'" class="account-label account-label-usb"><Icon name="usb" :size="17" /></span>
+                <span v-else-if="isNew(account)" class="account-label account-label-new">new</span>
               </span>
               
               <span class="account-address-balance">
@@ -170,17 +171,27 @@ export default class AccountList extends Vue {
     padding-bottom: 10px;
     line-height: 1.3;
   }
-  .account-new-label {
-    display: inline-block;
-    transform: translateY(-5px);
+  .account-label {
+    display: block;
     border-radius: 10px;
+    width: 36px;
+    line-height: 20px;
+    text-align: center;
+    transform: translateY(-5px);
+  }
+  .account-label-new {
     background-color: #ff4f9f;
     font-size: (8/16)*1rem;
     text-transform: uppercase;
-    line-height: 19px;
-    width: 36px;
-    text-align: center;
     color: #fff;
+  }
+  .account-label-usb {
+    background-color: #6F6F6F;
+    .icon {
+      line-height: 10px;
+      height: 10px;
+      transform: translateY(-1px);
+    }
   }
 }
 </style>
