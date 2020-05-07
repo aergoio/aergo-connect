@@ -211,7 +211,7 @@ class BackgroundController extends EventEmitter {
     txTracker.getReceipt().then(receipt => {
       if (receipt.status === 'SUCCESS') {
         this.handleConfirmedTx(txTracker.transaction);
-      };
+      }
     });
     return txTracker.transaction.txBody;
   }

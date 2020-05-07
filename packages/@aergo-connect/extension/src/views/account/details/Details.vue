@@ -54,7 +54,7 @@ import NameDetails from '../../../components/account/NameDetails.vue';
 })
 export default class AccountDetails extends Vue {
   exportAccountDialogVisible = false;
-  tokenPriceInfo = {};
+  tokenPriceInfo: any = {};
 
   get account(): Account {
     return this.$store.getters['accounts/getAccount'](this.accountSpec);
@@ -73,7 +73,6 @@ export default class AccountDetails extends Vue {
     // Clear Send dialog's persisted input
     this.$store.commit('ui/clearInput', { key: 'send' });
     this.$background.getTokenPrice(this.$route.params.chainId).then(priceInfo => {
-      console.log('price', priceInfo);
       this.tokenPriceInfo = priceInfo;
     });
   }
