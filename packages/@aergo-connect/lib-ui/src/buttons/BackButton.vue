@@ -17,9 +17,16 @@ export default Vue.extend({
     to: {
       type: [String, Object] as PropType<RawLocation>,
     },
+    onClick: {
+      type: Function,
+    }
   },
   methods: {
     handleClick() {
+      if (typeof this.onClick === 'function') {
+        this.onClick();
+        return;
+      }
       // Default action, can be overridden with custom route by passing `to`
       if (typeof this.$router !== 'undefined') {
         this.$router.back();
@@ -32,6 +39,10 @@ export default Vue.extend({
 <style lang="scss">
 .back-button {
   margin-left: -10px;
+  justify-content: flex-start;
+}
+.button-group-horizontal .back-button {
+  margin-left: 0px;
 }
 .header .back-button {
   margin-left: -7px;

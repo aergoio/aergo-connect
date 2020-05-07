@@ -46,6 +46,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    autofocus: {
+      type: Boolean,
+      default: false,
+    },
     state: {
       type: String as PropType<InputState>,
       default: InputStates[0],
@@ -66,6 +70,11 @@ export default Vue.extend({
         'text-field',
         `type-${this.type}`,
       ];
+    }
+  },
+  mounted() {
+    if (this.autofocus) {
+      (this.$refs.inputElement as HTMLFormElement).focus();
     }
   },
   methods: {

@@ -6,6 +6,7 @@
       :value="value"
       :error="passwordError"
       errorType="warning"
+      :autofocus="autofocus"
       @input="handleInput" @blur="handleBlur" @submit="handleEnter"
     />
     <span class="input-error-text password-good" v-if="value && passwordStrength.score >= 3">Good <Icon name="checkmark-circle" :size="16" /></span>
@@ -36,6 +37,7 @@ export default Vue.extend({
       type: String as PropType<InputVariant>,
       default: InputVariants[0],
     },
+    autofocus: Boolean,
   },
   computed: {
     passwordError(): string {
