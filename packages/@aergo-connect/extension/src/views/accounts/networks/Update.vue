@@ -31,6 +31,7 @@ import { Button, BackButton, ButtonGroup } from '@aergo-connect/lib-ui/src/butto
 import { TextField } from '@aergo-connect/lib-ui/src/forms';
 
 import { Vue, Component, Watch } from 'vue-property-decorator';
+// @ts-ignore
 import AergoClient, { GrpcWebProvider } from '@herajs/client';
 
 @Component({
