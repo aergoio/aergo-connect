@@ -1,6 +1,6 @@
 <template>
   <div class="header-logo">
-    <Icon name="logo" :size="36" />
+    <Icon :name="iconName" :size="36" />
   </div>
 </template>
 
@@ -11,7 +11,13 @@ import Icon from './Icon.vue';
 export default Vue.extend({
   components: {
     Icon,
-  }
+  },
+  props: {
+    iconName: {
+      type: String,
+      default: 'logo',
+    },
+  },
 });
 </script>
 

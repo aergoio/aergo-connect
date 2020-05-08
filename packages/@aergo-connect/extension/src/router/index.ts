@@ -15,6 +15,8 @@ import ConnectHw from '../views/accounts/connect-hw/1-Network.vue';
 import ConnectHwAccounts from '../views/accounts/connect-hw/2-Accounts.vue';
 import AccountsList from '../views/accounts/List.vue';
 import Settings from '../views/accounts/Settings.vue';
+import NetworksList from '../views/accounts/networks/List.vue';
+import NetworksUpdate from '../views/accounts/networks/Update.vue';
 
 import AccountContainer from '../views/account/Container.vue';
 import AccountCreated from '../views/account/Created.vue';
@@ -76,6 +78,9 @@ const routes: RouteConfig[] = [
     withMeta(4, { path: 'import/wif', name: 'account-import-wif', component: ImportWif }),
     withMeta(2, { path: 'connect-hw', name: 'account-connect-hw', component: ConnectHw }),
     withMeta(3, { path: 'connect-hw/accounts', name: 'account-connect-hw-accounts', component: ConnectHwAccounts }),
+    withMeta(4, { path: 'networks', name: 'networks-list', component: NetworksList }, R.NoTracking),
+    withMeta(5, { path: 'networks/create', name: 'networks-create', component: NetworksUpdate }, R.NoTracking),
+    withMeta(5, { path: 'networks/:chainId', name: 'networks-update', component: NetworksUpdate }, R.NoTracking),
   ] },
   { path: '/account/:chainId/:address/', component: AccountContainer, children: [
     { path: '', component: TabContainer, children: [

@@ -62,8 +62,12 @@ export class Api {
     return true;
   }
 
+  async getNetworks() {
+    if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
+    return (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data;
+  }
+
   async addNetwork({ chainId, nodeUrl }: ChainConfig) {
-    console.log('Adding chain', { chainId, nodeUrl });
     this.controller.wallet.useChain({ chainId, nodeUrl });
     let chains: Record<string, ChainConfig> = {};
     if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
@@ -74,6 +78,19 @@ export class Api {
     }
     chains[chainId] = { chainId, nodeUrl };
     await this.controller.wallet.datastore.getIndex('settings').put({
+      key: 'customChains',
+      data: chains as any,
+    });
+    return true;
+  }
+
+  async removeNetwork({ chainId }: { chainId: string }) {
+    let chains: Record<string, ChainConfig> = {};
+    if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
+    const index = this.controller.wallet.datastore.getIndex('settings');
+    chains = (await index.get('customChains')).data as any;
+    delete chains[chainId];
+    await index.put({
       key: 'customChains',
       data: chains as any,
     });

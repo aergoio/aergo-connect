@@ -14,7 +14,10 @@
         <component :is="modalSheet ? 'ModalDialog' : 'div'" class="dropdown" :visible="optionsVisible" :title="dropdownTitle">
           <div class="dialog-options" v-if="optionsVisible">
             <div v-for="(option, index) in optionDict" :key="option.value" class="dialog-option" @mousedown="selectOption(option.value, index)" :class="{focused: index === focusedOptionIndex}">
-              {{option.label}}
+              <span>
+                <Icon class="label-icon" :name="option.icon" :size="36" v-if="option.icon" />
+                {{option.label}}
+              </span>
               <Icon name="checkmark-circle" :size="20" v-if="index === selectedOptionIndex" />
             </div>
           </div>
@@ -26,15 +29,14 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { InputVariant, InputVariants, InputStates, InputState, SelectOption, isSelectOptionWithLabel, } from './types';
+import {
+  InputVariant, InputVariants,
+  InputStates, InputState,
+  SelectOption, OptionDict, isSelectOptionWithLabel, isSelectOptionObject,
+} from './types';
 import InputContainer from './InputContainer.vue';
 import Icon from '../icons/Icon.vue';
 import ModalDialog from '../layouts/ModalDialog.vue';
-
-interface OptionDict {
-  value: string | number;
-  label: string;
-}
 
 export default Vue.extend({
   components: {
@@ -86,6 +88,9 @@ export default Vue.extend({
       return this.options.map((option): OptionDict => {
         if (isSelectOptionWithLabel(option)) {
           return { value: option[0], label: option[1] };
+        }
+        if (isSelectOptionObject(option)) {
+          return option;
         }
         return { value: option, label: option };
       });
@@ -217,6 +222,13 @@ export default Vue.extend({
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .label-icon {
+        justify-self: flex-start;
+        flex: 36px;
+        border: 1px solid #f0f0f0;
+        border-radius: 100%;
+      }
 
       &.focused {
         background-color: rgba(0,0,0,0.04);

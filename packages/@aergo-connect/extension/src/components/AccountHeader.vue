@@ -2,7 +2,7 @@
   <InvertedColors>
     <Header class="account-header">
       <BackButton :to="{ name: backRouteName }" />
-      <HeaderLogo />
+      <HeaderLogo :iconName="isPublicChain ? 'logo' : 'network-other'" />
       <div class="account-identifier">
         <Elide class="address" :text="$route.params.address" mode="middle-fixed-tail" expect-ellipsis />
         <Elide class="network" :text="$route.params.chainId" mode="head" />
@@ -21,6 +21,7 @@ import { BackButton, Button } from '@aergo-connect/lib-ui/src/buttons';
 import InvertedColors from '@aergo-connect/lib-ui/src/theme/InvertedColors.vue'; 
 import { Elide } from '@aergo-connect/lib-ui/src/content';
 import { getExplorerUrl } from '../utils/chain-urls';
+import { isPublicChainId } from '../config';
 
 export default Vue.extend({
   props: {
@@ -41,6 +42,9 @@ export default Vue.extend({
   computed: {
     explorerUrl(): string {
       return getExplorerUrl(this.$route.params.chainId, `account/${this.$route.params.address}`);
+    },
+    isPublicChain(): boolean {
+      return isPublicChainId(this.$route.params.chainId);
     }
   },
   methods: {

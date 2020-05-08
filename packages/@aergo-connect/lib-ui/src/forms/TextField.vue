@@ -42,14 +42,8 @@ export default Vue.extend({
       type: String as PropType<InputVariant>,
       default: InputVariants[0],
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    autofocus: {
-      type: Boolean,
-      default: false,
-    },
+    disabled: Boolean,
+    autofocus: Boolean,
     state: {
       type: String as PropType<InputState>,
       default: InputStates[0],

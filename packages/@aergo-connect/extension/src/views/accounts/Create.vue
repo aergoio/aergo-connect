@@ -6,7 +6,7 @@
       </section>
       <Heading animated>Create</Heading>
       <p>Please select the network for your new account.</p>
-      <SelectField variant="main" :options="options" v-model="chainId" modal-sheet dropdownTitle="Network" />
+      <SelectNetwork v-model="chainId" />
     </div>
     <template #footer>
       <div class="content">
@@ -22,6 +22,7 @@ import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
 import { PersistInputsMixin } from '../../store/ui';
+import SelectNetwork from '../../components/accounts/SelectNetwork.vue';
 
 import Component, { mixins } from 'vue-class-component'
 
@@ -32,6 +33,7 @@ import Component, { mixins } from 'vue-class-component'
     Heading,
     SelectField,
     ContinueButton,
+    SelectNetwork,
   },
 })
 export default class Create extends mixins(PersistInputsMixin) {

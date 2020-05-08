@@ -29,7 +29,12 @@ export default Vue.extend({
       }
       // Default action, can be overridden with custom route by passing `to`
       if (typeof this.$router !== 'undefined') {
-        this.$router.back();
+        this.$router.go(-1);
+        /*if (this.$store.state.ui.route.previousPath) {
+          this.$router.push(this.$store.state.ui.route.previousPath);
+        } else {
+          this.$router.push({ name: 'accounts-list' });
+        }*/
       }
     },
   }

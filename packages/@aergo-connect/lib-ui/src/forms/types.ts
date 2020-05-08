@@ -17,9 +17,21 @@ export interface InputProps {
   state?: InputState;
 }
 
+export interface OptionDict {
+  value: string | number;
+  label: string;
+  icon?: string;
+}
+
 type SelectOptionWithLabel = [string, string];
-export type SelectOption = string | SelectOptionWithLabel;
+export type SelectOption = string | SelectOptionWithLabel | OptionDict;
 // eslint-disable-next-line
 export function isSelectOptionWithLabel(option: any): option is SelectOptionWithLabel {
   return typeof option === 'object' && option.length === 2;
 }
+// eslint-disable-next-line
+export function isSelectOptionObject(option: any): option is OptionDict {
+  return typeof option === 'object' && typeof option.value !== 'undefined';
+}
+
+
