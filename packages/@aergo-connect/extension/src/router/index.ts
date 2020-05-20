@@ -35,6 +35,7 @@ import AccountExportWif from '../views/account/export/Wif.vue';
 import AccountNameCreate from '../views/account/name/Create.vue';
 import AccountNameUpdate from '../views/account/name/Update.vue';
 import AccountRemove from '../views/account/Remove.vue';
+import AccountSign from '../views/account/Sign.vue';
 
 import RequestContainer from '../views/request/Container.vue';
 import RequestSelectAccount from '../views/request/SelectAccount.vue';
@@ -96,6 +97,7 @@ const routes: RouteConfig[] = [
         { path: 'confirm', name: 'account-send-confirm', component: AccountSendConfirm },
       ] },
       { path: 'history', name: 'account-history', component: AccountHistory },
+      { path: 'sign', name: 'account-sign', component: AccountSign },
     ] },
     { path: 'send/success/:hash', name: 'account-send-success', component: AccountSendSuccess },
     withMeta(1, { path: 'created', name: 'account-created', component: AccountCreated }),

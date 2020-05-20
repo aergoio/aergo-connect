@@ -4,6 +4,7 @@
       <Heading>Settings</Heading>
       <p class="settings-group">Accounts</p>
       <SwitchButton v-model="features.enableHardwareWallet" label="Enable experimental hardware wallet support" />
+      <SwitchButton v-model="features.enableSignMessage" label="Enable experimental sign message support" />
     </div>
   </ScrollView>
 </template>
@@ -26,6 +27,7 @@ import Component, { mixins } from 'vue-class-component';
 export default class Import extends mixins(PersistInputsMixin) {
   features = {
     enableHardwareWallet: false,
+    enableSignMessage: false,
   };
   persistFields = ['features'];
   persistFieldsKey = 'settings';

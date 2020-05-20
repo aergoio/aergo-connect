@@ -3,6 +3,7 @@
     <TabBar>
       <router-link :to="{ name: 'account-details' }"><Icon name="tab-wallet" :size="32" /></router-link>
       <router-link :to="{ name: 'account-send' }"><Icon name="tab-send" :size="32" /></router-link>
+      <router-link :to="{ name: 'account-sign' }" v-if="isSignMessageEnabled"><Icon name="tab-sign" :size="32" /></router-link>
       <router-link :to="{ name: 'account-history' }"><Icon name="tab-history" :size="32" /></router-link>
     </TabBar>
     <RouteTransition defaultTransition="fade">
@@ -27,6 +28,9 @@ import Component from 'vue-class-component'
   },
 })
 export default class TabFrame extends Vue {
+  get isSignMessageEnabled(): boolean {
+    return this.$store.getters['ui/getSetting']('features.enableSignMessage');
+  }
 }
 </script>
 

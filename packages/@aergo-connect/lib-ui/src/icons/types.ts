@@ -24,6 +24,7 @@ export const iconNames = tuple(
   'tab-history',
   'tab-send',
   'tab-wallet',
+  'tab-sign',
   'title-network',
   'title-request',
   'title-security',
