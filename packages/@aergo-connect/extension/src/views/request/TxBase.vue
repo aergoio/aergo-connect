@@ -97,17 +97,23 @@ export default class TxBase extends mixins(RequestMixin) {
     const app = new LedgerAppAergo(transport);
     this.setStatus('loading', 'Please confirm transaction on device!');
     try {
+      await app.getWalletAddress(this.account.data.derivationPath);
       const { signature } = await app.signTransaction(tx);
       tx.sign = signature;
       return tx;
     } catch (e) {
       if (`${e}`.match(/0x6982/)) {
         throw new Error('Transaction was rejected.');
+      } else if (`${e}`.match(/No device selected/)) {
+        throw new Error("You didn't select a compatible USB device.");
+      } else if (`${e}`.match(/CLA_NOT_SUPPORTED/)) {
+        throw new Error('Make sure to activate the Aergo app on your device and try again.');
       } else {
         throw e;
       }
     }
   }
+
   async confirmHandler(): Promise<any> {
     console.log('RequestSend confirmHandler');
     if (!this.request) return;

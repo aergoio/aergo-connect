@@ -15,7 +15,7 @@ import { ExternalRequest } from './request';
 //import 'whatwg-fetch';
 
 import { Buffer } from 'buffer';
-import { hashTransaction } from '@herajs/crypto';
+import { hashTransaction, hash } from '@herajs/crypto';
 import { TxTypes } from '@herajs/common';
 
 class BackgroundController extends EventEmitter {
@@ -185,7 +185,7 @@ class BackgroundController extends EventEmitter {
 
   async signMessage({ address, chainId, message }: any) {
     const account = await this.wallet.accountManager.getOrAddAccount({ address, chainId });
-    return await this.wallet.keyManager.signMessage(account, Buffer.from(message));
+    return await this.wallet.keyManager.signMessage(account, hash(Buffer.from(message)));
   }
 
   async signTransaction({ address, chainId, txData }: any) {

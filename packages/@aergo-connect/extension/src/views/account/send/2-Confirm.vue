@@ -85,12 +85,17 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
     const app = new LedgerAppAergo(transport);
     this.setStatus('loading', 'Please confirm transaction on device!');
     try {
+      await app.getWalletAddress(this.account.data.derivationPath);
       const { signature } = await app.signTransaction(tx);
       tx.sign = signature;
       return tx;
     } catch (e) {
       if (`${e}`.match(/0x6982/)) {
         throw new Error('Transaction was rejected.');
+      } else if (`${e}`.match(/No device selected/)) {
+        throw new Error("You didn't select a compatible USB device.");
+      } else if (`${e}`.match(/CLA_NOT_SUPPORTED/)) {
+        throw new Error('Make sure to activate the Aergo app on your device and try again.');
       } else {
         throw e;
       }
@@ -106,12 +111,16 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
       txBody = await this.signWithLedger(txBody);
     }
     this.setStatus('loading', 'Sending to network...');
-    const result = await this.$background.sendTransaction(txBody, this.$route.params.chainId);
-    if ('tx' in result) {
-      return result.tx.hash;
-    } else {
-      // This shouldn't happen normally
-      throw new Error('Result is missing transaction information.');
+    try {
+      const result = await this.$background.sendTransaction(txBody, this.$route.params.chainId);
+      if ('tx' in result) {
+        return result.tx.hash;
+      } else {
+        // This shouldn't happen normally
+        throw new Error('Result is missing transaction information.');
+      }
+    } catch (e) {
+      throw new Error(`Node response: ${e.message || e}`);
     }
   }
 
@@ -128,7 +137,6 @@ export default class AccountSendConfirm extends mixins(PersistInputsMixin) {
         this.$router.push({ name: 'account-send-success', params: { hash }});
       }, 1000);
     } catch(e) {
-      console.log(e);
       const errorMsg = `${e}`.replace("UNDEFINED_ERROR:", "");
       this.setStatus('error', errorMsg);
     }

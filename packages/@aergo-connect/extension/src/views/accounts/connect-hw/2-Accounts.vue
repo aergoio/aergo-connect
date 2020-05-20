@@ -98,7 +98,7 @@ export default class Import extends mixins(PersistInputsMixin) {
       } else if (`${e}`.match(/CLA_NOT_SUPPORTED/)) {
         this.error = `Make sure to activate the Aergo app on your device and try again.`;
       } else {
-        this.error = `Make sure the device is connected and the Aergo app is active. ${e}`;
+        this.error = `Make sure the device is connected and not used by another desktop appplication. ${e}`;
       }
       this.dialogState = 'error';
     }

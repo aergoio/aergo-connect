@@ -357,7 +357,7 @@ function wrapApiCall<Ret>(fn: ApiFunction<Ret>): DnodeFunction {
       const result = await fn(...args);
       send(result);
     } catch (e) {
-      send({ error: `${e}` });
+      send({ error: `${e.message || e}` });
     }
   }
 }
