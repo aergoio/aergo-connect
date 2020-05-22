@@ -122,7 +122,6 @@ class BackgroundController extends EventEmitter {
   async setActiveAccount({ chainId, address }: any) {
     const account = await this.wallet.accountManager.getOrAddAccount({ address, chainId });
     this.activeAccount = account;
-    console.log('Active account is now', { chainId, address });
   }
 
   async getActiveAccount() {
@@ -149,8 +148,12 @@ class BackgroundController extends EventEmitter {
           onceCb = undefined;
         }
       });
+      // Force an initial load and update with data
+      t.load().then(account => {
+        this.emit('update', { accounts: [account] });
+      });
     });
-    // Make an initial update
+    // Make an initial update (data might be empty)
     this.emit('update', { accounts: [account] });
   }
 
