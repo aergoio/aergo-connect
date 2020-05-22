@@ -4,10 +4,10 @@
       <section class="dialog-header">
         <BackButton :to="{ name: 'account-import-format' }" />
       </section>
-      <Heading>Import Encrypted String</Heading>
-      <p>Enter your encrypted private key and password.</p>
-      <TextField label="Encrypted private key" v-model="encryptedKey" :error="errors.keystore" />
-      <TextField v-model="password" type="password" label="Encryption password" :error="errors.password" autoComplete="no" />  
+      <Heading>Import Mnemonic Seedphrase</Heading>
+      <p>Enter your mnemonic seed phrase.</p>
+      <TextField label="Seed phrase" v-model="seedPhrase" :error="errors.seedPhrase" />
+      <TextField v-model="derivationPath" label="Derivation path" disabled :error="errors.derivationPath" />
     </div>
     <template #footer>
       <div class="content">
@@ -25,8 +25,8 @@ import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
 import { PersistInputsMixin } from '../../../store/ui';
 
 import Component, { mixins } from 'vue-class-component';
-import { decodePrivateKey, decryptPrivateKey, identityFromPrivateKey } from '@herajs/crypto';
-import { waitFor } from '@herajs/common';
+import { privateKeyFromMnemonic, identityFromPrivateKey } from '@herajs/crypto';
+import { waitFor, constants } from '@herajs/common';
 
 @Component({
   components: {
@@ -44,16 +44,16 @@ export default class Keystore extends mixins(PersistInputsMixin) {
   persistFields = ['chainId']; // Data from 1-Network
   persistFieldsKey = 'account-create';
 
-  encryptedKey = "";
-  password = "";
+  derivationPath = constants.WALLET_HDPATH;
+  seedPhrase = "";
   errors = {
-    keystore: "",
-    password: "",
+    seedPhrae: "",
+    derivationPath: "",
   };
   loading = false;
 
   get canContinue(): boolean {
-    return Boolean(this.encryptedKey) && Boolean(this.password);
+    return Boolean(this.derivationPath) && Boolean(this.seedPhrase);
   }
 
   async loadKeystore(): Promise<void> {
@@ -62,9 +62,9 @@ export default class Keystore extends mixins(PersistInputsMixin) {
     await waitFor(150);
 
     try {
-      const encryptedBytes = decodePrivateKey(this.encryptedKey);
-      const decryptedBytes = await decryptPrivateKey(encryptedBytes, this.password);
-      const identity = await identityFromPrivateKey(decryptedBytes);
+      const opts = { hdpath: this.derivationPath };
+      const privateKey = await privateKeyFromMnemonic(this.seedPhrase, opts);
+      const identity = identityFromPrivateKey(privateKey);
       const accountSpec = await this.$background.importAccount({
         privateKey: Array.from(identity.privateKey),
         chainId: this.chainId,
@@ -72,12 +72,7 @@ export default class Keystore extends mixins(PersistInputsMixin) {
       this.$router.push({ name: 'account-imported', params: {...accountSpec} });
     } catch(e) {
       console.log(e);
-      if (`${e}`.match(/invalid mac value/)) {
-        this.errors.password = 'Invalid password';
-      } else {
-        this.errors.password = `${e}`;
-      }
-      
+      this.errors.derivationPath = `${e}`;
     } finally {
       this.loading = false;
     }

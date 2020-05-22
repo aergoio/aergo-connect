@@ -17,13 +17,14 @@ storiesOf('Forms/AddressField', module)
         error: '',
       };
     },
-    watch: {
-      value(): void {
+    computed: {
+      error() {
         try {
+          // @ts-ignore
           new Address(this.value as string);
-          this.error = "";
+          return '';
         } catch (e) {
-          this.error = "Invalid address";
+          return 'Invalid address';
         }
       },
     },

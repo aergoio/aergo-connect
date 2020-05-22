@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-knobs',
     '@storybook/addon-backgrounds',
     '@storybook/preset-scss',
+    /*
     {
       name: '@storybook/preset-typescript',
       options: {
@@ -14,5 +15,6 @@ module.exports = {
         },
       },
     }
+    */
   ],
 };

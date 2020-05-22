@@ -6,7 +6,7 @@
       </section>
       <Heading animated>Connect Hardware Wallet</Heading>
       <p>Please select the network for which you want to import an account from a connected Ledger Nano S.</p>
-      <SelectField variant="main" :options="options" v-model="chainId" modal-sheet dropdownTitle="Network" />
+      <SelectNetwork v-model="chainId" />
     </div>
     <template #footer>
       <div class="content">
@@ -20,7 +20,7 @@
 import { BackButton, ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
-import SelectField from '@aergo-connect/lib-ui/src/forms/SelectField.vue';
+import SelectNetwork from '../../../components/accounts/SelectNetwork.vue';
 import { PersistInputsMixin } from '../../../store/ui';
 import { PublicChainIds, PublicChainData } from '../../../config';
 
@@ -33,7 +33,7 @@ const publicChainOptions = PublicChainIds.map(chainId => [chainId, PublicChainDa
     ScrollView,
     BackButton,
     Heading,
-    SelectField,
+    SelectNetwork,
     ContinueButton,
   },
 })

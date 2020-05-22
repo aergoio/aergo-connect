@@ -10,10 +10,13 @@
         <ButtonGroup vertical>
           <Button type="primary" :to="{ name: 'account-import-keystore' } ">Keystore File</Button>
           <Button :to="{ name: 'account-import-wif' } ">Encrypted String</Button>
+          <Button :to="{ name: 'account-import-seedphrase' } ">Mnemonic Seedphrase</Button>
         </ButtonGroup>
       </p>
-      <p class="note">"Keystore File" is the recommended format. Use it when you saved your key as an encrypted file.</p>
-      <p class="note">"Encrypted String" is a legacy format. Use it when you copied your key as an encrypted string.</p>
+      <p class="note">
+        "Keystore File" is the recommended format. Use it when you saved your key as an encrypted file.<br>
+        "Encrypted String" is a legacy format. Use it when you copied your key as an encrypted string.
+      </p>
     </div>
   </ScrollView>
 </template>
