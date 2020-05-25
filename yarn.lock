@@ -1225,10 +1225,10 @@
     create-hash "^1.2.0"
     jsbi "^3.0.0"
 
-"@herajs/crypto@^0.20.0":
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.20.0.tgz#46a7481185848c0cdb79806a4bf8be07db01e1dc"
-  integrity sha512-VEDCoeiCVSQKXkUQ75dwlWDqs3+I1C0WVOaRWVO8o57C/uKDtBuBOsA+uyuHP2xWUUA+7aQ2wKoFynruc/hibw==
+"@herajs/crypto@^0.20.5":
+  version "0.20.5"
+  resolved "https://registry.yarnpkg.com/@herajs/crypto/-/crypto-0.20.5.tgz#9e3c9437399a3c6eeeb6534a91c4ddbce145901e"
+  integrity sha512-ZtYt1b9cXJ88e6qJk0vnwqUj4fVpPW4DMyCz3mGIOCxIz7XS8vJFTwxON8LWxfo23QFhy8//d234zSSV5qC0MQ==
   dependencies:
     "@herajs/common" "^0.20.0"
     "@herajs/hdkey" "^11.2.0"
@@ -1250,25 +1250,25 @@
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
-"@herajs/ledger-hw-app-aergo@^0.20.4":
-  version "0.20.4"
-  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.20.4.tgz#c32053bfa34903b95277a25b9b5be5065a59678f"
-  integrity sha512-2ej5QAK/bZQGD8WacM26vdA0jYKzVwbsXksI6McWYF8kfCjenfElEosDGWdNunAl2pzRts+w6rPjMpAYwWyPOA==
+"@herajs/ledger-hw-app-aergo@^0.20.5":
+  version "0.20.5"
+  resolved "https://registry.yarnpkg.com/@herajs/ledger-hw-app-aergo/-/ledger-hw-app-aergo-0.20.5.tgz#45d817ed58f33a98d84152a61e440971f6ac7243"
+  integrity sha512-ZwvIoS0RAyNb59kGhgbXYpf1m4A6NGH6qI4NzMCY5GEnLl79QXBM8rjWj/KYzR0UTGFI1+yswP9RjgPpnaom4A==
   dependencies:
     "@herajs/client" "^0.20.3"
     "@herajs/common" "^0.20.0"
-    "@herajs/crypto" "^0.20.0"
+    "@herajs/crypto" "^0.20.5"
 
-"@herajs/wallet@^0.20.4":
-  version "0.20.4"
-  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.20.4.tgz#f987c8d117badf910916c02978f797ce5c873750"
-  integrity sha512-+72EvcGdbNHgGC79DXMwmmInL2YCl76lldrlhLyU6kzILTVYysCk3KWxYKAX/8Xr6CmWuYcbThnY7fLXD8tzhw==
+"@herajs/wallet@^0.20.5":
+  version "0.20.5"
+  resolved "https://registry.yarnpkg.com/@herajs/wallet/-/wallet-0.20.5.tgz#14011fbcccb260f8641b45b38b134fa9e6916c54"
+  integrity sha512-dA17lhJJfSNQ1BvZh2BbZAvH9R7Gx0oDOwbiHOxknoLNV72wAxARYxhQf24XuqFyV7md6IT4kY6W3q+KkNgtLQ==
   dependencies:
     "@elderapo/typed-event-emitter" "^1.4.1"
     "@herajs/client" "^0.20.3"
     "@herajs/common" "^0.20.0"
-    "@herajs/crypto" "^0.20.0"
-    "@herajs/ledger-hw-app-aergo" "^0.20.4"
+    "@herajs/crypto" "^0.20.5"
+    "@herajs/ledger-hw-app-aergo" "^0.20.5"
     "@types/google-protobuf" "^3.2.7"
     "@types/hashmap" "^2.0.29"
     "@types/leveldown" "^4.0.0"
