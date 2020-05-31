@@ -251,8 +251,8 @@ export class Api {
     };
   }
 
-  async signMessage({ address, chainId, message }: any) {
-    const signedMessage = await this.controller.signMessage({ address, chainId, message });
+  async signMessage({ address, chainId, message, hash }: any) {
+    const signedMessage = await this.controller.signMessage({ address, chainId, message, hash });
     return { signedMessage };
   }
 

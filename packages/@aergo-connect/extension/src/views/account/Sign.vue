@@ -8,6 +8,10 @@
 
     <div class="content">
       <textarea class="user-sign-message" v-model="message"></textarea>
+      <label class="prehash-check">
+        <input type="checkbox" v-model="isHashed">
+        This is a message hash
+      </label>
       <p class="sign-message sign-message-result" v-if="signature">{{signature}}</p>
     </div>
 
@@ -54,6 +58,7 @@ export default class RequestSign extends mixins() {
   statusText = '';
   statusDialogVisible = false;
   dialogState: 'loading' | 'success' | 'error' = 'loading';
+  isHashed = false;
 
   setStatus(state: 'loading' | 'success' | 'error', text: string) {
     this.dialogState = state;
@@ -95,7 +100,6 @@ export default class RequestSign extends mixins() {
     if (!this.account) {
       throw new Error('Could not load account, please reload page and try again.');
     }
-    const account = this.accountSpec;
     this.setStatus('loading', 'Calculating signature...');
     const message = this.message;
     let buf = Buffer.from(message);
@@ -109,15 +113,28 @@ export default class RequestSign extends mixins() {
       }
     }
     if (this.account.data.type === 'ledger') {
+      if (this.isHashed) {
+        throw new Error('The Ledger app does not support pre-hashed messages for security reasons. Please enter the original message instead.');
+      }
       this.signature = await timedAsync(this.signWithLedger(buf, displayAsHex));
       return
     }
     const { address, chainId } = this.accountSpec;
-    const result = await timedAsync(this.$background.signMessage({
+    const callData: {
+      address: string;
+      chainId: string;
+      hash?: number[];
+      message?: number[];
+    } = {
       address,
       chainId,
-      message: Array.from(Uint8Array.from(buf)),
-    }));
+    };
+    if (!this.isHashed) {
+      callData.message = Array.from(Uint8Array.from(buf));
+    } else {
+      callData.hash = Array.from(Uint8Array.from(buf));
+    }
+    const result = await timedAsync(this.$background.signMessage(callData));
     this.signature = result.signedMessage;
   }
   async confirm() {
@@ -143,5 +160,13 @@ export default class RequestSign extends mixins() {
 }
 .sign-message.sign-message-result {
   margin: 20px 0;
+}
+.prehash-check {
+  display: block;
+  font-size: .85em;
+  margin: 10px 0;
+  input {
+    margin-right: 3px;
+  }
 }
 </style>

@@ -186,9 +186,10 @@ class BackgroundController extends EventEmitter {
     request.sendSuccess(result);
   }
 
-  async signMessage({ address, chainId, message }: any) {
+  async signMessage({ address, chainId, message, hash: msgHash }: any) {
     const account = await this.wallet.accountManager.getOrAddAccount({ address, chainId });
-    return await this.wallet.keyManager.signMessage(account, hash(Buffer.from(message)));
+    const signMessage = msgHash ? Buffer.from(msgHash) : hash(Buffer.from(message));
+    return await this.wallet.keyManager.signMessage(account, signMessage);
   }
 
   async signTransaction({ address, chainId, txData }: any) {

@@ -10,8 +10,15 @@
       </div>
     </template>
 
-    <div class="sign-message" v-if="request">
-      {{request.data.hash}}
+    <p class="unsupported-error" v-if="ledgerSignHashUnsupported">
+      For security reasons, signing hashes is not supported on the Ledger app.
+      Use a browser-stored account or request support from the Dapp developer.<br>
+      Advice for developer: change the API call to pass the original message as `message`
+      instead of a precomputed `hash`.
+    </p>
+
+    <div class="sign-message" v-if="request && !ledgerSignHashUnsupported">
+      {{msgToSign}}
     </div>
 
     <template #footer>
@@ -84,6 +91,20 @@ export default class RequestSign extends mixins(RequestMixin) {
       }
     }
   }
+  get msgToSign() {
+    if (!this.request) return '';
+    return this.request.data.message || this.request.data.hash;
+  }
+  get signSource() {
+    if (!this.request || this.request.data.message) {
+      return 'message';
+    }
+    return 'hash';
+  }
+  get ledgerSignHashUnsupported() {
+    if (!this.request || !this.account) return false;
+    return this.signSource === 'hash' && this.account.data.type === 'ledger';
+  }
   async confirmHandler() {
     if (!this.request) return;
     if (!this.account) {
@@ -91,7 +112,7 @@ export default class RequestSign extends mixins(RequestMixin) {
     }
     const account = this.accountSpec;
     this.setStatus('loading', 'Calculating signature...');
-    const message = this.request.data.hash;
+    const message = this.msgToSign;
     let buf = Buffer.from(message);
     let displayAsHex = false;
     if (message.substr(0, 2) === '0x') {
@@ -110,11 +131,21 @@ export default class RequestSign extends mixins(RequestMixin) {
       };
     }
     const { address, chainId } = this.accountSpec;
-    const result = await timedAsync(this.$background.signMessage({
+    const callData: {
+      address: string;
+      chainId: string;
+      hash?: number[];
+      message?: number[];
+    } = {
       address,
       chainId,
-      message: Array.from(Uint8Array.from(buf)),
-    }));
+    };
+    if (this.signSource === 'message') {
+      callData.message = Array.from(Uint8Array.from(buf));
+    } else {
+      callData.hash = Array.from(Uint8Array.from(buf));
+    }
+    const result = await timedAsync(this.$background.signMessage(callData));
     return {
       account,
       signature: result.signedMessage,
@@ -131,5 +162,10 @@ export default class RequestSign extends mixins(RequestMixin) {
   font-size: (14/16)*1rem;
   word-wrap: break-word;
   line-height: 1.3;
+}
+.unsupported-error {
+  margin: 0 20px;
+  color: red;
+  font-size: .85em;
 }
 </style>
