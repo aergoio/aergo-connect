@@ -69,6 +69,9 @@ export default class HistoryList extends Vue {
   goToExplorer(tx: Transaction): void {
     const url = getExplorerUrl(this.$route.params.chainId, `transaction/${tx.data.hash}`);
     if (url) window.open(url);
+    else {
+      alert(`Hash: ${tx.data.hash}`);
+    }
   } 
 
 
