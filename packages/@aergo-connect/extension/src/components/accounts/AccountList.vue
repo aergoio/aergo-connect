@@ -10,7 +10,7 @@
       <ul>
         <li v-for="account in accounts" :key="account.key" class="account-item-li" @click.capture="$emit('select', account)">
           <router-link :to="{ name: accountRoute, params: account.data.spec }">
-            <div class="account-item">
+            <div class="account-item" :class="activeAccount && activeAccount.key === account.key ? 'active' : ''">
               <span>
                 <Identicon :text="account.data.spec.address" class="circle" />
                 <span v-if="account.data.type === 'ledger'" class="account-label account-label-usb"><Icon name="usb" :size="17" /></span>
@@ -56,15 +56,31 @@ export default class AccountList extends Vue {
   @Prop({type: Boolean, default: true}) readonly highlightNew!: boolean;
   @Prop({type: String, default: 'account-details'}) readonly accountRoute!: string;
   @Prop({type: Boolean, default: false}) readonly canDelete!: boolean;
+  activeAccount: any = null;
+
+  async mounted() {
+    this.activeAccount = await this.$background.getActiveAccount();
+    // Scroll the active account into view
+    setTimeout(() => {
+      const element = this.$el.querySelectorAll('.active')[0];
+      // @ts-ignore: non-standard function
+      if (element.scrollIntoViewIfNeeded) {
+        // @ts-ignore: non-standard function
+        element.scrollIntoViewIfNeeded(true);
+      } else {
+        element.scrollIntoView({ block: 'center' });
+      }
+    }, 50);
+  }
 
   get sortedAccounts() {
     const accounts = [...this.accounts];
     // Order by address A-Z
-    accounts.sort((a, b) => a.data.spec.address.localeCompare(b.data.spec.address));
+    accounts.sort((a, b) => a.data.spec?.address?.localeCompare(b.data.spec.address));
     // Order by balance, reversed
     accounts.sort((a, b) => !a.data ? 0 : - (new Amount(a.data.balance)).compare((new Amount(b.data.balance))));
     // Order by chainID A-Z. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
-    accounts.sort((a, b) => !a.data ? 0 : a.data.spec.chainId.localeCompare(b.data.spec.chainId) );
+    accounts.sort((a, b) => !a.data ? 0 : a.data.spec?.chainId?.localeCompare(b.data.spec.chainId) );
     // Order the most recent accounts first, but only if they are new
     if (this.highlightNew) {
       accounts.sort((a, b) => {
@@ -125,6 +141,11 @@ export default class AccountList extends Vue {
   .account-item {
     padding-bottom: 0;
     display: flex;
+
+    &.active {
+      border: 1px solid rgba(#ff4f9f, 1);
+      animation: activeFaceOut .4s 2 forwards ease-in-out;
+    }
   }
   .account-address-balance {
     flex: 1;
@@ -192,6 +213,18 @@ export default class AccountList extends Vue {
       height: 10px;
       transform: translateY(-1px);
     }
+  }
+}
+
+@keyframes activeFaceOut {
+  0% {
+    border-color: rgba(#ff4f9f, 0.3);
+  }
+  50% {
+    border-color: rgba(#ff4f9f, 1);
+  }
+  100% {
+    border-color: rgba(#ff4f9f, 0.3);
   }
 }
 </style>

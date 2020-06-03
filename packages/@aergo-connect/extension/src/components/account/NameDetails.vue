@@ -22,7 +22,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component'
-import { Prop } from 'vue-property-decorator';
 import { LoadingIndicator, Icon } from '@aergo-connect/lib-ui/src/icons';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 
@@ -30,7 +29,6 @@ import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
   components: { LoadingIndicator, Icon, ScrollView, },
 })
 export default class NameDetails extends Vue {
-  @Prop({type: String, required: true}) readonly address!: string;
   state: 'initial' | 'loading' | 'loaded' | 'error' = 'initial';
   names: {}[] = [];
 
@@ -62,7 +60,7 @@ export default class NameDetails extends Vue {
   height: 100%;
   
   .name-details-header {
-    padding: 12px 24px;
+    padding: 10px 20px;
     background-color: #fff;
     box-shadow: inset 0 -1px 0 0 #f2f2f2;
     display: flex;

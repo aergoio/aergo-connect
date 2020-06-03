@@ -19,7 +19,8 @@
               <ClipboardButton :value="$route.params.address" />
             </div>
           </div>
-          <NameDetails :address="$route.params.address" />
+          <StakeDetails />
+          <NameDetails />
         </div>
       </div>
     </div>
@@ -38,6 +39,7 @@ import { Account } from '@herajs/wallet';
 import ExportAccountDialog from '../../../components/account/ExportAccountDialog.vue';
 import AccountBalance from '../../../components/account/Balance.vue';
 import NameDetails from '../../../components/account/NameDetails.vue';
+import StakeDetails from '../../../components/account/StakeDetails.vue';
 
 @Component({
   components: {
@@ -50,11 +52,13 @@ import NameDetails from '../../../components/account/NameDetails.vue';
     ExportAccountDialog,
     ClipboardButton,
     NameDetails,
+    StakeDetails,
   },
 })
 export default class AccountDetails extends Vue {
   exportAccountDialogVisible = false;
   tokenPriceInfo: any = {};
+  staking: any = {};
 
   get account(): Account {
     return this.$store.getters['accounts/getAccount'](this.accountSpec);
@@ -90,16 +94,16 @@ export default class AccountDetails extends Vue {
   .account-address {
     word-break: break-all;
     line-height: 1.3;
+    font-size: .95em;
     color: #000;
     display: flex;
     align-items: center;
     .copy-button {
       margin-left: 10px;
     }
-    
   }
   .account-detail-address {
-    padding: 24px 24px 18px;
+    padding: 20px 20px 12px;
     box-shadow: inset 0 -1px 0 0 #f2f2f2;
     background-color: #fff;
   }
