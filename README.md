@@ -28,3 +28,13 @@ Run dev build
     yarn build-dev
 
 Add the `dist-dev` folder as an "unpacked extension" to Chrome.
+
+## Build
+
+    cd packages/@aergo-connect/extension && yarn build
+
+Package as zip
+
+    cd packages/@aergo-connect/extension && yarn package
+
+Find the zip in the release folder.
