@@ -2,7 +2,7 @@
   <div class="account-detail-staking">
     <div class="stake-balance">
       <span class="stake-label">Staked balance</span>
-      <FormattedToken :value="staking.amount" v-if="staking" />
+      <FormattedToken :value="staking.amount" v-if="staking && staking.amount" />
       <span v-else>...</span>
     </div>
     <a href="https://voting.aergo.io" target="_blank" class="voting-link">Manage stake and votes on Aergo Voting</a>
