@@ -6,8 +6,11 @@
       <AccountBalance :account="account" :tokenPriceInfo="tokenPriceInfo" />
 
       <Button v-if="canExport" @click="exportAccountDialogVisible = true" type="icon"><Icon name="account-export" :size="36" /></Button>
-      <div v-if="account && account.data && account.data.type === 'ledger'" class="account-storage-note">Stored on Ledger</div>
 
+      <span class="display-on-ledger" @click="displayOnLedger">
+        <span class="display-text">Display on device</span>
+        <span v-if="account && account.data && account.data.type === 'ledger'" class="account-label account-label-usb"><Icon name="usb" :size="17" /></span>
+      </span>
     </div>
     <div class="detail-bottom">
       <div class="content">
@@ -24,11 +27,15 @@
         </div>
       </div>
     </div>
+    <LoadingDialog :visible="statusDialogVisible" @close="statusDialogVisible=false" :state="dialogState">
+      <p v-if="dialogState !== 'error'">{{statusText}}</p>
+      <p v-else class="error">{{statusText}}</p>
+    </LoadingDialog>
   </ScrollView>
 </template>
 
 <script lang="ts">
-import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
+import { ScrollView, LoadingDialog } from '@aergo-connect/lib-ui/src/layouts';
 import { FormattedToken, Identicon } from '@aergo-connect/lib-ui/src/content';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
 import { Button, ClipboardButton } from '@aergo-connect/lib-ui/src/buttons';
@@ -40,6 +47,10 @@ import ExportAccountDialog from '../../../components/account/ExportAccountDialog
 import AccountBalance from '../../../components/account/Balance.vue';
 import NameDetails from '../../../components/account/NameDetails.vue';
 import StakeDetails from '../../../components/account/StakeDetails.vue';
+
+import Transport from '@ledgerhq/hw-transport-webusb';
+import LedgerAppAergo from '@herajs/ledger-hw-app-aergo';
+import { timedAsync } from 'timed-async/index.js';
 
 @Component({
   components: {
@@ -53,12 +64,22 @@ import StakeDetails from '../../../components/account/StakeDetails.vue';
     ClipboardButton,
     NameDetails,
     StakeDetails,
+    LoadingDialog,
   },
 })
 export default class AccountDetails extends Vue {
   exportAccountDialogVisible = false;
   tokenPriceInfo: any = {};
   staking: any = {};
+  statusText = '';
+  statusDialogVisible = false;
+  dialogState: 'loading' | 'success' | 'error' = 'loading';
+
+  setStatus(state: 'loading' | 'success' | 'error', text: string) {
+    this.dialogState = state;
+    this.statusText = text;
+    this.statusDialogVisible = true;
+  }
 
   get account(): Account {
     return this.$store.getters['accounts/getAccount'](this.accountSpec);
@@ -79,6 +100,18 @@ export default class AccountDetails extends Vue {
     this.$background.getTokenPrice(this.$route.params.chainId).then(priceInfo => {
       this.tokenPriceInfo = priceInfo;
     });
+  }
+
+  async displayOnLedger() {
+    this.setStatus('loading', 'Connecting to Ledger device...');
+    const transport = await timedAsync(Transport.create(5000), { fastTime: 1000 });
+    const app = new LedgerAppAergo(transport);
+    await app.getWalletAddress(this.account.data.derivationPath);
+    await app.displayAccount();
+    this.setStatus('success', 'You can verify the address on the device.');
+    setTimeout(() => {
+      this.statusDialogVisible = false;
+    }, 3000);
   }
 }
 </script>
@@ -109,17 +142,13 @@ export default class AccountDetails extends Vue {
   }
 }
 
-.account-storage-note {
-  color: #777;
-  font-size: (12/16)*1rem;
-}
-
 /* Two-tone trick effect. Extend the upper (white) box and then pull the lower (black) box up */
 .content.detail-top {
   background-color: #fff;
   padding-bottom: 80px;
   display: flex;
   align-items: flex-start;
+  position: relative;
 
   .detail-balance {
     flex: 1;
@@ -130,6 +159,7 @@ export default class AccountDetails extends Vue {
   flex: 1;
   height: 100%;
   overflow: hidden;
+  z-index: 1;
   
   .content {
     height: 100%;
@@ -150,6 +180,45 @@ export default class AccountDetails extends Vue {
   main {
     display: flex;
     flex-direction: column;
+  }
+
+  .account-label {
+    display: inline-block;
+    border-radius: 10px;
+    width: 36px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .account-label-usb {
+    background-color: #6F6F6F;
+    .icon {
+      line-height: 10px;
+      height: 10px;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.display-on-ledger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border-radius: 12px;
+  padding: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  .display-text {
+    display: none;
+    font-size: (10/16)*1rem;
+    margin: 0 4px;
+    color: #000;
+  }
+  &:hover {
+    background-color: #f0f0f0;
+    .display-text {
+      display: inline;
+    }
   }
 }
 </style>

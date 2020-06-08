@@ -57,6 +57,7 @@ export default Vue.extend({
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.45);
+  z-index: 100;
 }
 .modal-dialog {
   position: absolute;
@@ -66,6 +67,7 @@ export default Vue.extend({
   z-index: 999;
   background-color: #fff;
   border-radius: 8px 8px 0 0;
+  box-shadow: 0 -1px 6px rgba(0,0,0,0.1);
 
   > .content {
     padding: 24px;
