@@ -63,6 +63,7 @@ export default class AccountList extends Vue {
     // Scroll the active account into view
     setTimeout(() => {
       const element = this.$el.querySelectorAll('.active')[0];
+      if (!element) return;
       // @ts-ignore: non-standard function
       if (element.scrollIntoViewIfNeeded) {
         // @ts-ignore: non-standard function
