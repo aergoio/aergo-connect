@@ -3,6 +3,20 @@ import store from '../store';
 import { capitalizeFirstLetter } from '../utils/strings';
 
 /**
+ * If we're coming from the lockscreen, check that app was actually unlocked.
+ * Otherwise you can e.g. just 'go back' to show a previous screen (privacy issue).
+ */
+export const allowedToExitLockscreen: NavigationGuard = (to, from, next) => {
+  if (from.name === 'lockscreen') {
+    const exclude = ['', '/', '/welcome'];
+    if (!store.state.ui.unlocked && exclude.indexOf(to.fullPath) === -1) {
+      return next({ name: 'lockscreen' });
+    }
+  }
+  return next();
+}
+
+/**
  * Load persisted route on initial load
  * or whenever selecting an account during permission request
  */

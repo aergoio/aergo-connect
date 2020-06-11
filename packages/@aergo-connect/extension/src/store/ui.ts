@@ -23,6 +23,7 @@ export interface UiState {
     [form: string]: InputData;
     settings: typeof defaultSettings;
   };
+  unlocked: boolean;
 }
 
 const storeModule: Module<UiState, RootState> = {
@@ -35,6 +36,7 @@ const storeModule: Module<UiState, RootState> = {
     input: {
       settings: defaultSettings,
     },
+    unlocked: false,
   },
   getters: {
     getSetting: state => (keyPath: string): Json => {
@@ -66,6 +68,9 @@ const storeModule: Module<UiState, RootState> = {
     clearInput(state, { key }) {
       state.input[key] = {};
     },
+    setUnlocked(state, unlocked) {
+      state.unlocked = unlocked;
+    }
   },
   actions: {
     setTxBody({ commit }, txBody) {

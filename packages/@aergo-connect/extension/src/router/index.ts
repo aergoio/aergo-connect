@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import { loadPersistedRoute, persistRoute, updateTitle } from './guards';
+import { loadPersistedRoute, allowedToExitLockscreen, persistRoute, updateTitle } from './guards';
 
 import AccountsContainer from '../views/accounts/Container.vue';
 import Lockscreen from '../views/accounts/Lockscreen.vue';
@@ -131,6 +131,7 @@ router.beforeEach(function(to, from, next) {
   console.log('from', from.name, 'to', to.name);
   next();
 });*/
+router.beforeEach(allowedToExitLockscreen);
 router.beforeEach(loadPersistedRoute);
 router.beforeEach(persistRoute);
 router.afterEach(updateTitle);
