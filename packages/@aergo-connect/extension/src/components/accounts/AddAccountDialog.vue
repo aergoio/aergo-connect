@@ -13,17 +13,19 @@
           Import Account
         </span>
       </router-link>
-      <router-link :to="{ name: 'account-connect-hw' }" v-if="isHardwareWalletEnabled">
-        <span>
+      <span @click="openConnectHardwareWalletTab" v-if="isHardwareWalletEnabled">
+        <span  >
           <Icon name="account-connect" :size="36" />
           Connect Hardware Wallet
         </span>
-      </router-link>
+      </span>
     </div>
   </ModalDialog>
 </template>
 
 <script lang="ts">
+import extension from 'extensionizer';
+
 import { ModalDialog } from '@aergo-connect/lib-ui/src/layouts';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
 
@@ -42,6 +44,10 @@ export default class AddAccountDialog extends Vue {
 
   get isHardwareWalletEnabled(): boolean {
     return this.$store.getters['ui/getSetting']('features.enableHardwareWallet');
+  }
+
+  openConnectHardwareWalletTab() {
+    extension.tabs.create({url: "index.html#/accounts/connect-hw"});
   }
 }
 </script>
