@@ -68,9 +68,11 @@ interface TxBody {
 ```
 
 **Signining hashed or unhashed messages**
+
 In previous versions of Aergo Connect, only already hashed messaged could be signed (by passing the `{ hash: ... }` data).
 Since Aergo Connect 2.0, unhashed messaged are also supported (by passing the `{ message: ... }` data instead).
 The message is then hashed by the application, or potentially by a connected hardware wallet, before signing.
+
 Passing the raw message is recommended, as signing hashes using a hardware wallet is not best practice.
 (You are or of course free to use a hash as a message, with the resulting signature effectively being for the doubly hashed message.)
 
