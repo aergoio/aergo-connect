@@ -42,7 +42,9 @@ export default class Create extends mixins() {
   }
   async fetchNetworks() {
     const chains = Object.values(await this.$background.getNetworks()) as any;
-    this.options.push(...chains.map((item: any) => [item.chainId, item.chainId]));
+    if (chains) {
+      this.options.push(...chains.map((item: any) => [item.chainId, item.chainId]));
+    }
   }
   configure() {
     this.$router.push({ name: 'networks-list' });

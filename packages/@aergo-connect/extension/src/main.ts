@@ -36,7 +36,10 @@ async function init(name: string) {
   new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    data() {
+      return { name };
+    },
   }).$mount('#app');
 
   // React to state updates from background

@@ -53,7 +53,7 @@ export default class NetworkUpdate extends Vue {
   nodeUrlError = '';
 
   get chainIdValid() {
-    return this.chainId.length > 0 && this.chainId.match(/^[a-z0-9._]+$/i)
+    return this.chainId.length > 0 && this.chainId.match(/^[a-z0-9._-]+$/i)
   }
   get nodeUrlValid() {
     const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;

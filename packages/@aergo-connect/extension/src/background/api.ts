@@ -64,7 +64,11 @@ export class Api {
 
   async getNetworks() {
     if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
-    return (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data;
+    try {
+      return (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data;
+    } catch(e) {
+      return {};
+    }
   }
 
   async addNetwork({ chainId, nodeUrl }: ChainConfig) {

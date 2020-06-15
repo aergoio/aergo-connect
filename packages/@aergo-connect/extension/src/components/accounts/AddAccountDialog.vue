@@ -47,7 +47,12 @@ export default class AddAccountDialog extends Vue {
   }
 
   openConnectHardwareWalletTab() {
-    extension.tabs.create({url: "index.html#/accounts/connect-hw"});
+    const name = (this.$root as any).name;
+    if (name === 'popup') {
+      extension.tabs.create({url: "index.html#/accounts/connect-hw"});
+    } else {
+      this.$router.push({ name: 'account-connect-hw' });
+    }
   }
 }
 </script>
