@@ -153,7 +153,7 @@ export default class AccountList extends Vue {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f0f0f0;
-    padding: 3px 0 16px;
+    padding: 3px 0 10px;
     margin-left: 14px;
     font-size: (12/16)*1rem;
   }
@@ -190,7 +190,7 @@ export default class AccountList extends Vue {
 
   .account-address {
     word-break: break-all;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     line-height: 1.3;
   }
   .account-label {
