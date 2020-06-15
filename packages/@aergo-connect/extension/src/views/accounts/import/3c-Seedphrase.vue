@@ -12,7 +12,7 @@
     <div class="content" style="padding-bottom: 0">
       <TextField label="Seed phrase" v-model="seedPhrase" :error="errors.seedPhrase" errorType="warning" :state="seedPhraseValid ? 'valid' : 'default'" />
       <p class="note" v-if="!errors.seedPhrase">Words separated by space</p>
-      <TextField v-model="derivationPath" label="Derivation path" disabled :error="errors.derivationPath" />
+      <TextField :value="derivationPath + '0'" label="Derivation path" disabled :error="errors.derivationPath" />
     </div>
     <template #footer>
       <div class="content">
