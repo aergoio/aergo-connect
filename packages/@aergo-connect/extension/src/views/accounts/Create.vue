@@ -4,7 +4,7 @@
       <section class="dialog-header">
         <BackButton :to="$store.state.ui.route.previousPath" />
       </section>
-      <Heading animated>Create</Heading>
+      <Heading animated>Create Account</Heading>
       <p>Please select the network for your new account.</p>
       <SelectNetwork v-model="chainId" />
     </div>

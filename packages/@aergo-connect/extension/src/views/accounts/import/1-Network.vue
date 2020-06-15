@@ -4,7 +4,7 @@
       <section class="dialog-header">
         <BackButton :to="$store.state.ui.route.previousPath !== '/accounts/import/format' ? $store.state.ui.route.previousPath : '/accounts'" />
       </section>
-      <Heading animated>Import</Heading>
+      <Heading animated>Import Account</Heading>
       <p>Please select the network for which you want to import the account.</p>
       <SelectNetwork v-model="chainId" />
     </div>
