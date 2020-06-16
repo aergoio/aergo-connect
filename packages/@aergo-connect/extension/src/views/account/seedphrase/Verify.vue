@@ -20,14 +20,17 @@
     </div>
     <template #footer>
       <div class="content">
-        <ContinueButton :to="{ name: 'account-details' }" :disabled="!verified" />
+        <ButtonGroup horizontal>
+          <BackButton />
+          <ContinueButton :to="{ name: 'account-details' }" :disabled="!verified" />
+        </ButtonGroup>
       </div>
     </template>
   </ScrollView>
 </template>
 
 <script lang="ts">
-import { ContinueButton } from '@aergo-connect/lib-ui/src/buttons';
+import { ContinueButton, BackButton, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 import { TextField } from '@aergo-connect/lib-ui/src/forms';
 import { ScrollView } from '@aergo-connect/lib-ui/src/layouts';
 import { Icon } from '@aergo-connect/lib-ui/src/icons';
@@ -48,6 +51,8 @@ const nth = (n: number): string => ["st","nd","rd"][((n+90)%100-10)%10-1]||"th";
     Identicon,
     Icon,
     TextField,
+    ButtonGroup,
+    BackButton,
     ContinueButton,
   },
 })
