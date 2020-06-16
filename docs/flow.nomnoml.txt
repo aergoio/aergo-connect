@@ -9,6 +9,7 @@
 [user] - [onboarding]
 [onboarding] -> [set wallet password]
 [set wallet password] -> [create]
+[set wallet password] -> [import]
 
 [user] -> [account list]
 
@@ -20,9 +21,9 @@
 [input password] -> [download file]
 [download file] -> [<end>end5]
 [create] -> [choose network for create]
-[choose network for create] <-> [configure networks]
 [choose network for create] -> [create success]
-[create success] -> [export]
+[create success] -> [export seedphrase]
+[choose network for create] <-> [configure networks]
 
 [configure networks] <-> [add network]
 [configure networks] <-> [edit network]
@@ -37,12 +38,23 @@
 [from text]->[input text and password]
 [input text and password] -> [import success]
 [input file and password] -> [import success]
+[type] -> [from seedphrase]
+[from seedphrase] -> [input seedphrase]
+[input seedphrase] -> [import success]
 [import success] -> [<end>end4]
 
+[add account] -> [connect HW]
+[connect HW] -> [choose network for import]
+
 [account list] -> [account details]
-[account details] -> [send]
-[account details] -> [transaction history]
+[account details] -> [tx history]
+[account details] -> [add name]
+[account details] -> [update name]
 [account details] -> [export]
+[account details] -> [send]
+
+
+[account list] -> [delete account]
 
 [send] -> [confirm send data]
 [confirm send data] -> [send success]
