@@ -1,11 +1,12 @@
 <template>
   <ScrollView class="page">
-    <div class="content">
+    <div class="content" style="padding-bottom: 0">
       <BackButton :to="{ name: 'account-details' }" />
       <Heading tag="h2">Export as Keystore</Heading>
       <div v-if="!keystore">
         <p>Choose a passphrase to encrypt your keystore file.</p>
-        <TextField v-model="password" variant="main" type="password" :error="errors.password" autoComplete="no" />
+        <PasswordStrengthField variant="main" v-model="password" @submit="createKeystore" autofocus />
+        {{errors.password}}
       </div>
       <div v-else>
         <p>Your encrypted keystore file is ready to download. A download should have been started automatically by your browser. If not, click the button below.</p>
@@ -27,7 +28,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component'
 import { BackButton, Button, ButtonGroup } from '@aergo-connect/lib-ui/src/buttons';
 import Heading from '@aergo-connect/lib-ui/src/content/Heading.vue';
-import { TextField } from '@aergo-connect/lib-ui/src/forms';
+import { TextField, PasswordStrengthField } from '@aergo-connect/lib-ui/src/forms';
 
 @Component({
   components: {
@@ -37,6 +38,7 @@ import { TextField } from '@aergo-connect/lib-ui/src/forms';
     ButtonGroup,
     Heading,
     TextField,
+    PasswordStrengthField,
   },
 })
 export default class AccountExportKeystore extends Vue {

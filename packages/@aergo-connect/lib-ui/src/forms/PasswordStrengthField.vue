@@ -6,6 +6,7 @@
       :value="value"
       :error="passwordError"
       errorType="warning"
+      autoComplete="no"
       :autofocus="autofocus"
       @input="handleInput" @blur="handleBlur" @submit="handleEnter"
     />
