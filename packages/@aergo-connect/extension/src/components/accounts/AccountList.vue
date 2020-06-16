@@ -75,9 +75,9 @@ export default class AccountList extends Vue {
   }
 
   get sortedAccounts() {
-    const accounts = [...this.accounts];
+    const accounts = [...this.accounts].filter(account => typeof account.data !== 'undefined');
     // Order by address A-Z
-    accounts.sort((a, b) => a.data.spec?.address?.localeCompare(b.data.spec.address));
+    accounts.sort((a, b) => a.data.spec?.address?.localeCompare(b.data.spec?.address));
     // Order by balance, reversed
     accounts.sort((a, b) => !a.data ? 0 : - (new Amount(a.data.balance)).compare((new Amount(b.data.balance))));
     // Order by chainID A-Z. This does not affect the groupBy, it just orders the groups alphabetically (e.g. aergo.io < testnet.aergo.io)
