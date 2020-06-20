@@ -12,9 +12,13 @@ export default Vue.extend({
     },
     unit: String,
     prefix: String,
+    decimalsIfAergo: {
+      type: Number,
+      default: -1,
+    },
   },
   render(h, ctx) {
-    const innerHTML = formatToken(ctx.props.value, ctx.props.unit, ctx.props.prefix);
+    const innerHTML = formatToken(ctx.props.value, ctx.props.unit, ctx.props.prefix, ctx.props.decimalsIfAergo);
     return h('span', { ...ctx.data, domProps: { innerHTML } })
   }
 })

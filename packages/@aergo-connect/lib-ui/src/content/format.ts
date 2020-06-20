@@ -10,21 +10,24 @@ interface NumberLike {
  * @param sep seperator for 10^3, default: space
  * @param sepDecimal seperator for 10^-3, default: empty
  */
-export function formatNumber(value: NumberLike, sep=' ', sepDecimal=''): string {
+export function formatNumber(value: NumberLike, sep=' ', sepDecimal='', decimals = -1): string {
   const parts = value.toString().split('.');
   // Add seperators from the right
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
   if (parts.length > 1 && sepDecimal) {
+    // Round down
+    const decimalPart = decimals > -1 ? parts[1].slice(0, decimals) : parts[1];
     // Reverse decimal part to add seperators from the left
     const rev = (s: string): string => s.split('').reverse().join('');
-    parts[1] = rev(rev(parts[1]).replace(/\B(?=(\d{3})+(?!\d))/g, sepDecimal));
+    parts[1] = rev(rev(decimalPart).replace(/\B(?=(\d{3})+(?!\d))/g, sepDecimal));
+    if (parts[1].length === 0) return parts[0];
   }
   return parts.join('.');
 }
 
 const tryUnits = ['aergo', 'gaer', 'aer'];
 
-export function formatToken(_value: string, unit: string|null = null, prefix = '') {
+export function formatToken(_value: string, unit: string|null = null, prefix = '', decimalsIfAergo = -1) {
     const value = new Amount(_value);
     let amount;
     if (unit) {
@@ -43,7 +46,7 @@ export function formatToken(_value: string, unit: string|null = null, prefix = '
     }
 
     // Insert spaces for formatting
-    let display = formatNumber(amount, ' ', ' ');
+    let display = formatNumber(amount, ' ', ' ', unit === 'aergo' ? decimalsIfAergo : -1);
     // Turn spaces into html to not mess up copy and paste
     display = display.replace(/\s/g, '<span class="sep"></span>');
     // Add class for decimal point
