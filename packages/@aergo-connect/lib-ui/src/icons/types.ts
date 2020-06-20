@@ -34,6 +34,8 @@ export const iconNames = tuple(
   'tx-out',
   'tx-self',
   'usb',
+  'view-disabled',
+  'view-enabled',
 );
   
 export type IconName = typeof iconNames[number];

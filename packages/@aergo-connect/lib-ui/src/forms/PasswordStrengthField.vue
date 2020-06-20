@@ -1,7 +1,7 @@
 <template>
   <div>
     <TextField
-      type="password"
+      :type="revealPassword ? 'text' : 'password'"
       :variant="variant" 
       :value="value"
       :error="passwordError"
@@ -9,7 +9,9 @@
       autoComplete="no"
       :autofocus="autofocus"
       @input="handleInput" @blur="handleBlur" @submit="handleEnter"
-    />
+    >
+      <Icon class="btn-reveal-password" :name="revealPassword ? 'view-enabled' : 'view-disabled'" :size="20" @click.native="toggleReveal" />
+    </TextField>
     <span class="input-error-text password-good" v-if="value && passwordStrength.score >= 3">Good <Icon name="checkmark-circle" :size="16" /></span>
     <span class="password-advice" v-if="value && passwordStrength.score < 3">
       <span v-if="passwordStrength.feedback.warning">{{passwordStrength.feedback.warning}}.<br></span>
@@ -40,6 +42,11 @@ export default Vue.extend({
     },
     autofocus: Boolean,
   },
+  data() {
+    return {
+      revealPassword: false,
+    };
+  },
   computed: {
     passwordError(): string {
       if (this.value && this.passwordStrength.score < 3) return 'Weak passphrase';
@@ -59,6 +66,9 @@ export default Vue.extend({
     handleEnter(value: string): void {
       this.$emit('submit', value);
     },
+    toggleReveal(): void {
+      this.revealPassword = !this.revealPassword;
+    }
   }
 });
 </script>
@@ -74,5 +84,9 @@ export default Vue.extend({
   .adjustable-stroke {
     stroke: #00c789;
   }
+}
+.btn-reveal-password {
+  margin-right: 10px;
+  user-select: none;
 }
 </style>

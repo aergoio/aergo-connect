@@ -14,6 +14,7 @@
           @keyup.enter="handleEnter"
           accept=".txt"
           ref="inputElement" />
+        <slot></slot>
       </InputContainer>
       <span class="input-error-text" :class="errorType" v-if="error">{{error}} <Icon name="danger" :size="16" /></span>
     </label>
@@ -105,6 +106,7 @@ export default Vue.extend({
     outline: none;
     background-color: transparent;
     width: 100px;
+    line-height: 1;
   }
 
   &.variant-default {
@@ -121,7 +123,9 @@ export default Vue.extend({
       padding-left: 4px;
     }
     &.type-password input {
-      font-size: 2rem;
+      font-size: (36/16) * 1rem;
+      padding-top: 7px;
+      padding-bottom: 7px;
       overflow: hidden;
     }
   }
