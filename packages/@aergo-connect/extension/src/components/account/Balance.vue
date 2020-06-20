@@ -2,7 +2,7 @@
   <div class="detail-balance">
     <span class="balance-label">Balance</span>
     <span class="account-balance" :style="{fontSize}">
-      <FormattedToken :value="account.data.balance" v-if="account && account.data" />
+      <FormattedToken :value="account.data.balance" v-if="account && account.data" :decimalsIfAergo="3" />
       <span v-else>...</span>
     </span>
     <span class="balance-fiat" v-if="tokenPriceInfo">{{fiatBalance}}</span>

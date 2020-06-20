@@ -22,7 +22,7 @@
               <ClipboardButton :value="$route.params.address" />
             </div>
           </div>
-          <StakeDetails />
+          <StakeDetails :tokenPriceInfo="tokenPriceInfo" />
           <NameDetails />
         </div>
       </div>
