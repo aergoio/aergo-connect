@@ -53,7 +53,7 @@ export default class StakeDetails extends Vue {
   }
 
   get stakedFiatBalance(): string {
-    if (!this.tokenPriceInfo || !this.staking || !this.staking.amount) return '';
+    if (!this.tokenPriceInfo || !this.tokenPriceInfo.price || !this.staking || !this.staking.amount) return '';
     const aergoAmount = new Amount(this.staking.amount).formatNumber('aergo');
     const balance = Number(aergoAmount) * this.tokenPriceInfo.price;
     return formatCurrency(balance, this.tokenPriceInfo.currency);
