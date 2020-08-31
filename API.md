@@ -12,11 +12,13 @@ Flow
 +---------------+                           +---------------+
 |               |    window.postMessage()   |               |
 |               |  +--------------------->  |               |
-|    Website    |                           |   Extension   |
+|    Website*   |                           |   Extension   |
 |               |  <---------------------+  |               |
 |               |           Event           |               |
 +---------------+                           +---------------+
 ```
+
+* Website needs to be served over http(s), it does not work with other protocols like `file:` due to extension security restrictions.
 
 1. Website sends a request using `window.postMessage()`:
 ```js
