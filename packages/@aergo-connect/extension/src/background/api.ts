@@ -317,15 +317,14 @@ export class Api {
     }
     const currency = 'usd';
     const cachedData = tokenPriceCache[currency];
-    if (cachedData) {
+    if (cachedData?.lastUpdatedAt) {
       const age = + new Date() - + new Date(cachedData.lastUpdatedAt * 1000);
-      //console.log('getTokenPrice cache age', age / 1000);
       if (age < 5 * 60 * 1000) { // cache for maximum of 5 minutes
         return cachedData;
       }
     }
     const params = {
-      'contract_addresses': '0xae31b85bfe62747d0836b82608b4830361a3d37a',
+      'contract_addresses': '0x91af0fbb28aba7e31403cb457106ce79397fd4e6',
       'vs_currencies': currency,
       'include_last_updated_at': 'true',
     }
