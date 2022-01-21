@@ -18,11 +18,11 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "css-loader": "^3.4.2",
-    "@storybook/addon-actions": "6.0.0-beta.32",
-    "@storybook/addon-backgrounds": "6.0.0-beta.32",
-    "@storybook/addon-knobs": "6.0.0-beta.32",
+    "@storybook/addon-actions": "^6.0.0",
+    "@storybook/addon-backgrounds": "^6.0.0",
+    "@storybook/addon-knobs": "^6.0.0",
     "@storybook/preset-scss": "^1.0.2",
-    "@storybook/vue": "6.0.0-beta.32",
+    "@storybook/vue": "^6.0.0",
     "@types/chrome": "^0.0.100",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
@@ -36,7 +36,6 @@
     "babel-loader": "^8.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
-    "patch-package": "^6.2.0",
     "postinstall-postinstall": "^2.0.0",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
@@ -49,7 +48,6 @@
     "webpack": "^4.42.0"
   },
   "scripts": {
-    "postinstall": "patch-package",
     "build": "cd packages/@aergo-connect/extension && yarn build",
     "build-dev": "cd packages/@aergo-connect/extension && yarn build-dev",
     "serve-extension": "cd packages/@aergo-connect/extension && yarn serve",
