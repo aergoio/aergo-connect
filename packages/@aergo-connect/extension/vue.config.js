@@ -30,6 +30,12 @@ module.exports = {
 
     // Add content-script entry
     config.entry('content-script').add('./src/content-script.js').end();
+
+    config.optimization.minimizer("terser").tap(args => {
+      const { terserOptions } = args[0];
+      terserOptions.output = { ...terserOptions.output, ascii_only: true };
+      return args
+    })
   },
   configureWebpack: {
     output: {

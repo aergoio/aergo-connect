@@ -19,14 +19,14 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
-// @ts-ignore
-import { TxTypes } from '@herajs/common';
 
 import { KVTable, KVTableRow } from '@aergo-connect/lib-ui/src/tables';
 import { FormattedToken } from '@aergo-connect/lib-ui/src/content';
 
 import { getExplorerUrl } from '../../utils/chain-urls';
 import { jsonHighlight } from '../../utils/json';
+import { typeToLabel } from '../../utils/tx';
+import { Tx } from '@herajs/client';
 
 @Component({
   components: {
@@ -38,7 +38,8 @@ export default class TxConfirm extends Vue {
   @Prop({type: Array, default: () => ([])}) readonly keys!: any;
 
   get typeLabel(): string {
-    return TxTypes[this.txBody.type || 0];
+    const [key] = (Object.entries(Tx.Type).find(([_, n]) => n === this.txBody.type) ?? ['NORMAL']) as [keyof typeof Tx.Type];
+    return typeToLabel(key);
   }
   get amountValue(): string {
     if (this.txBody.unit) return `${this.txBody.amount} ${this.txBody.unit}`;
