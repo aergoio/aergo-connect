@@ -13,6 +13,8 @@
             <span class="address">
               <Identicon :text="address == tx.data.from ? tx.data.to : tx.data.from" :emptyIcon="tx.data.type === 7 ? 'multicall' : 'deploy'" />
               <span v-if="tx.data.to == tx.data.from">self-transfer</span>
+              <span v-if="tx.data.to == '' && tx.data.type === 7">Multiple Calls</span>
+              <span v-if="tx.data.to == '' && tx.data.type !== 7">Contract Creation</span>
               <Elide v-else class="address" :text="address == tx.data.from ? tx.data.to : tx.data.from" mode="middle-fixed-tail" expect-ellipsis />
             </span>
             <FormattedToken :class="['amount', address == tx.data.from ? 'negative' : 'positive']" :prefix="tx.data.from == tx.data.to ? '' : address == tx.data.to ? '+' : '-'" :value="`${tx.data.amount} aer`" />
