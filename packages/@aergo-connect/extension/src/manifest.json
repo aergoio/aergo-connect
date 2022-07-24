@@ -38,10 +38,8 @@
 
 	"permissions": [
 		"activeTab",
-		"storage",
 		"unlimitedStorage",
 		"clipboardWrite",
-		"notifications",
 		"contextMenus",
 		"idle"
 	]

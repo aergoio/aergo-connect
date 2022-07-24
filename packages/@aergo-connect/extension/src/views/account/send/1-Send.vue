@@ -38,17 +38,7 @@ import { PersistInputsMixin } from '../../../store/ui';
 import Component, { mixins } from 'vue-class-component';
 import { Tx } from '@herajs/client';
 import { Address } from '@herajs/common';
-import { capitalizeFirstLetter } from '../../../utils/strings';
-
-function typeToLabel(type: keyof typeof Tx.Type) {
-  if (type === 'FEEDELEGATION') {
-    return 'Call with fee delegation';
-  }
-  if (type === 'NORMAL') {
-    return 'Normal (legacy)';
-  }
-  return capitalizeFirstLetter(type.toLowerCase());
-}
+import { typeToLabel } from '../../../utils/tx';
 
 const typeOptions: [number, string][] = [];
 export function keys<O>(o: O): (keyof O)[] {
@@ -67,9 +57,17 @@ function keysFilteredReordered<O, E extends Partial<O>>(
   const filtered = keys(enumObj).filter(a => exclude.indexOf(a) === -1);
   return Array.from(new Set([...orderFront, ...filtered])) as Exclude<(keyof O), (keyof E)>[];
 }
-const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'FEEDELEGATION', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY']);
+const orderedTypes = keysFilteredReordered(Tx.Type, ['TRANSFER', 'CALL', 'FEEDELEGATION', 'MULTICALL', 'GOVERNANCE'], ['DEPLOY', 'REDEPLOY']);
 for (const key of orderedTypes) {
   typeOptions.push([Tx.Type[key], typeToLabel(key)]);
+}
+
+function typeRequiresRecipient(type: typeof Tx.Type[keyof typeof Tx.Type]) {
+  return type !== Tx.Type.MULTICALL;
+}
+
+function typeRequiresAmount(type: typeof Tx.Type[keyof typeof Tx.Type]) {
+  return type !== Tx.Type.MULTICALL;
 }
 
 @Component({
@@ -110,7 +108,7 @@ export default class AccountSend extends mixins(PersistInputsMixin) {
   typeOptions = typeOptions;
 
   checkData() {
-    if (!this.txBody.to) {
+    if (typeRequiresRecipient(this.txBody.type) && !this.txBody.to) {
       this.errors.to = 'Required';
     } else {
       try {
@@ -120,10 +118,10 @@ export default class AccountSend extends mixins(PersistInputsMixin) {
         this.errors.to = 'Invalid address';
       }
     }
-    if (!this.txBody.amount) {
+    if (typeRequiresAmount(this.txBody.type) && !this.txBody.amount) {
       this.errors.amount = 'Required';
     } else {
-      this.errors.amount =  '';
+      this.errors.amount = '';
     }
     if (this.errors.to || this.errors.amount) return;
     if (this.txBody.payload) {
