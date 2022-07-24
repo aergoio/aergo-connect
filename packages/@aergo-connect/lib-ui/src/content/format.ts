@@ -51,7 +51,7 @@ export function formatToken(_value: string, unit: string|null = null, prefix = '
     display = display.replace(/\s/g, '<span class="sep"></span>');
     // Add class for decimal point
     display = display.replace('.', '<span class="point">. </span>');
-    const posneg = prefix ? `<span class="prefix">${prefix}</span>` : "";
+    const posneg = (prefix && amount !== '0') ? `<span class="prefix">${prefix}</span>` : "";
     const displayHtml = `<span class="value">${posneg}${display}</span>`;
     const unitHtml = `<span class="unit">${unit}</span>`;
     return `<span class="formatted-value token" title="${value}">${displayHtml} ${unitHtml}</span>`;

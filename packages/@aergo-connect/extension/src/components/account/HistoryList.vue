@@ -5,13 +5,13 @@
     <div v-if="state === 'loaded' && transactions.length">
       <div class="tx-list-item" v-for="tx in transactions" :key="tx.hash" :class="'status-'+tx.data.status" @click="goToExplorer(tx)">
         <span class="tx-direction">
-          <Icon :name="tx.data.to == tx.data.from ? 'tx-self' : address == tx.data.from ? 'tx-out' : 'tx-in'" :size="24" />
+          <Icon :name="getIcon(tx)" :size="24" />
         </span>
 
         <span class="tx-info">
           <span class="address-amount">
             <span class="address">
-              <Identicon :text="address == tx.data.from ? tx.data.to : tx.data.from" />
+              <Identicon :text="address == tx.data.from ? tx.data.to : tx.data.from" :emptyIcon="tx.data.type === 7 ? 'multicall' : 'deploy'" />
               <span v-if="tx.data.to == tx.data.from">self-transfer</span>
               <Elide v-else class="address" :text="address == tx.data.from ? tx.data.to : tx.data.from" mode="middle-fixed-tail" expect-ellipsis />
             </span>
@@ -77,6 +77,12 @@ export default class HistoryList extends Vue {
 
   getCategory(tx: Transaction): string {
     return TxTypes[tx.data.type];
+  }
+
+  getIcon(tx: Transaction): string {
+    if (tx.data.to == tx.data.from) return 'tx-self';
+    if (this.address != tx.data.from) return 'tx-in';
+    return 'tx-out';
   }
 }
 </script>
