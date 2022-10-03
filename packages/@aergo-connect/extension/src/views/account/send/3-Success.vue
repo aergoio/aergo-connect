@@ -39,6 +39,7 @@ import { FormattedToken } from '@aergo-connect/lib-ui/src/content';
 import Component, { mixins } from 'vue-class-component';
 
 import TxConfirm from '../../../components/account/TxConfirm.vue';
+import { Account } from '@herajs/wallet';
 
 @Component({
   components: {
@@ -77,6 +78,7 @@ export default class AccountSendConfirm extends mixins() {
     });
     this.$background.getTransaction(this.$route.params.chainId, this.$route.params.hash).then(result => {
       this.txData = result.tx;
+      // @ts-ignore
       this.txData.payload = Buffer.from(Object.values(this.txData.payload)).toString();
     })
   }
