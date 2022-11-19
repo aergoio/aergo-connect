@@ -31,6 +31,9 @@ module.exports = {
     // Add content-script entry
     config.entry('content-script').add('./src/content-script.js').end();
 
+    // Fix for https://github.com/LedgerHQ/ledger-live/issues/763
+    config.resolve.alias.set('@ledgerhq/devices/hid-framing', '@ledgerhq/devices/lib/hid-framing');
+
     config.optimization.minimizer("terser").tap(args => {
       const { terserOptions } = args[0];
       terserOptions.output = { ...terserOptions.output, ascii_only: true };
