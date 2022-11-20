@@ -2,7 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "include": [
     "src/**/*"
-  ],
+, "rollup.config.mjs"  ],
   "compilerOptions": {
     "baseUrl": ".",
   }

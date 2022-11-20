@@ -1,21 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 module.exports = {
   publicPath: '',
   pages: {
     'index': 'src/main.ts',
     'popup': 'src/main.ts',
-    'popup-request': 'src/main.ts',
-    'background': 'src/background/main.js'
+    'popup-request': 'src/main.ts'
   },
   chainWebpack: (config) => {
-    if (process.env.npm_lifecycle_event === 'build-dev') {
-      config.plugin('extension-reloader').use(ChromeExtensionReloader, [{
-        reloadPage: false,
-      }]);
-    }
-
     // manifest.json interpolation
     config.module.rule('manifest').test(/manifest\.json$/).type('javascript/auto')
       .use('file-loader').loader('file-loader').options({ name: '[name].[ext]' }).end()
@@ -41,9 +32,10 @@ module.exports = {
     })
   },
   configureWebpack: {
+    devtool: 'source-map',
     output: {
       filename: 'js/[name].js',
-      chunkFilename: 'js/[name].js'
-    }
+      chunkFilename: 'js/[name].js',
+    },
   }
 }

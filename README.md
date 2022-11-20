@@ -45,3 +45,9 @@ Add the `dist-dev` folder as an "unpacked extension" to Chrome.
     cd packages/@aergo-connect/extension && yarn package
 
 Find the zip in the release folder.
+
+Build
+
+- nvm use 12, yarn build
+- nvm use 14, yarn build-background
+- arch -x86_64 /bin/bash

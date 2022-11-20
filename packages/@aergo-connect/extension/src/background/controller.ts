@@ -1,4 +1,3 @@
-import extension from 'extensionizer';
 import { EventEmitter } from 'events';
 import pump from 'pump';
 import Dnode from 'dnode/browser.js';
@@ -33,7 +32,7 @@ class BackgroundController extends EventEmitter {
   constructor() {
     super();
 
-    this.id = extension.runtime.id;
+    this.id = chrome.runtime.id;
 
     this.requests = {};
     this.lastRequestId = 0;
@@ -57,7 +56,7 @@ class BackgroundController extends EventEmitter {
         if (customChains && customChains.data) {
           for (const chainId of Object.keys(customChains.data)) {
             // @ts-ignore
-            this.wallet.useChain({ chainId, nodeUrl: customChains.data[chainId].nodeUrl});
+            this.wallet.useChain({ chainId, nodeUrl: customChains.data[chainId].nodeUrl });
           }
         }
       } catch (e) {
@@ -110,7 +109,7 @@ class BackgroundController extends EventEmitter {
   lock() {
     this.wallet.lock();
   }
-  
+
   async unlock(passphrase: string) {
     await this.wallet.unlock(passphrase);
   }
@@ -160,11 +159,11 @@ class BackgroundController extends EventEmitter {
   permissionRequest(request: ExternalRequest) {
     const requestId = this.lastRequestId++;
     this.requests[requestId] = request;
-    extension.windows.getCurrent((window: any) => {
+    chrome.windows.getCurrent((window: any) => {
       const left = Math.max(0, window.left + window.width - 360);
-      extension.windows.create({
+      chrome.windows.create({
         // @ts-ignore
-        url: extension.runtime.getURL(`popup-request.html?request=${requestId}`),
+        url: chrome.runtime.getURL(`popup-request.html?request=${requestId}`),
         type: "popup",
         width: 360,
         height: 620,
