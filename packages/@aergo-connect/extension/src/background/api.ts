@@ -66,7 +66,7 @@ export class Api {
     if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
     try {
       return (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data;
-    } catch(e) {
+    } catch (e) {
       return {};
     }
   }
@@ -77,7 +77,7 @@ export class Api {
     if (!this.controller.wallet.datastore) throw new Error('cannot open datastore');
     try {
       chains = (await this.controller.wallet.datastore.getIndex('settings').get('customChains')).data as any;
-    } catch(e) {
+    } catch (e) {
       // not found
     }
     chains[chainId] = { chainId, nodeUrl };
@@ -147,7 +147,7 @@ export class Api {
     return account.data.spec;
   }
 
-  async createAccountWithMnemonic({ chainId }: { chainId: string }): Promise<{ account: AccountSpec; mnemonic: string}> {
+  async createAccountWithMnemonic({ chainId }: { chainId: string }): Promise<{ account: AccountSpec; mnemonic: string }> {
     const mnemonic = generateMnemonic();
     const privateKey = await privateKeyFromMnemonic(mnemonic);
     const account = await this.controller.wallet.accountManager.importAccount(privateKey, chainId);
@@ -196,7 +196,7 @@ export class Api {
     } else {
       privkeyEncrypted = JSON.stringify(await keystoreFromPrivateKey(Buffer.from(privateKey), password));
     }
-    return {privateKey: privkeyEncrypted};
+    return { privateKey: privkeyEncrypted };
   }
 
   async sendTransaction(tx: any, chainId: string) {
@@ -354,13 +354,13 @@ type DnodeFunction = ((...args: any[]) => void);
  * Wraps API call to use with Dnode
  */
 function wrapApiCall<Ret>(fn: ApiFunction<Ret>): DnodeFunction {
-  return async function(...args: any[]) {
+  return async function (...args: any[]) {
     const send = args.pop() as (val: (Ret | { error: any })) => void;
     try {
       const result = await fn(...args);
       send(result);
     } catch (e) {
-      send({ error: `${e.message || e}` });
+      send({ error: `${(e as Error).message || e}` });
     }
   }
 }
@@ -372,8 +372,8 @@ function wrapApiCall<Ret>(fn: ApiFunction<Ret>): DnodeFunction {
 const getWrapped = (instance: Api): Record<ApiMethodNames, DnodeFunction> => {
   const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(instance)) as ApiMethodNames[];
   return keys.reduce((classAsObj, key) => {
-      classAsObj[key] = wrapApiCall((instance[key] as unknown as ApiFunction<any>).bind(instance));
-      return classAsObj;
+    classAsObj[key] = wrapApiCall((instance[key] as unknown as ApiFunction<any>).bind(instance));
+    return classAsObj;
   }, {} as Record<ApiMethodNames, DnodeFunction>)
 }
 
